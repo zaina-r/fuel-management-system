@@ -8,26 +8,26 @@ public class UserAccount {
     @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id")
-    private int UserId;
+    private int userId;
 
     @Column(name="NIC") private String NIC;
 
     @Column(name = "TelNo")
-    private String TelNo;
+    private String telno;
 
     @Column(name="FirstName")
-    private String FirstName;
+    private String firstname;
 
     @Column(name = "LastName")
-    private String LastName;
+    private String lastname;
 
     @Column(name="UserName")
-    private String UserName;
+    private String username;
 
     @Column(name="Password")
-    private String Password;
+    private String password;
 
     @Enumerated(value=EnumType.STRING)
-    private Role Role;
+    private Role role;
 
 }
