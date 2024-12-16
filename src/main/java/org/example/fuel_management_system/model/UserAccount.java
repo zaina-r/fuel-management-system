@@ -10,8 +10,7 @@ public class UserAccount {
     @Column(name="Id")
     private int UserId;
 
-    @Column(name="NIC")
-    private String NIC;
+    @Column(name="NIC") private String NI;
 
     @Column(name = "TelNo")
     private String TelNo;
