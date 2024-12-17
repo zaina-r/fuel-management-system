@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class AuthenticationController {
     private final AuthenticateService authenticateService;
@@ -17,8 +18,14 @@ public class AuthenticationController {
     }
 @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserAccount request){
+        try{
+            return ResponseEntity.ok(authenticateService.register(request));
 
-        return ResponseEntity.ok(authenticateService.register(request));
+        } catch (RuntimeException e) {
+
+              throw new RuntimeException(e.getMessage());
+        }
+
 
     }
 @PostMapping("/login")
