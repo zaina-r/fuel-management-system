@@ -1,7 +1,6 @@
 package org.example.fuel_management_system.service;
 
-import lombok.RequiredArgsConstructor;
-import org.example.fuel_management_system.Repository.userAccountRepository;
+import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserAccountService implements UserDetailsService {
 
-    private final userAccountRepository repository;
-    public UserAccountService(userAccountRepository repository) {
+    private final UserAccountRepository repository;
+    public UserAccountService(UserAccountRepository repository) {
         this.repository = repository;
     }
 
