@@ -39,6 +39,11 @@ public class AuthenticateService {
             throw new IllegalArgumentException("Username already exists!");
         }
 
+        if(request.getPassword()==null || request.getPassword().length()<=4) {
+            throw new IllegalArgumentException("Password Charter Minimum 5 charters!");
+        }
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
+
         userAccount=userAccountRepository.save(userAccount);
         String token=jwtService.generateToken(userAccount);
 
