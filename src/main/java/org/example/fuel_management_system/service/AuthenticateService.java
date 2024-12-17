@@ -3,6 +3,7 @@ package org.example.fuel_management_system.service;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.example.fuel_management_system.model.AuthenticationResponse;
 import org.example.fuel_management_system.model.UserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,9 +15,10 @@ public class AuthenticateService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    @Autowired
     private final UserAccountRepository userAccountRepository;
 
-    public AuthenticateService(UserAccountRepository userAccountRepositoryrepository, UserAccountRepository userAccountRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthenticateService( UserAccountRepository userAccountRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userAccountRepository = userAccountRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
