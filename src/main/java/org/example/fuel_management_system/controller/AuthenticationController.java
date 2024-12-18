@@ -20,7 +20,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserAccount request){
         try{
             return ResponseEntity.ok(authenticateService.register(request));
-            System.out.println("check");
+
         } catch (RuntimeException e) {
 
               throw new RuntimeException(e.getMessage());
