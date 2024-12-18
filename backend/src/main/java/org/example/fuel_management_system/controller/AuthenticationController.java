@@ -22,7 +22,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(authenticateService.register(request));
 
         } catch (RuntimeException e) {
-
+            System.out.println(e.getMessage());
               throw new RuntimeException(e.getMessage());
         }
 
