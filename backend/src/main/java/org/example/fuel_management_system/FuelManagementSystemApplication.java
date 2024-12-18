@@ -8,6 +8,9 @@ public class FuelManagementSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FuelManagementSystemApplication.class, args);
+
+
+        
     }
 
 }
