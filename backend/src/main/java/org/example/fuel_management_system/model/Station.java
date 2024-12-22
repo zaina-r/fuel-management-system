@@ -20,9 +20,6 @@ public class Station {
 
     private LocalDate registrationDate;
 
-    @JsonIgnore
-    @OneToOne
-    private UserAccount petrolOwner;
 
     @ManyToMany
     @JoinTable(
@@ -31,4 +28,10 @@ public class Station {
             inverseJoinColumns = @JoinColumn(name = "fuel_id")
     )
     private List<Fuel> fuel = new ArrayList<>();
+
+
+
+
+
+
 }
