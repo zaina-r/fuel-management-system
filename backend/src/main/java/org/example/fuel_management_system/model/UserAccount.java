@@ -39,12 +39,26 @@ public class UserAccount implements UserDetails {
     @Enumerated(value=EnumType.STRING)
     private Role role;
 
-    private File authFile;
+    private File authfile;
+
+    private int stationid;
 
 
-    @OneToOne(mappedBy = "petrolOwner",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Station station;
+    public File getAuthfile() {
+        return authfile;
+    }
 
+    public void setAuthfile(File authfile) {
+        this.authfile = authfile;
+    }
+
+    public int getStationid() {
+        return stationid;
+    }
+
+    public void setStationid(int stationid) {
+        this.stationid = stationid;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

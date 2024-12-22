@@ -2,6 +2,7 @@ package org.example.fuel_management_system.service;
 
 import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.example.fuel_management_system.model.AuthenticationResponse;
+import org.example.fuel_management_system.model.Role;
 import org.example.fuel_management_system.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +35,22 @@ public class AuthenticateService {
         userAccount.setUsername(request.getUsername());
         userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        userAccount.setRole(request.getRole());
+        Role role = request.getRole();
+        if (role == Role.FUELSTATION_OWNER) {
+            if (request.getStationid() == 0 || request.getAuthfile() == null) {
+                throw new IllegalArgumentException("Station ID and Auth File are required for FUELSTATION_OWNER!");
+            }
+            userAccount.setRole(Role.FUELSTATION_OWNER);
+            userAccount.setStationid(request.getStationid());
+            userAccount.setAuthfile(request.getAuthfile());
+        } else if (role == Role.VEHICLE_OWNER) {
+            userAccount.setRole(Role.VEHICLE_OWNER);
+            userAccount.setStationid(0);
+            userAccount.setAuthfile(null);
+        } else {
+            throw new IllegalArgumentException("Invalid role specified!");
+        }
+
         if (userAccountRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists!");
         }
