@@ -22,12 +22,13 @@ public class StationController {
         if(stationService.doesStationIdExist(station.getStationId())){
             return new ResponseEntity<>("Station is already registered!", HttpStatus.BAD_REQUEST);
         }
-        Station station = new Station();
-        station.setRegistrationDate(LocalDate.now());
-        station.setStationId(stationId);
-        station.setStationAddress(address);
-        station.setDealerName(dealerName);
+//        Station station = new Station();
+//        station.setRegistrationDate(LocalDate.now());
+//        station.setStationId(stationId);
+//        station.setStationAddress(address);
+//        station.setDealerName(dealerName);
 
+//        stationService.saveStation(station);
         stationService.saveStation(station);
         return new ResponseEntity<>("Station registered Successfully!", HttpStatus.OK);
     }

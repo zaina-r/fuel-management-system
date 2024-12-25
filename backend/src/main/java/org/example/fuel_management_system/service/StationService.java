@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Component
 @Service
 public class StationService {
@@ -22,7 +24,14 @@ public class StationService {
     }
 
     public void saveStation(Station station){
-        fuelStationRepository.save(station);
+        Station createdStation = new Station();
+//        Station createStation = new Station();
+        createdStation.setRegistrationDate(LocalDate.now());
+        createdStation.setStationId(station.getStationId());
+        createdStation.setStationAddress(station.getStationAddress());
+        createdStation.setDealerName(station.getDealerName());
+        fuelStationRepository.save(createdStation);
+
     }
 
 }
