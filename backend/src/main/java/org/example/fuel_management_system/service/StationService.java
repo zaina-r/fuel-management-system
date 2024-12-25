@@ -7,14 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StationService {
 
     @Autowired
-    private FuelStationRepository fuelStationRepository;
+    final FuelStationRepository fuelStationRepository;
 
-    public boolean isStationIdValid(String stationId){
-        return !fuelStationRepository.existsByStationId(Integer.parseInt(stationId));
+    public StationService(FuelStationRepository fuelStationRepository) {
+        this.fuelStationRepository = fuelStationRepository;
     }
 
-    public Station saveStation(Station station){
-        return fuelStationRepository.save(station);
+    public boolean doesStationIdExist(int stationId){
+        return !fuelStationRepository.existsByStationId(stationId);
+    }
+
+    public void saveStation(Station station){
+        fuelStationRepository.save(station);
     }
 
 }
