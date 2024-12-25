@@ -5,24 +5,21 @@ import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/station-registration")
+@RequestMapping("/station")
 public class StationController {
 
     @Autowired
     private StationService stationService;
 
-    public ResponseEntity<String> registerStation(@RequestParam int stationId,
-                                                  @RequestParam String dealerName,
-                                                  @RequestParam String address){
+    @PostMapping("/registration")
+    public ResponseEntity<String> registerStation(@RequestBody Station station){
 
-        if(stationService.doesStationIdExist(stationId)){
+        if(stationService.doesStationIdExist(station.getStationId())){
             return new ResponseEntity<>("Station is already registered!", HttpStatus.BAD_REQUEST);
         }
         Station station = new Station();
