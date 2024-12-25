@@ -10,14 +10,18 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "station_registration")
 public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stationId;
 
+    @Column(name = "station_address", length = 255, nullable = false)
     private String stationAddress;
-
+    @Column(name = "dealer_name", length = 255, nullable = false)
+    private String dealerName;
+    @Temporal(TemporalType.DATE)
     private LocalDate registrationDate;
 
 
@@ -28,10 +32,5 @@ public class Station {
             inverseJoinColumns = @JoinColumn(name = "fuel_id")
     )
     private List<Fuel> fuel = new ArrayList<>();
-
-
-
-
-
 
 }
