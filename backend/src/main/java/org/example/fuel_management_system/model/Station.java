@@ -1,11 +1,7 @@
 package org.example.fuel_management_system.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +15,9 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stationId;
 
-    @Column(name = "station_address", length = 255, nullable = false)
+    @Column(name = "station_address", nullable = false)
     private String stationAddress;
-    @Column(name = "dealer_name", length = 255, nullable = false)
+    @Column(name = "dealer_name", nullable = false)
     private String dealerName;
     @Temporal(TemporalType.DATE)
     private LocalDate registrationDate;
