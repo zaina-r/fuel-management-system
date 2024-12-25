@@ -3,7 +3,9 @@ package org.example.fuel_management_system.service;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.Station;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StationService {
 
     @Autowired
