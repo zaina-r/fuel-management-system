@@ -4,8 +4,10 @@ import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.Station;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
+@Service
 public class StationService {
 
     @Autowired
