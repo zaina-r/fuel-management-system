@@ -5,12 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
 
 import java.util.Date;
 
 @Entity
-public class registeredvehicles {
+public class Registeredvehicles {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private int vehicleId;
@@ -29,10 +28,10 @@ private Date Resitration_expiry_date;
 private String Owner_ID;
 
 
-    public registeredvehicles() {
+    public Registeredvehicles() {
     }
 
-    public registeredvehicles(int vehicleId, String vehicle_reg_no, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_year, String vehicle_color, String vehicle_type, String registration_status, String fuel_type, String registered_province, Date resitration_expiry_date, String owner_ID) {
+    public Registeredvehicles(int vehicleId, String vehicle_reg_no, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_year, String vehicle_color, String vehicle_type, String registration_status, String fuel_type, String registered_province, Date resitration_expiry_date, String owner_ID) {
         this.vehicleId = vehicleId;
         this.vehicle_reg_no = vehicle_reg_no;
         License_plate_no = license_plate_no;
