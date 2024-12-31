@@ -23,7 +23,7 @@ public class StationService {
         return !fuelStationRepository.existsByStationId(stationId);
     }
 
-    public void saveStation(Station station){
+    public void saveStation(Station station) {
 
         station.setLoginCode(verificationCodeGenerator.generateVerificationCode());
 
