@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExistingStationsRepository extends JpaRepository<ExistingStations, Integer> {
 
-    boolean existsByStationId(int stationId);
+    boolean existsByDealerId(int dealer_id);
 
 }

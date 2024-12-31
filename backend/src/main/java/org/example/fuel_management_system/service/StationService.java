@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component
+
 @Service
 public class StationService {
 
-    @Autowired
     final FuelStationRepository fuelStationRepository;
 
     public StationService(FuelStationRepository fuelStationRepository) {
