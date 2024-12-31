@@ -22,6 +22,16 @@ public class Station {
     @Temporal(TemporalType.DATE)
     private LocalDate registrationDate;
 
+    @Column //todo: include that this is a unique value
+    private String loginCode;
+
+    public String getLoginCode() {
+        return loginCode;
+    }
+
+    public void setLoginCode(String loginCode) {
+        this.loginCode = loginCode;
+    }
 
     @ManyToMany
     @JoinTable(

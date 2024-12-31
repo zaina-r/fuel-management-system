@@ -3,6 +3,7 @@ package org.example.fuel_management_system.controller;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.StationService;
 import org.example.fuel_management_system.service.StationValidationService;
+import org.example.fuel_management_system.utilities.VerificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,13 @@ public class StationController {
 
     @Autowired
     private StationValidationService stationValidationService;
+
+    @Autowired
+    private final VerificationCodeGenerator verificationCodeGenerator;
+
+    public StationController(VerificationCodeGenerator verificationCodeGenerator) {
+        this.verificationCodeGenerator = verificationCodeGenerator;
+    }
 
     @PostMapping("/registration")
     public ResponseEntity<String> registerStation(@RequestBody Station station){
