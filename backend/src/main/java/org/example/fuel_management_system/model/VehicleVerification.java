@@ -4,18 +4,19 @@ import jakarta.persistence.*;
 
 @Entity
 public class VehicleVerification {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vehicleId;
 
-    private String vehicle_reg_no;
+    private String vehicleRegNo;
     private String license_plate_no;
     private String vehicle_make;
     private String vehicle_model;
     private String vehicle_type;
     private String fuel_type;
 
-    // Getters and setters are not necessary because of Lombok's @Data annotation
+
 
     public int getVehicleId() {
         return vehicleId;
@@ -26,11 +27,11 @@ public class VehicleVerification {
     }
 
     public String getVehicle_reg_no() {
-        return vehicle_reg_no;
+        return vehicleRegNo;
     }
 
     public void setVehicle_reg_no(String vehicle_reg_no) {
-        this.vehicle_reg_no = vehicle_reg_no;
+        this.vehicleRegNo = vehicle_reg_no;
     }
 
     public String getLicense_plate_no() {

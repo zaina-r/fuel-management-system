@@ -14,8 +14,11 @@ import java.time.LocalDate;
 @Service
 public class StationService {
 
+
     private final FuelStationRepository fuelStationRepository;
-    private VerificationCodeGenerator verificationCodeGenerator;
+
+
+    private  VerificationCodeGenerator verificationCodeGenerator;
 
     public StationService(FuelStationRepository fuelStationRepository, VerificationCodeGenerator verificationCodeGenerator) {
         this.fuelStationRepository = fuelStationRepository;
@@ -30,8 +33,7 @@ public class StationService {
 
         station.setLoginCode(verificationCodeGenerator.generateVerificationCode());
 
-        fuelStationRepository.save(station);
-    public void saveStation(Station station){
+
         Station createdStation = new Station();
         createdStation.setRegistrationDate(LocalDate.now());
         createdStation.setStationId(station.getStationId());
