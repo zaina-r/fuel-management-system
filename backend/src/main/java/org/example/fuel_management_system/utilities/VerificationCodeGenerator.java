@@ -1,10 +1,13 @@
 package org.example.fuel_management_system.utilities;
 
+import org.springframework.stereotype.Component;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class VerificationCodeGenerator {
     private static final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     private static final int length = 6;
