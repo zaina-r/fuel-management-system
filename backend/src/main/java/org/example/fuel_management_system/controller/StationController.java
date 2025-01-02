@@ -35,6 +35,7 @@ public class StationController {
             return new ResponseEntity<>("Station is already registered!", HttpStatus.BAD_REQUEST);
         }
 
+
         if(stationValidationService.isStationIdValid(station.getStationId())){
             return  new ResponseEntity<>("Station does not Exist!", HttpStatus.BAD_REQUEST);
         }

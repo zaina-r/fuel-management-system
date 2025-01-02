@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+
+
 @Service
 public class StationService {
 
@@ -28,6 +31,15 @@ public class StationService {
         station.setLoginCode(verificationCodeGenerator.generateVerificationCode());
 
         fuelStationRepository.save(station);
+    public void saveStation(Station station){
+        Station createdStation = new Station();
+        createdStation.setRegistrationDate(LocalDate.now());
+        createdStation.setStationId(station.getStationId());
+        createdStation.setStationAddress(station.getStationAddress());
+        createdStation.setDealerName(station.getDealerName());
+        fuelStationRepository.save(createdStation);
+
+
     }
 
 }

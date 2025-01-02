@@ -62,7 +62,7 @@ public class AuthenticateService {
 
         userAccount=userAccountRepository.save(userAccount);
         String token=jwtService.generateToken(userAccount);
-
+  
         return new AuthenticationResponse(token);
 
 
