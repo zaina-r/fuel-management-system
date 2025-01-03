@@ -3,6 +3,8 @@ package org.example.fuel_management_system.model;
 public class MailStructure {
     private String subject;
 
+    private  String message;
+
     public String getSubject() {
         return subject;
     }
@@ -19,5 +21,5 @@ public class MailStructure {
         this.message = message;
     }
 
-    private  String message;
+
 }

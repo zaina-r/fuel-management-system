@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.service;
 
+import org.apache.catalina.User;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.example.fuel_management_system.model.AuthenticationResponse;
 import org.example.fuel_management_system.model.Role;
@@ -7,8 +8,11 @@ import org.example.fuel_management_system.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthenticateService {
@@ -77,5 +81,20 @@ public class AuthenticateService {
     }
 
 
+    public List<UserAccount> getAllAccounts() {
+        return userAccountRepository.findAll();
+    }
 
+    public UserAccount getAccountById(int userId) {
+        return userAccountRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+    }
+
+    public List<UserAccount> getUsersByRole(Role role) {
+
+      return  userAccountRepository.findByRole(role);
+
+
+
+
+    }
 }

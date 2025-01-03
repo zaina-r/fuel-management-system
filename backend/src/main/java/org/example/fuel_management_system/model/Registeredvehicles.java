@@ -14,7 +14,7 @@ public class Registeredvehicles {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private int vehicleId;
 
-private String vehicle_reg_no;
+private String vehicleRegNo;
 private String License_plate_no;
 private String Vehicle_make;
 private String Vehicle_model;
@@ -33,7 +33,7 @@ private String Owner_ID;
 
     public Registeredvehicles(int vehicleId, String vehicle_reg_no, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_year, String vehicle_color, String vehicle_type, String registration_status, String fuel_type, String registered_province, Date resitration_expiry_date, String owner_ID) {
         this.vehicleId = vehicleId;
-        this.vehicle_reg_no = vehicle_reg_no;
+        this.vehicleRegNo = vehicle_reg_no;
         License_plate_no = license_plate_no;
         Vehicle_make = vehicle_make;
         Vehicle_model = vehicle_model;
@@ -55,12 +55,12 @@ private String Owner_ID;
         this.vehicleId = vehicleId;
     }
 
-    public String getVehicle_reg_no() {
-        return vehicle_reg_no;
+    public String getVehicleRegNo() {
+        return vehicleRegNo;
     }
 
     public void setVehicle_reg_no(String vehicle_reg_no) {
-        this.vehicle_reg_no = vehicle_reg_no;
+        this.vehicleRegNo = vehicle_reg_no;
     }
 
     public String getLicense_plate_no() {

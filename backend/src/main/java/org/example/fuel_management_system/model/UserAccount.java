@@ -36,7 +36,7 @@ public class UserAccount implements UserDetails {
     @Column(name="Password")
     private String password;
 
-    @Enumerated(value=EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     private File authfile;
