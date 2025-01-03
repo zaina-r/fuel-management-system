@@ -26,6 +26,18 @@ public class Station {
     @Column //todo: include that this is a unique value
     private String loginCode;
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "station_fuel",
+            joinColumns = @JoinColumn(name = "station_id"),
+            inverseJoinColumns = @JoinColumn(name = "fuel_id")
+    )
+    private List<Fuel> fuel = new ArrayList<>();
+
+
+
+
     public String getLoginCode() {
         return loginCode;
     }
@@ -42,13 +54,6 @@ public class Station {
         this.verificationDocument = verificationDocument;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "station_fuel",
-            joinColumns = @JoinColumn(name = "station_id"),
-            inverseJoinColumns = @JoinColumn(name = "fuel_id")
-    )
-    private List<Fuel> fuel = new ArrayList<>();
 
     public int getStationId() {
         return stationId;

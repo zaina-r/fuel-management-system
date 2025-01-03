@@ -1,12 +1,15 @@
 package org.example.fuel_management_system.controller;
 
+import org.apache.catalina.User;
 import org.example.fuel_management_system.model.AuthenticationResponse;
+import org.example.fuel_management_system.model.Role;
 import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.service.AuthenticateService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -22,7 +25,6 @@ public class AuthenticationController {
             return ResponseEntity.ok(authenticateService.register(request));
 
         } catch (RuntimeException e) {
-//            System.out.println(e.getMessage());
               throw new RuntimeException(e.getMessage());
         }
 
@@ -32,4 +34,21 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserAccount request){
         return ResponseEntity.ok(authenticateService.authenticate(request));
     }
+
+@GetMapping("/allaccounts")
+    public ResponseEntity<List<UserAccount>>getAllAccounts(){
+        return ResponseEntity.ok(authenticateService.getAllAccounts());
+}
+
+@GetMapping("/account/{id}")
+public ResponseEntity<UserAccount> getAccountById(@PathVariable("id") int userId){
+        return ResponseEntity.ok(authenticateService.getAccountById(userId));
+}
+
+    @GetMapping("/by-role")
+    public ResponseEntity<List<UserAccount>> getUsersByRole(@RequestParam Role role) {
+       return ResponseEntity.ok(authenticateService.getUsersByRole(role));
+    }
+
+
 }
