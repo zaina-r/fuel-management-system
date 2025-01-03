@@ -31,7 +31,7 @@ public class VehicleRegistrationController {
 
         // Check if the vehicle registration number exists in the registered vehicle repository
 
-        Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
+        Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicle_reg_no());
         System.out.println(registeredVehicle);
         if (registeredVehicle.isPresent()) {
             // Add the vehicle to the VehicleVerification table
