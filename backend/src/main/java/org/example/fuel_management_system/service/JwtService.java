@@ -5,7 +5,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.fuel_management_system.model.UserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class JwtService {
 
     private static final String STATIC_KEY= "71bd01b02c58bb607257b1f5dcac69db2f3f3777b62a99602c6a60aaef4bd923";
 
+    @Autowired
+    private HttpServletRequest request;
 
     public String generateToken(UserAccount userAccount){
         return Jwts
@@ -33,6 +37,14 @@ public class JwtService {
         byte[] keyBytes= Decoders.BASE64URL.decode(STATIC_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+    public String getTokenFromHeader() {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7); // Remove "Bearer " prefix
+        }
+        return null;
+    }
+
 
     public boolean isValidate(String token, UserDetails userDetails){
         String username=extractUsername(token);
