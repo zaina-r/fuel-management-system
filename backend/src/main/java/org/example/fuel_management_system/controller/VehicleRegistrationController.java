@@ -4,7 +4,9 @@ import org.example.fuel_management_system.Repository.RegisteredVehicleRepository
 import org.example.fuel_management_system.Repository.VehicleVerificationRepository;
 import org.example.fuel_management_system.model.Registeredvehicles;
 import org.example.fuel_management_system.model.VehicleVerification;
+import org.example.fuel_management_system.service.VehicleRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,29 +18,28 @@ import static java.util.Objects.requireNonNull;
 public class VehicleRegistrationController {
 
     // Inject the repository for database access
+
     @Autowired
-    private RegisteredVehicleRepository registeredVehicleRepository;
-    @Autowired
-    private VehicleVerificationRepository vehicleVerificationRepository;
+    private VehicleRegistrationService vehicleRegistrationService;
 
     // The constructor is no longer required to inject the controller itself
-    public VehicleRegistrationController() {
-    }
+
 
     @PostMapping("/verifyAndAddVehicle")
-    public String verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
-        requireNonNull(inputVehicle, "Input vehicle cannot be null");
+    public ResponseEntity<VehicleVerification> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
+           return ResponseEntity.ok(vehicleRegistrationService.verifyAndAddVehicle(inputVehicle));
 
-        // Check if the vehicle registration number exists in the registered vehicle repository
+    }
+    @GetMapping("/{qrCode}")
+    public ResponseEntity<VehicleVerification> getVehicleDetails(@PathVariable String qrCode) {
+        VehicleVerification vehicle = vehicleRegistrationService.getVehicleByQrCode(qrCode);
+        return ResponseEntity.ok(vehicle);
+    }
 
-        Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicle_reg_no());
-        System.out.println(registeredVehicle);
-        if (registeredVehicle.isPresent()) {
-            // Add the vehicle to the VehicleVerification table
-            vehicleVerificationRepository.save(inputVehicle);
-            return "Vehicle verified and added to the Vehicle Verification table!";
-        } else {
-            return "Vehicle registration number not found in the registered vehicle repository.";
-        }
+    @PostMapping("/{id}/update-fuel")
+    public ResponseEntity<VehicleVerification> updateFuelCapacity(@PathVariable Integer id, @RequestBody float request) {
+        VehicleVerification updatedVehicle = vehicleRegistrationService.updateFuelCapacity(id, (int) request);
+        return ResponseEntity.ok(updatedVehicle);
+
     }
 }
