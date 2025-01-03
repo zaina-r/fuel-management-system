@@ -17,17 +17,13 @@ public class VerificationCodeGenerator {
         for (char c : characters.toCharArray()) {
             availableCharacters.add(c);
         }
-
         SecureRandom randomValues = new SecureRandom();
         Collections.shuffle(availableCharacters, randomValues);
-
         StringBuilder verificationCode = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
             verificationCode.append(availableCharacters.get(i));
         }
-
-        System.out.println(verificationCode.toString());
 
         return verificationCode.toString();
     }
