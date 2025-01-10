@@ -21,7 +21,6 @@ public class VehicleRegistrationService {
     private RegisteredVehicleRepository registeredVehicleRepository;
 
     public VehicleVerification verifyAndAddVehicle(VehicleVerification inputVehicle) {
-        System.out.println(inputVehicle.getLicense_plate_no());
         requireNonNull(inputVehicle, "Input vehicle cannot be null");
         if(inputVehicle.getVehicle_type().equals("Car")){
             inputVehicle.setMaximumFuelCapacity(5L);
@@ -42,23 +41,14 @@ public class VehicleRegistrationService {
 
         inputVehicle.setQrCode(generateQrCode(inputVehicle.getLicense_plate_no()));
 
-        Optional<VehicleVerification>verifyVehicle=vehicleVerificationRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
-        if(verifyVehicle.isPresent()){
 
 
-            }else{
-            Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
-            System.out.println(registeredVehicle.isPresent());
-            if (registeredVehicle.isPresent()) {
+        Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
+        System.out.println(registeredVehicle.isPresent());
+        if (registeredVehicle.isPresent()) {
 
-                vehicleVerificationRepository.save(inputVehicle);
-            }
-
+            vehicleVerificationRepository.save(inputVehicle);
         }
-
-
-
-
         return inputVehicle;
     }
      public String generateQrCode(String LicensePlateNo) {

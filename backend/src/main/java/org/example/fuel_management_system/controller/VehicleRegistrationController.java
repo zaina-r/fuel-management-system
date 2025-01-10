@@ -27,7 +27,6 @@ public class VehicleRegistrationController {
 
     @PostMapping("/verifyAndAddVehicle")
     public ResponseEntity<VehicleVerification> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
-        System.out.println(inputVehicle.getLicense_plate_no());
            return ResponseEntity.ok(vehicleRegistrationService.verifyAndAddVehicle(inputVehicle));
 
     }

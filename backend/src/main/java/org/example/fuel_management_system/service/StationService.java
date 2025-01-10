@@ -92,13 +92,6 @@ this.authenticateService=authenticateService;
             String username = getUsernameFromToken();
             System.out.println("Email is: "+username);
             mailService.sendMail(username, mailStructure);
-
-
-
-
-
-
-
             return fuelStationRepository.save(existingStation);
         }
 
