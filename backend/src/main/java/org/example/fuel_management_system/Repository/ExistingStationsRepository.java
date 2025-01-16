@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExistingStationsRepository extends JpaRepository<ExistingStations, Integer> {
+    boolean existsByLicense_number(String LicenseNumber);
 
 }
