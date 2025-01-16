@@ -11,7 +11,7 @@ public class ExistingStationsServiceImpl {
 
     public boolean isLicenseNumberValid(String licenseNumber) {
         // Query the database to check if the license number exists
-        return existingStationsRepository.existsByLicense_number(licenseNumber);
+        return existingStationsRepository.existsByLicenseNumber(licenseNumber);
     }
 
 
