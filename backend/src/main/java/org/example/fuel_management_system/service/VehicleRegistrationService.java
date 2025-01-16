@@ -7,6 +7,7 @@ import org.example.fuel_management_system.model.VehicleVerification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
@@ -40,18 +41,28 @@ public class VehicleRegistrationService {
             inputVehicle.setAvailableFuelCapacity(8L);
         }
 
-        inputVehicle.setQrCode(generateQrCode(inputVehicle.getLicense_plate_no()));
+        // Generate and set the QR code for the vehicle
+        inputVehicle.setQrCode(generateQrCode());
 
         Optional<VehicleVerification>verifyVehicle=vehicleVerificationRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
         if(verifyVehicle.isPresent()){
-
+                return null;
 
             }else{
             Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
             System.out.println(registeredVehicle.isPresent());
             if (registeredVehicle.isPresent()) {
 
-                vehicleVerificationRepository.save(inputVehicle);
+
+                String li=registeredVehicle.get().getLicencePlateNo();
+
+
+
+                if(inputVehicle.getLicense_plate_no().equals(li)){
+                    vehicleVerificationRepository.save(inputVehicle);
+                    return inputVehicle;
+                }
+
             }
 
         }
@@ -59,11 +70,26 @@ public class VehicleRegistrationService {
 
 
 
-        return inputVehicle;
+        return null;
     }
-     public String generateQrCode(String LicensePlateNo) {
-        // QR code generation logic using ZXing library
-        return "QR_CODE_" + LicensePlateNo;
+
+    public String generateQrCode() {
+
+         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+
+         SecureRandom random = new SecureRandom();
+
+
+         StringBuilder sb = new StringBuilder();
+
+         for (int i = 0; i < 12; i++) {
+
+             int randomIndex = random.nextInt(characters.length());
+             sb.append(characters.charAt(randomIndex));
+         }
+         System.out.println(sb.toString());
+         return sb.toString();
     }
 
     public VehicleVerification getVehicleByQrCode(String qrCode) {

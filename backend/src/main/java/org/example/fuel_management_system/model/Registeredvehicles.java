@@ -24,8 +24,8 @@ public class Registeredvehicles {
     @Column(name = "fuel_type")
     private String fuelType;
 
-    @Column(name = "license_plate_no")
-    private String licensePlateNo;
+    @Column(name = "licence_plate_no")
+    private String licencePlateNo;
 
     @Column(name = "vehicle_make")
     private String vehicleMake;
@@ -51,11 +51,11 @@ public class Registeredvehicles {
     @Column(name = "vehicle_year")
     private String vehicleYear;
 
-    public Registeredvehicles(int id, String vehicleRegNo, String fuelType, String licensePlateNo, String vehicleMake, String vehicleModel, String vehicleType, String registeredProvince, String registrationStatus, String registrationExpiryDate, String vehicleColor, String vehicleYear) {
+    public Registeredvehicles(int id, String vehicleRegNo, String fuelType, String licencePlateNo, String vehicleMake, String vehicleModel, String vehicleType, String registeredProvince, String registrationStatus, String registrationExpiryDate, String vehicleColor, String vehicleYear) {
         this.id = id;
         this.vehicleRegNo = vehicleRegNo;
         this.fuelType = fuelType;
-        this.licensePlateNo = licensePlateNo;
+        this.licencePlateNo = licencePlateNo;
         this.vehicleMake = vehicleMake;
         this.vehicleModel = vehicleModel;
         this.vehicleType = vehicleType;
@@ -94,12 +94,12 @@ public class Registeredvehicles {
         this.fuelType = fuelType;
     }
 
-    public String getLicensePlateNo() {
-        return licensePlateNo;
+    public String getLicencePlateNo() {
+        return licencePlateNo;
     }
 
-    public void setLicensePlateNo(String licensePlateNo) {
-        this.licensePlateNo = licensePlateNo;
+    public void setLicencePlateNo(String licencePlateNo) {
+        this.licencePlateNo = licencePlateNo;
     }
 
     public String getVehicleMake() {

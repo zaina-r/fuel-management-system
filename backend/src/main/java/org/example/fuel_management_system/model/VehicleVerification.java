@@ -11,8 +11,7 @@ public class VehicleVerification {
 
     private String vehicleRegNo;
     private String license_plate_no;
-    private String vehicle_make;
-    private String vehicle_model;
+
     private String vehicle_type;
     private String fuel_type;
     private float maximumFuelCapacity;
@@ -23,8 +22,7 @@ public class VehicleVerification {
         this.vehicleId = vehicleId;
         this.vehicleRegNo = vehicleRegNo;
         this.license_plate_no = license_plate_no;
-        this.vehicle_make = vehicle_make;
-        this.vehicle_model = vehicle_model;
+
         this.vehicle_type = vehicle_type;
         this.fuel_type = fuel_type;
         this.maximumFuelCapacity = maximumFuelCapacity;
@@ -61,21 +59,7 @@ public class VehicleVerification {
         this.license_plate_no = license_plate_no;
     }
 
-    public String getVehicle_make() {
-        return vehicle_make;
-    }
-
-    public void setVehicle_make(String vehicle_make) {
-        this.vehicle_make = vehicle_make;
-    }
-
-    public String getVehicle_model() {
-        return vehicle_model;
-    }
-
-    public void setVehicle_model(String vehicle_model) {
-        this.vehicle_model = vehicle_model;
-    }
+    
 
     public String getVehicle_type() {
         return vehicle_type;

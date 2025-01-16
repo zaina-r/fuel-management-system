@@ -14,4 +14,6 @@ public interface RegisteredVehicleRepository extends JpaRepository<Registeredveh
     Optional<Registeredvehicles> findByVehicleRegNo(String vehicleRegNo);
 
 
+
+
 }
