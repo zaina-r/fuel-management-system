@@ -11,14 +11,14 @@ public class ExistingStations{
     private String dealerId;
     private String address;
     private String dealer_name;
-    private String license_number;
+    private String licenseNumber;
 
     public String getLicense_number() {
-        return license_number;
+        return licenseNumber;
     }
 
     public void setLicense_number(String license_number) {
-        this.license_number = license_number;
+        this.licenseNumber = license_number;
     }
 
     public String getDealerId() {
