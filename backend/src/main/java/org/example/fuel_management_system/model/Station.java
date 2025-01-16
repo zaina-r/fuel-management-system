@@ -18,8 +18,7 @@ public class Station {
     private String stationAddress;
     @Column(name = "dealer_name", nullable = false)
     private String dealerName;
-   // @Lob
-    //private byte[] verificationDocument;
+
     private LocalDate registrationDate;
    @Column
     private String loginCode;
@@ -38,16 +37,6 @@ public class Station {
     public void setLoginCode(String loginCode) {
         this.loginCode = loginCode;
     }
-    /*
-
-    public byte[] getVerificationDocument() {
-        return verificationDocument;
-    }
-
-    public void setVerificationDocument(byte[] verificationDocument) {
-        this.verificationDocument = verificationDocument;
-    }
-*/
 
     public int getStationId() {
         return stationId;

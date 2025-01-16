@@ -33,6 +33,8 @@ public class AuthenticateService {
     private MailService mailService;
     @Autowired
     private VerificationCodeService verificationCodeService;
+    @Autowired
+    private ExistingStationsServiceImpl existingStationsService;
 
 
 
@@ -69,10 +71,13 @@ public class AuthenticateService {
         userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
         userAccount=userAccountRepository.save(userAccount);
         String token=jwtService.generateToken(userAccount);
-        if(role==Role.FUELSTATION_OWNER){
+        if(role==Role.FUELSTATION_OWNER && request.getLicenseNumber()==null){
+            String licenseNumber = request.getLicenseNumber();
+            boolean isLicenseValid = existingStationsService.isLicenseNumberValid(licenseNumber);
+            if(isLicenseValid){
             String otp=GenerateOtp.generateOtp();
             VerificationCode verificationCode= verificationCodeService.generateOtp(userAccount,token,otp);
-        }
+        }}
   
         return new AuthenticationResponse(token,"The account has been registered successfully");
     }
