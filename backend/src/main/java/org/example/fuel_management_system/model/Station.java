@@ -12,12 +12,14 @@ public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int stationId;
+    private int id;
+    private String stationId;
 
     @Column(name = "station_address", nullable = false)
     private String stationAddress;
     @Column(name = "dealer_name", nullable = false)
     private String dealerName;
+    private String licenseNumber;
 
     private LocalDate registrationDate;
    @Column
@@ -28,21 +30,19 @@ public class Station {
     @JsonIgnore
     private List<Fuel> fuel = new ArrayList<>();
 
-
-
-    public String getLoginCode() {
-        return loginCode;
+    public int getId() {
+        return id;
     }
 
-    public void setLoginCode(String loginCode) {
-        this.loginCode = loginCode;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getStationId() {
+    public String getStationId() {
         return stationId;
     }
 
-    public void setStationId(int stationId) {
+    public void setStationId(String stationId) {
         this.stationId = stationId;
     }
 
@@ -62,12 +62,28 @@ public class Station {
         this.dealerName = dealerName;
     }
 
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
     public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public String getLoginCode() {
+        return loginCode;
+    }
+
+    public void setLoginCode(String loginCode) {
+        this.loginCode = loginCode;
     }
 
     public List<Fuel> getFuel() {

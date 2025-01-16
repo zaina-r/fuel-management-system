@@ -5,11 +5,13 @@ import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.VerificationCodeRepository;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.model.MailStructure;
+import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.model.VerificationCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.rmi.server.UID;
 import java.time.LocalDateTime;
@@ -25,66 +27,58 @@ public class VerificationCodeService {
     @Autowired
     private MailService mailService;
 
-    public VerificationCode generateOtp(UserAccount userAccount,String jwt,String otp) {
-        VerificationCode existingOtp = verificationCodeRepository.findByUser_UserId(userAccount.getUserId());
-        LocalDateTime expirationTime = LocalDateTime.now().plusHours(24);
-        if (existingOtp != null && existingOtp.getExpirationTime().isAfter(LocalDateTime.now())) {
-            sendOtp(existingOtp.getOtp(),existingOtp.getUser().getUsername());
-            return existingOtp;
-        }
-        else if(existingOtp!=null && existingOtp.getExpirationTime().isBefore(LocalDateTime.now())){
-            verificationCodeRepository.delete(existingOtp);
+    public VerificationCode generateOtpForStation(Station station, String otp,String email) {
 
-
-            VerificationCode verificationCode = new VerificationCode();
-            UUID uuid = UUID.randomUUID();
-            String id = uuid.toString();
-            verificationCode.setId(id);
-            verificationCode.setOtp(otp);
-            verificationCode.setExpirationTime(expirationTime);
-            verificationCode.setUser(userAccount);
-
-            sendOtp(verificationCode.getOtp(),verificationCode.getUser().getUsername());
-
-            return verificationCodeRepository.save(verificationCode);
-        }
-        else {
-
-
-
-            // Save the OTP in the database
-            VerificationCode verificationCode = new VerificationCode();
-            UUID uuid = UUID.randomUUID();
-            String id = uuid.toString();
-            verificationCode.setId(id);
-            verificationCode.setOtp(otp);
-            verificationCode.setExpirationTime(expirationTime);
-            verificationCode.setUser(userAccount);
-            sendOtp(verificationCode.getOtp(),verificationCode.getUser().getUsername());
-
-
-
-            return verificationCodeRepository.save(verificationCode);
+        // Check if the station is null to avoid NullPointerException
+        if (station == null ) {
+            throw new IllegalArgumentException("Station or Station ID cannot be null");
         }
 
+        LocalDateTime expirationTime = LocalDateTime.now().plusDays(1);
+
+        // Fetch the existing OTP for the station
+        VerificationCode existingOtp = verificationCodeRepository.findByStationId(station.getId());
+
+        if (existingOtp != null) {
+            if (existingOtp.getExpirationTime().isAfter(LocalDateTime.now())) {
+                // If the OTP is still valid, reuse it
+                sendOtp(existingOtp.getOtp(), email);
+                return existingOtp;
+            } else {
+                // If the OTP has expired, update it
+                existingOtp.setOtp(otp);
+                existingOtp.setExpirationTime(expirationTime);
+                sendOtp(existingOtp.getOtp(), email);
+                return verificationCodeRepository.save(existingOtp);
+            }
+        }
+
+        // Create a new OTP entry if no existing OTP is found
+        VerificationCode newVerificationCode = new VerificationCode();
+        newVerificationCode.setId(UUID.randomUUID().toString());
+        newVerificationCode.setOtp(otp);
+        newVerificationCode.setExpirationTime(expirationTime);
+        newVerificationCode.setStation(station);
+
+        sendOtp(newVerificationCode.getOtp(),email);
+        return verificationCodeRepository.save(newVerificationCode);
     }
 
 
+
     public void sendOtp(String otp, String userContact) {
+        System.out.println("Sending otp"+userContact);
         MailStructure mailStructure=new MailStructure();
         mailStructure.setSubject("Your verification Code");
-        mailStructure.setMessage("Your email verification code is  "+ otp);
+        mailStructure.setMessage("Your station verification code is  "+ otp);
         mailService.sendMail(userContact,mailStructure);
     }
     public VerificationCode getVerificationCode(String id) throws Exception {
         return verificationCodeRepository.findById(id).orElseThrow(()->new Exception("The id not found"));
     }
-    public List<VerificationCode> getAllOwners() {
-        return verificationCodeRepository.findAll().stream()
-                .filter(otp -> otp.getUser().getRole().equals(Role.FUELSTATION_OWNER))
-                .collect(Collectors.toList());
+
+
+    public List<VerificationCode> getAllStationsWithOtps() {
+        return verificationCodeRepository.findAll();
     }
-
-
-
 }

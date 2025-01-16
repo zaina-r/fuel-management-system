@@ -60,9 +60,7 @@ public class AuthenticateService {
         if (userAccountRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists!");
         }
-        if(userAccountRepository.existsByNIC(request.getNIC())){
-            throw new IllegalArgumentException("Nic already exists!");
-        }
+
 
         if(request.getPassword()==null || request.getPassword().length()<=4) {
             throw new IllegalArgumentException("Password Charter Minimum 5 charters!");
@@ -71,13 +69,18 @@ public class AuthenticateService {
         userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
         userAccount=userAccountRepository.save(userAccount);
         String token=jwtService.generateToken(userAccount);
-        if(role==Role.FUELSTATION_OWNER && request.getLicenseNumber()==null){
+        if(role==Role.FUELSTATION_OWNER && request.getLicenseNumber()!=null){
             String licenseNumber = request.getLicenseNumber();
+
             boolean isLicenseValid = existingStationsService.isLicenseNumberValid(licenseNumber);
             if(isLicenseValid){
-            String otp=GenerateOtp.generateOtp();
-            VerificationCode verificationCode= verificationCodeService.generateOtp(userAccount,token,otp);
-        }}
+                userAccount.setLicenseNumber(licenseNumber);
+            }
+            else{
+                throw new IllegalArgumentException("License number is not valid");
+            }
+ }
+        userAccountRepository.save(userAccount);
   
         return new AuthenticationResponse(token,"The account has been registered successfully");
     }

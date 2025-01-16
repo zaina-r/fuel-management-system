@@ -18,6 +18,8 @@ List<UserAccount> findByRole(Role role);
 
 boolean existsByNIC(String  nic);
 
+UserAccount findByLicenseNumber(String LicenseNumber);
+
 }
 
 

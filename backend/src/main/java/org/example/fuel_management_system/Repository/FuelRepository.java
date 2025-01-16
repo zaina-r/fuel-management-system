@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FuelRepository extends JpaRepository<Fuel,Integer> {
-    List<Fuel> findByStation_StationId(int stationId);
+    List<Fuel> findByStationId(int stationId);
 }

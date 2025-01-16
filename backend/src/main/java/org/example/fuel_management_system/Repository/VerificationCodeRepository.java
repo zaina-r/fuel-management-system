@@ -10,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface VerificationCodeRepository extends JpaRepository<VerificationCode,String> {
 
-    VerificationCode findByUser_UserId(int userId);
-
+    VerificationCode findByStationId(int stationId);
 }
