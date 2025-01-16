@@ -1,7 +1,7 @@
 package org.example.fuel_management_system.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import org.example.fuel_management_system.enumpackage.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,26 +39,6 @@ public class UserAccount implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private File authfile;
-
-    private int stationid;
-
-
-    public File getAuthfile() {
-        return authfile;
-    }
-
-    public void setAuthfile(File authfile) {
-        this.authfile = authfile;
-    }
-
-    public int getStationid() {
-        return stationid;
-    }
-
-    public void setStationid(int stationid) {
-        this.stationid = stationid;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

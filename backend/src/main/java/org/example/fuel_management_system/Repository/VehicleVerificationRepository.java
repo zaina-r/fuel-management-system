@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface VehicleVerificationRepository extends JpaRepository<VehicleVerification, Integer> {
     Optional<VehicleVerification> findByQrCode(String qrCode);
+    Optional<VehicleVerification> findByVehicleRegNo(String vehicleRegNo);
+
 }
