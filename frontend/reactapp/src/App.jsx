@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import UserLogin from "./pages/UserLogin";
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./pages/Home";
 
 import Navbar from './components/Navbar';
 
@@ -17,7 +18,9 @@ function App() {
                <Navbar/>
                <div className="content">
                   <Routes>
-                     {/* <Route path="/" element={<UserLogin />} /> */}
+                     <Route exact path="/" element={<Home />} />'
+                     {/* <Route exact path="/login" element={<UserLogin />} /> */}
+                     
                   </Routes>
  
                </div>
