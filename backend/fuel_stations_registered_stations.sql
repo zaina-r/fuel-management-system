@@ -22,6 +22,7 @@ CREATE TABLE `registered_stations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `registered_stations` WRITE;
+
 /*!40000 ALTER TABLE `registered_stations` DISABLE KEYS */;
 
 INSERT INTO `registered_stations` (`dealer_id`, `address`, `dealer_name`, `license_number`)
