@@ -27,9 +27,9 @@ function App() {
          </div>
     
     </BrowserRouter>
-    <div>
+    <div className="VehicleRegistration">
       <Header/>
-      <VehicleRegistrationForm />
+      <VehicleRegistration />
     </div>
     </>
   );
