@@ -27,8 +27,4 @@ public class FuelService {
         return fuelRepository.save(fuel);
     }
 
-    public List<Station> getAllStations() {
-        return fuelStationRepository.findAll();
-    }
-
 }

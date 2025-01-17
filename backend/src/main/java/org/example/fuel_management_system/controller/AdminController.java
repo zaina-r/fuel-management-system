@@ -3,6 +3,7 @@ package org.example.fuel_management_system.controller;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.FuelService;
+import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,11 @@ public class AdminController {
     @Autowired
     FuelService fuelService;
 
-    @GetMapping("/fuelAmount")
+    @Autowired
+    StationService stationService;
+
+    @GetMapping("/stationInfo")
     public ResponseEntity<List<Station>> getAllStations() {
-        return new ResponseEntity<>(fuelService.getAllStations(), HttpStatus.OK);
+        return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
     }
 }
