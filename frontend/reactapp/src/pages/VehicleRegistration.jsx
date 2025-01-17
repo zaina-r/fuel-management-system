@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './VehicleRegistration_style.css';
 
-const VehicleRegistrationForm = () => {
+const VehicleRegistration = () => {
   const [formData, setFormData] = useState({
     ownerName: '',
     ownerID: '',
@@ -112,4 +112,5 @@ const VehicleRegistrationForm = () => {
   );
 };
 
-export default VehicleRegistrationForm;
+export default VehicleRegistration;
+

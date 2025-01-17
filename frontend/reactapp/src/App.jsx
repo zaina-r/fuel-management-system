@@ -3,16 +3,17 @@ import "./App.css";
 import UserLogin from "./pages/UserLogin";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
-
+import VehicleRegistration from "./pages/VehicleRegistration";
 import Navbar from './components/Navbar';
 
 
 function App() {
   return (
     <>
-    // <div>
-    //   <UserLogin />
-    // </div>
+     <div>
+      rfrfcrfwef vfv df
+       <UserLogin />
+     </div>
     <BrowserRouter>
          <div className="fuelPass">
                <Navbar/>
@@ -25,12 +26,10 @@ function App() {
  
                </div>
          </div>
-    
-    </BrowserRouter>
-    <div className="VehicleRegistration">
-      <Header/>
+         <div className="VehicleRegistration">
       <VehicleRegistration />
     </div>
+    </BrowserRouter>
     </>
   );
 }
