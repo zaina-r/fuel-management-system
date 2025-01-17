@@ -6,148 +6,168 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.Date;
+
+
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "registeredvehicles")
 public class Registeredvehicles {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int vehicleId;
 
-private String vehicle_reg_no;
-private String License_plate_no;
-private String Vehicle_make;
-private String Vehicle_model;
-private String Vehicle_year;
-private String Vehicle_color;
-private String Vehicle_type;
-private String Registration_status;
-private String Fuel_type;
-private String Registered_province;
-private Date Resitration_expiry_date;
-private String Owner_ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
+    @Column(name = "vehicle_reg_no", nullable = false)
+    private String vehicleRegNo;
+
+    @Column(name = "fuel_type")
+    private String fuelType;
+
+    @Column(name = "licence_plate_no")
+    private String licencePlateNo;
+
+    @Column(name = "vehicle_make")
+    private String vehicleMake;
+
+    @Column(name = "vehicle_model")
+    private String vehicleModel;
+
+    @Column(name = "vehicle_type")
+    private String vehicleType;
+
+    @Column(name = "registered_province")
+    private String registeredProvince;
+
+    @Column(name = "registration_status")
+    private String registrationStatus;
+
+    @Column(name = "resitration_expiry_date")
+    private String registrationExpiryDate;
+
+    @Column(name = "vehicle_color")
+    private String vehicleColor;
+
+    @Column(name = "vehicle_year")
+    private String vehicleYear;
+
+    public Registeredvehicles(int id, String vehicleRegNo, String fuelType, String licencePlateNo, String vehicleMake, String vehicleModel, String vehicleType, String registeredProvince, String registrationStatus, String registrationExpiryDate, String vehicleColor, String vehicleYear) {
+        this.id = id;
+        this.vehicleRegNo = vehicleRegNo;
+        this.fuelType = fuelType;
+        this.licencePlateNo = licencePlateNo;
+        this.vehicleMake = vehicleMake;
+        this.vehicleModel = vehicleModel;
+        this.vehicleType = vehicleType;
+        this.registeredProvince = registeredProvince;
+        this.registrationStatus = registrationStatus;
+        this.registrationExpiryDate = registrationExpiryDate;
+        this.vehicleColor = vehicleColor;
+        this.vehicleYear = vehicleYear;
+    }
 
     public Registeredvehicles() {
+
     }
 
-    public Registeredvehicles(int vehicleId, String vehicle_reg_no, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_year, String vehicle_color, String vehicle_type, String registration_status, String fuel_type, String registered_province, Date resitration_expiry_date, String owner_ID) {
-        this.vehicleId = vehicleId;
-        this.vehicle_reg_no = vehicle_reg_no;
-        License_plate_no = license_plate_no;
-        Vehicle_make = vehicle_make;
-        Vehicle_model = vehicle_model;
-        Vehicle_year = vehicle_year;
-        Vehicle_color = vehicle_color;
-        Vehicle_type = vehicle_type;
-        Registration_status = registration_status;
-        Fuel_type = fuel_type;
-        Registered_province = registered_province;
-        Resitration_expiry_date = resitration_expiry_date;
-        Owner_ID = owner_ID;
+    public int getId() {
+        return id;
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public String getVehicleRegNo() {
+        return vehicleRegNo;
     }
 
-    public String getVehicle_reg_no() {
-        return vehicle_reg_no;
+    public void setVehicleRegNo(String vehicleRegNo) {
+        this.vehicleRegNo = vehicleRegNo;
     }
 
-    public void setVehicle_reg_no(String vehicle_reg_no) {
-        this.vehicle_reg_no = vehicle_reg_no;
+    public String getFuelType() {
+        return fuelType;
     }
 
-    public String getLicense_plate_no() {
-        return License_plate_no;
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
-    public void setLicense_plate_no(String license_plate_no) {
-        License_plate_no = license_plate_no;
+    public String getLicencePlateNo() {
+        return licencePlateNo;
     }
 
-    public String getVehicle_make() {
-        return Vehicle_make;
+    public void setLicencePlateNo(String licencePlateNo) {
+        this.licencePlateNo = licencePlateNo;
     }
 
-    public void setVehicle_make(String vehicle_make) {
-        Vehicle_make = vehicle_make;
+    public String getVehicleMake() {
+        return vehicleMake;
     }
 
-    public String getVehicle_model() {
-        return Vehicle_model;
+    public void setVehicleMake(String vehicleMake) {
+        this.vehicleMake = vehicleMake;
     }
 
-    public void setVehicle_model(String vehicle_model) {
-        Vehicle_model = vehicle_model;
+    public String getVehicleModel() {
+        return vehicleModel;
     }
 
-    public String getVehicle_year() {
-        return Vehicle_year;
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
     }
 
-    public void setVehicle_year(String vehicle_year) {
-        Vehicle_year = vehicle_year;
+    public String getVehicleType() {
+        return vehicleType;
     }
 
-    public String getVehicle_color() {
-        return Vehicle_color;
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
-    public void setVehicle_color(String vehicle_color) {
-        Vehicle_color = vehicle_color;
+    public String getRegisteredProvince() {
+        return registeredProvince;
     }
 
-    public String getVehicle_type() {
-        return Vehicle_type;
+    public void setRegisteredProvince(String registeredProvince) {
+        this.registeredProvince = registeredProvince;
     }
 
-    public void setVehicle_type(String vehicle_type) {
-        Vehicle_type = vehicle_type;
+    public String getRegistrationStatus() {
+        return registrationStatus;
     }
 
-    public String getRegistration_status() {
-        return Registration_status;
+    public void setRegistrationStatus(String registrationStatus) {
+        this.registrationStatus = registrationStatus;
     }
 
-    public void setRegistration_status(String registration_status) {
-        Registration_status = registration_status;
+    public String getRegistrationExpiryDate() {
+        return registrationExpiryDate;
     }
 
-    public String getFuel_type() {
-        return Fuel_type;
+    public void setRegistrationExpiryDate(String registrationExpiryDate) {
+        this.registrationExpiryDate = registrationExpiryDate;
     }
 
-    public void setFuel_type(String fuel_type) {
-        Fuel_type = fuel_type;
+    public String getVehicleColor() {
+        return vehicleColor;
     }
 
-    public String getRegistered_province() {
-        return Registered_province;
+    public void setVehicleColor(String vehicleColor) {
+        this.vehicleColor = vehicleColor;
     }
 
-    public void setRegistered_province(String registered_province) {
-        Registered_province = registered_province;
+    public String getVehicleYear() {
+        return vehicleYear;
     }
 
-    public Date getResitration_expiry_date() {
-        return Resitration_expiry_date;
-    }
-
-    public void setResitration_expiry_date(Date resitration_expiry_date) {
-        Resitration_expiry_date = resitration_expiry_date;
-    }
-
-    public String getOwner_ID() {
-        return Owner_ID;
-    }
-
-    public void setOwner_ID(String owner_ID) {
-        Owner_ID = owner_ID;
+    public void setVehicleYear(String vehicleYear) {
+        this.vehicleYear = vehicleYear;
     }
 }
+
+
+
+
+

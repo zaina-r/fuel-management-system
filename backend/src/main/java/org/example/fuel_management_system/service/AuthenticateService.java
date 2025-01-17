@@ -1,33 +1,45 @@
 package org.example.fuel_management_system.service;
 
+
+import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
-import org.example.fuel_management_system.model.AuthenticationResponse;
-import org.example.fuel_management_system.model.Role;
-import org.example.fuel_management_system.model.UserAccount;
+import org.example.fuel_management_system.Response.AuthenticationResponse;
+import org.example.fuel_management_system.enumpackage.Role;
+import org.example.fuel_management_system.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthenticateService {
 
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     @Autowired
-    private final UserAccountRepository userAccountRepository;
+    private  PasswordEncoder passwordEncoder;
+    @Autowired
+    private  JwtService jwtService;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
+    @Autowired
+    private  UserAccountRepository userAccountRepository;
+    @Autowired
+    private TwoFactorOtpServiceImpl twoFactorOtpService;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private VerificationCodeService verificationCodeService;
+    @Autowired
+    private ExistingStationsServiceImpl existingStationsService;
 
-    public AuthenticateService( UserAccountRepository userAccountRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
-        this.userAccountRepository = userAccountRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
-    }
+
+
     public AuthenticationResponse register(UserAccount request){
         UserAccount userAccount=new UserAccount();
-
         userAccount.setNIC(request.getNIC());
         userAccount.setTelno(request.getTelno());
         userAccount.setFirstname(request.getFirstname());
@@ -36,44 +48,104 @@ public class AuthenticateService {
         userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
 
         Role role = request.getRole();
+
         if (role == Role.FUELSTATION_OWNER) {
-            if (request.getStationid() == 0 || request.getAuthfile() == null) {
-                throw new IllegalArgumentException("Station ID and Auth File are required for FUELSTATION_OWNER!");
-            }
             userAccount.setRole(Role.FUELSTATION_OWNER);
-            userAccount.setStationid(request.getStationid());
-            userAccount.setAuthfile(request.getAuthfile());
-        } else if (role == Role.VEHICLE_OWNER) {
+        } else if (role == Role.ADMIN) {
+            userAccount.setRole(Role.ADMIN);
+        } else{
             userAccount.setRole(Role.VEHICLE_OWNER);
-            userAccount.setStationid(0);
-            userAccount.setAuthfile(null);
-        } else {
-            throw new IllegalArgumentException("Invalid role specified!");
         }
 
         if (userAccountRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists!");
         }
 
+
         if(request.getPassword()==null || request.getPassword().length()<=4) {
             throw new IllegalArgumentException("Password Charter Minimum 5 charters!");
         }
-        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
         userAccount=userAccountRepository.save(userAccount);
         String token=jwtService.generateToken(userAccount);
+        if(role==Role.FUELSTATION_OWNER && request.getLicenseNumber()!=null){
+            String licenseNumber = request.getLicenseNumber();
+
+            boolean isLicenseValid = existingStationsService.isLicenseNumberValid(licenseNumber);
+            if(isLicenseValid){
+                userAccount.setLicenseNumber(licenseNumber);
+            }
+            else{
+                throw new IllegalArgumentException("License number is not valid");
+            }
+ }
+        userAccountRepository.save(userAccount);
   
-        return new AuthenticationResponse(token);
-
-
+        return new AuthenticationResponse(token,"The account has been registered successfully");
     }
+
+
+
     public AuthenticationResponse authenticate(UserAccount request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
-        String token=jwtService.generateToken(userAccountRepository.findByUsername(request.getUsername()).orElseThrow());
-
         UserAccount userAccount=userAccountRepository.findByUsername(request.getUsername()).orElseThrow();
-         token=jwtService.generateToken(userAccount);
-        return new AuthenticationResponse(token);
+        String token=jwtService.generateToken(userAccount);
+        UserAccount userAccount1=getUserByUsername(request.getUsername());
+        if(userAccount1.getRole().equals(Role.FUELSTATION_OWNER)){
+            String otp= GenerateOtp.generateOtp();
+            TwoFactorOtp oldTwoFactorOtp=twoFactorOtpService.findByUser(userAccount1.getUserId());
+            if(oldTwoFactorOtp!=null){
+                twoFactorOtpService.deleteTwoFactorOtp(oldTwoFactorOtp);
+            }
+            TwoFactorOtp newTwoFactorOtp=twoFactorOtpService.createTwoFactorOtp(userAccount1,otp,token);
+            MailStructure mailStructure=new MailStructure();
+            mailStructure.setSubject("Your two factor  email verification");
+            mailStructure.setMessage("Your email verification code is  "+otp);
+            mailService.sendMail(userAccount1.getUsername(),mailStructure);
+
+
+        }
+        return new AuthenticationResponse(token,"The account has been login successfully");
     }
+
+
+    public List<UserAccount> getAllAccounts() {
+        return userAccountRepository.findAll();
+    }
+
+    public UserAccount getAccountById(int userId) {
+        return userAccountRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+    }
+
+    public List<UserAccount> getUsersByRole(Role role) {
+        return  userAccountRepository.findByRole(role);
+    }
+
+    public UserAccount getUserByUsername(String username){
+        Optional<UserAccount> userAccount=userAccountRepository.findByUsername(username);
+        if(userAccount.isPresent()){
+            return userAccount.get();
+        }
+        return null;
+    }
+
+    public UserAccount findByUserProfileByJwt(String jwt) {
+        String email=jwtService.extractUsername(jwt);
+        UserAccount userAccount=userAccountRepository.findByUsername(email).get();
+        return userAccount;
+    }
+
+    public UserAccount updatePassword(UserAccount user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userAccountRepository.save(user);
+    }
+
+
+
+
+
+
+
 
 }
