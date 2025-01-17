@@ -28,7 +28,7 @@ const VehicleRegistration = () => {
   return (
     <>
     <div style={{ margin: '20px' }}>
-      <h2>Vehicle Registration Form</h2>
+      <h1>Vehicle Registration Form</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Vehicle Owner Name:</label>
