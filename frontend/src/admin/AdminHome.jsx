@@ -8,10 +8,9 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/getAllStations");
-        console.log("Fetched data:", response.data);
-        
-        setStations(response.data); // Ensure response.data is an array
+        const response = await axios.get("http://localhost:8080/api/admin/fuelAmount");
+        setStations(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsError(true);
@@ -30,9 +29,9 @@ const AdminHome = () => {
   }
 
   return (
-    <div className="grid">
-      {stations.length > 0 ? (
-        stations.map((station) => (
+    <>
+      <div className="grid">
+        {stations.map((station) => (
           <div
             className="card mb-3"
             key={station.id}
@@ -42,6 +41,7 @@ const AdminHome = () => {
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
               borderRadius: "10px",
               overflow: "hidden",
+
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-start",
@@ -63,17 +63,18 @@ const AdminHome = () => {
                   className="card-title"
                   style={{ margin: "0 0 10px 0", fontSize: "1.2rem" }}
                 >
-                  {station.dealer_name}
+                  {station.dealerName.toUpperCase()}
                 </h5>
+                
               </div>
               <hr className="hr-line" style={{ margin: "10px 0" }} />
+              
+              
             </div>
           </div>
-        ))
-      ) : (
-        <p>No stations found</p>
-      )}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 
