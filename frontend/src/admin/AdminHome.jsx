@@ -8,7 +8,7 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/fuelAmount");
+        const response = await axios.get("http://localhost:8080/api/admin/stationInfo");
         setStations(response.data);
         console.log(response.data);
       } catch (error) {
@@ -68,7 +68,18 @@ const AdminHome = () => {
                 
               </div>
               <hr className="hr-line" style={{ margin: "10px 0" }} />
-              
+              <div>
+                <h5
+                  className="card-body"
+                  style={{ margin: "0 0 10px 0", fontSize: "1.2rem" }}
+                >
+                  {station.licenseNumber}
+                </h5>
+                </div>
+              <hr className="hr-line" style={{ margin: "10px 0" }} />
+              <div>
+                
+              </div>
               
             </div>
           </div>
