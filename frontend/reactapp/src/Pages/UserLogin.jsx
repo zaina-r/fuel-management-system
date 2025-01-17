@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Fuelstation = () => {
+function UserLogin() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Fuelstation = () => {
   )
 }
 
-export default Fuelstation
+export default UserLogin

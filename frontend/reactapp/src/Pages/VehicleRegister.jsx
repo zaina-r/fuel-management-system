@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Vehicles = () => {
+function VehicleRegister() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Vehicles = () => {
   )
 }
 
-export default Vehicles
+export default VehicleRegister
