@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 
 function App() {
   return (
+    <>
     // <div>
     //   <UserLogin />
     // </div>
@@ -23,6 +24,11 @@ function App() {
          </div>
     
     </BrowserRouter>
+    <div>
+      <Header/>
+      <VehicleRegistrationForm />
+    </div>
+    </>
   );
 }
 
