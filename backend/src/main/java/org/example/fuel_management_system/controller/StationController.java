@@ -3,7 +3,6 @@ package org.example.fuel_management_system.controller;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
-import org.example.fuel_management_system.service.FuelService;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ public class StationController {
     private final StationService stationService;
     private final FuelStationRepository fuelStationRepository;
 
-
     public StationController(StationService stationService, FuelStationRepository fuelStationRepository) {
         this.stationService = stationService;
         this.fuelStationRepository = fuelStationRepository;
@@ -27,7 +25,11 @@ public class StationController {
 
 
 
-
+    @GetMapping("/{stationId}/fuels")
+    public ResponseEntity<List<Fuel>> getFuelsByStation(@PathVariable int stationId) {
+        List<Fuel> fuels = stationService.getFuelsByStationId(stationId);
+        return ResponseEntity.ok(fuels);
+    }
 
     @PostMapping("/{stationId}/fuels")
     public ResponseEntity<String > addFuelsToStation(
@@ -40,15 +42,17 @@ public class StationController {
 
     @PostMapping("/registration")
     public ResponseEntity<String> registerStation(@RequestBody Station station) throws Exception {
-
-            System.out.println(station.getStationId());
-            System.out.println("all"+fuelStationRepository.findAll());
-
+        try{
+        if(fuelStationRepository.existsByStationId(station.getStationId())){
+            throw new Exception("Station already exists");
+        }
 
         Station registeredStations=stationService.saveStation(station);
 
         return new ResponseEntity<>("Station registered Successfully!", HttpStatus.OK);
-
+    }catch (Exception e){
+            return new ResponseEntity<>("Station already exists",HttpStatus.BAD_REQUEST);
+        }
 
     }
 
@@ -62,10 +66,5 @@ public class StationController {
     {
         return stationService.findStationById(id);
     }
-    @PostMapping("/mobile/{code}")
-    public Station findByStation(@PathVariable String code){
-        return stationService.findStation(code);
-    }
-
 
 }

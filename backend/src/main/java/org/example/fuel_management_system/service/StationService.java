@@ -25,9 +25,9 @@ public class StationService {
 
     private final FuelStationRepository fuelStationRepository;
     private final FuelRepository fuelRepository;
-    private final MailService mailService;
-    private final AuthenticateService authenticateService;
-    private final JwtService jwtService;
+     private final MailService mailService;
+     private final AuthenticateService authenticateService;
+     private final JwtService jwtService;
     private final ExistingStationsRepository existingStationsRepository;
     private final VerificationCodeService verificationCodeService;
     @Autowired
@@ -38,19 +38,20 @@ public class StationService {
         this.fuelStationRepository = fuelStationRepository;
         this.fuelRepository = fuelRepository;
         this.mailService = mailService;
-        this.authenticateService = authenticateService;
+this.authenticateService=authenticateService;
         this.verificationCodeService = verificationCodeGenerator1;
-        this.jwtService = jwtService;
+        this.jwtService=jwtService;
         this.existingStationsRepository = existingStationsRepository;
     }
 
-    public boolean doesStationIdExist(String stationName) {
+    public boolean doesStationIdExist(String stationName){
 
-        Optional<Station> station = fuelStationRepository.findByDealerName(stationName);
+        Optional<Station> station= fuelStationRepository.findByDealerName(stationName);
 
-        if (station.isPresent()) {
+        if(station.isPresent()){
             return true;
-        } else {
+        }
+        else {
             return false;
 
         }
@@ -89,7 +90,6 @@ public class StationService {
                 existingStation.setStationAddress(station.getStationAddress());
                 existingStation.setDealerName(station.getDealerName());
                 existingStation.setRegistrationDate(LocalDate.now());
-                existingStation.setStationId(station.getStationId());
 
                 // Generate and send OTP
                 String otp = GenerateOtp.generateOtp();
@@ -140,20 +140,27 @@ public class StationService {
     }
 
 
+
+
+
+
+
     public List<Station> getAllStations() {
         return fuelStationRepository.findAll();
     }
 
     public Station findStationById(int id) {
-        return fuelStationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("station with id " + id + "not found"));
+        return fuelStationRepository.findById(id).orElseThrow(()->new EntityNotFoundException("station with id "+id+"not found"));
     }
 
+    public List<Fuel> getFuelsByStationId(int stationId) {
+        return fuelRepository.findByStationId(stationId);
+    }
 
+    public boolean isStationIdValid (int dealer_id){
 
-    public boolean isStationIdValid(int dealer_id) {
-
-        Optional<ExistingStations> existingStations = existingStationsRepository.findById(dealer_id);
-        if (existingStations.isPresent()) {
+        Optional<ExistingStations>existingStations= existingStationsRepository.findById(dealer_id);
+        if(existingStations.isPresent()){
             return true;
         }
         return false;
@@ -161,19 +168,4 @@ public class StationService {
     }
 
 
-    public Station findStation(String code) {
-
-        Optional<Station> station = fuelStationRepository.findByLoginCode(code);
-        if (station.isEmpty()) {
-            throw new EntityNotFoundException("station with code " + code + " not found");
-        }
-        return station.get();
-
-
-    }
 }
-
-
-
-
-
