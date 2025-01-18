@@ -1,9 +1,8 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.Dto.Response;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Request.ResetPasswordRequest;
-import org.example.fuel_management_system.Response.ApiResponse;
-import org.example.fuel_management_system.Response.AuthenticationResponse;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.model.ForgotPasswordToken;
 import org.example.fuel_management_system.model.MailStructure;
@@ -35,15 +34,9 @@ public class AuthenticationController {
 
 
 @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserAccount request) throws Exception {
-        try{
-            return ResponseEntity.ok(authenticateService.register(request));
-
-        } catch (Exception e) {
-              AuthenticationResponse authenticationResponse=new AuthenticationResponse();
-              authenticationResponse.setMessage("The user not registered successfully");
-              return new ResponseEntity<>(authenticationResponse,HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Response> register(@RequestBody UserAccount request) throws Exception {
+   Response response=authenticateService.register(request);
+   return ResponseEntity.status(response.getStatusCode()).body(response);
 }
 
 @PostMapping("/login")
