@@ -4,7 +4,7 @@ import './Header_style.css';
 function Header() {
   return (
     <>
-    <div className="logo">Fuel Management</div>
+    <div className="logo">Fuel Management System</div>
     <div className="menu-toggle">
       <div></div>
       <div></div>
