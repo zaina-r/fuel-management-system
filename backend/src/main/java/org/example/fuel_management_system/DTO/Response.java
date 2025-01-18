@@ -18,10 +18,28 @@ public class Response {
     private UserAccountDto userAccountDto;
     private VehiclesDto vehiclesDto;
     private StationDto stationDto;
+    private FuelDto fuelDto;
     private List<UserAccountDto>userAccountDtoList;
     private List<VehiclesDto>vehiclesDtoList;
     private List<StationDto> stationDtosList;
+    private List<FuelDto>fuelDtoList;
 
+
+    public FuelDto getFuelDto() {
+        return fuelDto;
+    }
+
+    public void setFuelDto(FuelDto fuelDto) {
+        this.fuelDto = fuelDto;
+    }
+
+    public List<FuelDto> getFuelDtoList() {
+        return fuelDtoList;
+    }
+
+    public void setFuelDtoList(List<FuelDto> fuelDtoList) {
+        this.fuelDtoList = fuelDtoList;
+    }
 
     public String getMessage() {
         return message;
