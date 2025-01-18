@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Carousel } from "@material-tailwind/react";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [bd, setBd] = useState(false);
@@ -242,6 +243,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     </>
   );
