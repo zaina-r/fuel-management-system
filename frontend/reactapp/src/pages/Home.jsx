@@ -18,7 +18,7 @@ const Home = () => {
             autoPlay
             loop
             muted
-            className="absolute w-auto min-w-full min-h-full object-cover shadow-2xl"
+            className="absolute w-auto min-w-full min-h-full object-cover shadow-2xl "
           ></video>
 
           <div className="z-10 text-center text-white px-4">
