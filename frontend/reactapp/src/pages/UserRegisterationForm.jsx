@@ -5,14 +5,14 @@ const UserRegisterationForm = () => {
     const [formData, setFormData] = useState({
       firstname: "",
       lastname: "",
-      email: "",
+      username: "",
       password: "",
       nic: "",
-      telephnNo: "",
-      role: ""
+      telno: ""
+      
       
     });
-
+            
     const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
@@ -21,8 +21,9 @@ const UserRegisterationForm = () => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        await axios.post("http://localhost:8080/api/register", formData);
-        alert("Registration successful!");
+      const response=  await axios.post("http://localhost:8080/api/register", formData);
+      console.log(response.data)
+            alert("Registration successful!");
       } catch (error) {
         alert("Error during registration: " + error.response.data);
       }
@@ -50,11 +51,11 @@ const UserRegisterationForm = () => {
           />
         </div>
         <div className="form-group">
-          <label>Email:</label>
+          <label>username:</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
           />
         </div>
@@ -70,23 +71,23 @@ const UserRegisterationForm = () => {
         <div className="form-group">
           <label>Telphn No:</label>
           <input
-            type="telphnNo"
-            name="telphnNo"
-            value={formData.telephnNo}
+            type="text"
+            name="telno"
+            value={formData.telno}
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Role:</label>
           <select
             name="role"
             value={formData.role}
             onChange={handleChange}
           >
-            <option value="vehicle-owner">Vehicle Owner</option>
+            <option value="VEHICLE_OWNER">Vehicle Owner</option>
             <option value="station-owner">Station Owner</option>
           </select>
-        </div>
+        </div> */}
         <div className="form-group">
           <label>Password:</label>
           <input
