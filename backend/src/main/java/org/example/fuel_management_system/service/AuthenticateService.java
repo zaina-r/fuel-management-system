@@ -1,9 +1,10 @@
 package org.example.fuel_management_system.service;
 
 
+import org.example.fuel_management_system.Dto.Response;
+import org.example.fuel_management_system.Dto.UserAccountDto;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
-import org.example.fuel_management_system.Response.AuthenticationResponse;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,30 @@ public class AuthenticateService {
 
 
 
-    public AuthenticationResponse register(UserAccount request){
+    public Response register(UserAccount request){
+
+        Response response=new Response();
+        try{
+            if(request.getRole()==null||request.getRole().equals(null)){
+                request.setRole(Role.VEHICLE_OWNER);
+            }
+            if (userAccountRepository.existsByUsername(request.getUsername())) {
+                throw new IllegalArgumentException("Username already exists!");
+            }
+           request.setPassword(passwordEncoder.encode(request.getPassword()));
+            UserAccount savedUser=userAccountRepository.save(request);
+            //UserAccountDto userAccountDto=
+
+
+        }
+
         UserAccount userAccount=new UserAccount();
         userAccount.setNIC(request.getNIC());
         userAccount.setTelno(request.getTelno());
         userAccount.setFirstname(request.getFirstname());
         userAccount.setLastname(request.getLastname());
         userAccount.setUsername(request.getUsername());
-        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
+
 
         Role role = request.getRole();
 
@@ -53,13 +70,9 @@ public class AuthenticateService {
             userAccount.setRole(Role.FUELSTATION_OWNER);
         } else if (role == Role.ADMIN) {
             userAccount.setRole(Role.ADMIN);
-        } else{
-            userAccount.setRole(Role.VEHICLE_OWNER);
         }
 
-        if (userAccountRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("Username already exists!");
-        }
+
 
 
         if(request.getPassword()==null || request.getPassword().length()<=4) {
