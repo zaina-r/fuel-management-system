@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserAccountApi from "../../../apiservice/UserAccountApi";
+import UserAccountApi from "../apiservice/UserAccountApi";
 
 const UserRegisterationForm = () => {
   const [licese, setLicense] = useState(false);
@@ -28,30 +28,23 @@ const UserRegisterationForm = () => {
       role,
       licenseNumber,
     } = formData;
-    if (firstname || lastname || username || password || nic || telno || role) {
-      if (role == "FUELSTATION_OWNER") {
-        if (!licenseNumber) {
-          return false;
-        } else {
-          return true;
-        }
-      } else {
-        return true;
+
+    if (firstname && lastname && username && password && nic && telno && role) {
+      if (role === "FUELSTATION_OWNER") {
+        return !!licenseNumber;
       }
-    } else {
-      return false;
+      return true;
     }
+    return false;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
-    if (value == "FUELSTATION_OWNER") {
-      setLicense(true);
+
+    if (name === "role") {
+      setLicense(value === "FUELSTATION_OWNER");
     }
-    if (value == "VEHICLE_OWNER") {
-      setLicense(false);
-    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -61,13 +54,17 @@ const UserRegisterationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm) {
-      setError("please fill the fields");
+
+    if (!validateForm()) {
+      setError("Please fill in all the required fields.");
+      return;
     }
+
     try {
       const response = await UserAccountApi.registerUser(formData);
       console.log(response.data);
-      if (response.statusCode == 200) {
+
+      if (response.statusCode === 200) {
         setFormData({
           firstname: "",
           lastname: "",
@@ -78,9 +75,12 @@ const UserRegisterationForm = () => {
           role: "",
           licenseNumber: "",
         });
-        setSuccess("User Account Registration successfull");
+        setLicense(false);
+        setError("");
+        setSuccess("User Account Registration successful!");
       }
     } catch (error) {
+      setSuccess("");
       setError(error.response?.data?.message || error.message);
     }
   };
@@ -287,6 +287,7 @@ const UserRegisterationForm = () => {
                   onChange={handleChange}
                   className="bg-neutral-200 p-2"
                 >
+                  <option value="">Select Role</option>
                   <option value="VEHICLE_OWNER">Vehicle Owner</option>
                   <option value="FUELSTATION_OWNER">Station Owner</option>
                 </select>
@@ -300,6 +301,7 @@ const UserRegisterationForm = () => {
                     type="text"
                     name="licenseNumber"
                     value={formData.licenseNumber}
+                    onChange={handleChange}
                     placeholder="fuel station license number"
                     className="bg-neutral-200 p-2 w-full"
                   />
