@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import UserRegisterationForm from "./pages/UserRegisterationForm";
 
 import Navbar from "./components/Navbar";
+import VehicleRegistration from "./pages/VehicleRegistration";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               <Route exact path="/" element={<Home />} />'
               <Route exact path="/login" element={<UserLogin />} />
               <Route path="/register" element={<UserRegisterationForm />} />
+              <Route path="/vehicleRegister" element={<VehicleRegistration/>} />
               
 
             </Routes>

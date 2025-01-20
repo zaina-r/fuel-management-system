@@ -26,10 +26,10 @@ const Navbar = () => {
           </div>
           <div className="flex gap-3">
             <div className="hidden md:block">
-              <button className="primary-btn "><NavLink to="/login">Log in</NavLink></button>
+              <button className="primary-btn "><NavLink to="/login">Sign in</NavLink></button>
             </div>
             <div className="hidden md:block">
-              <button className="primary-btn"><NavLink to="/register">Register</NavLink> </button>
+              <button className="primary-btn"><NavLink to="/register">Sign up</NavLink> </button>
             </div>
           </div>
 
