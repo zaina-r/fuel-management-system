@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import UserAccountApi from "../../../apiservice/UserAccountApi";
 
 const UserRegisterationForm = () => {
   const [licese, setLicense] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -10,7 +13,35 @@ const UserRegisterationForm = () => {
     password: "",
     nic: "",
     telno: "",
+    role: "",
+    licenseNumber: "",
   });
+
+  const validateForm = () => {
+    const {
+      firstname,
+      lastname,
+      username,
+      password,
+      nic,
+      telno,
+      role,
+      licenseNumber,
+    } = formData;
+    if (firstname || lastname || username || password || nic || telno || role) {
+      if (role == "FUELSTATION_OWNER") {
+        if (!licenseNumber) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,15 +61,27 @@ const UserRegisterationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm) {
+      setError("please fill the fields");
+    }
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/register",
-        formData
-      );
+      const response = await UserAccountApi.registerUser(formData);
       console.log(response.data);
-      alert("Registration successful!");
+      if (response.statusCode == 200) {
+        setFormData({
+          firstname: "",
+          lastname: "",
+          username: "",
+          password: "",
+          nic: "",
+          telno: "",
+          role: "",
+          licenseNumber: "",
+        });
+        setSuccess("User Account Registration successfull");
+      }
     } catch (error) {
-      alert("Error during registration: " + error.response.data);
+      setError(error.response?.data?.message || error.message);
     }
   };
 
@@ -49,7 +92,9 @@ const UserRegisterationForm = () => {
         <div className="flex justify-center w-full">
           <div className="relative w-1/2 bg-[url('..\src\Assets\fuel2.jpg')] bg-cover bg-center bg-no-repeat">
             <div className="absolute inset-0 bg-black opacity-80 p-8 text-white">
-              <h1 className="text-white text-2xl mb-5">Register for FuelPass</h1>
+              <h1 className="text-white text-2xl mb-5">
+                Register for FuelPass
+              </h1>
               <div className="flex flex-col gap-3">
                 <p className="flex items-center gap-2">
                   <img
@@ -93,52 +138,68 @@ const UserRegisterationForm = () => {
                   <span>Tel No</span>
 
                   <span className="text-xs text-neutral-400 ">
-                  Enter your telephone number. Please ensure that it is active and that we can reach you if necessary. Use the format +94xxxxxxxx (Sri Lanka)
+                    Enter your telephone number. Please ensure that it is active
+                    and that we can reach you if necessary. Use the format
+                    +94xxxxxxxx (Sri Lanka)
                     <span className="text-white">
                       <br />
-                    Example:"+94123456789"
+                      Example:"+94123456789"
                     </span>{" "}
                   </span>
                 </p>
                 <p className="flex items-start gap-2">
-                <img
+                  <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>Username</span>
-                  <span className="text-xs text-neutral-400">Choose a unique username. This will be used to identify your account. It should be something you’ll remember and may include letters, numbers, and underscores. <br />
+                  <span className="text-xs text-neutral-400">
+                    Choose a unique username. This will be used to identify your
+                    account. It should be something you’ll remember and may
+                    include letters, numbers, and underscores. <br />
                     <span className="text-white">Example:name@gmail.com</span>
                   </span>
                 </p>
                 <p className="flex items-start gap-2">
-                <img
+                  <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>Password</span>
-                  <span className="text-xs text-neutral-400">Create a strong password that you can easily remember but is difficult for others to guess. We recommend using a combination of letters, numbers, and special characters.. <br />
-                    <span className="text-white">Example:xxxxxx atlease 4 characters</span>
+                  <span className="text-xs text-neutral-400">
+                    Create a strong password that you can easily remember but is
+                    difficult for others to guess. We recommend using a
+                    combination of letters, numbers, and special characters..{" "}
+                    <br />
+                    <span className="text-white">
+                      Example:xxxxxx atlease 4 characters
+                    </span>
                   </span>
                 </p>
                 <p className="flex items-start gap-2">
-                <img
+                  <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>Role</span>
-                  <span className="text-xs text-neutral-400">When you select fuel station owner you need to provide one more secure license No for you station registration <br />
-                    <span className="text-white">Example:xxxxxx secure license code for fuel station</span>
+                  <span className="text-xs text-neutral-400">
+                    When you select fuel station owner you need to provide one
+                    more secure license No for you station registration <br />
+                    <span className="text-white">
+                      Example:xxxxxx secure license code for fuel station
+                    </span>
                   </span>
                 </p>
-                
               </div>
             </div>
           </div>
 
           <div className="w-1/2 flex flex-col  mt-3">
+            {error && <p>{error}</p>}
+            {success && <p>{success}</p>}
             <form onSubmit={handleSubmit} className="register-form">
               <h1 className="text-4xl font-extrabold text-neutral-800 m-5">
                 Sign up
@@ -237,6 +298,8 @@ const UserRegisterationForm = () => {
                   </label>
                   <input
                     type="text"
+                    name="licenseNumber"
+                    value={formData.licenseNumber}
                     placeholder="fuel station license number"
                     className="bg-neutral-200 p-2 w-full"
                   />
