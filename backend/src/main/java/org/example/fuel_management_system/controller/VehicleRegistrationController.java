@@ -1,46 +1,44 @@
 package org.example.fuel_management_system.controller;
-
-import org.example.fuel_management_system.Repository.RegisteredVehicleRepository;
-import org.example.fuel_management_system.Repository.VehicleVerificationRepository;
-import org.example.fuel_management_system.model.Registeredvehicles;
+import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.model.VehicleVerification;
 import org.example.fuel_management_system.service.VehicleRegistrationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
 
 @RestController
 @RequestMapping("/api")
 public class VehicleRegistrationController {
 
-    // Inject the repository for database access
 
-    @Autowired
+
+
     private VehicleRegistrationService vehicleRegistrationService;
 
-    // The constructor is no longer required to inject the controller itself
-
+    public VehicleRegistrationController(VehicleRegistrationService vehicleRegistrationService) {
+        this.vehicleRegistrationService = vehicleRegistrationService;
+    }
 
     @PostMapping("/verifyAndAddVehicle")
-    public ResponseEntity<VehicleVerification> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
-        System.out.println(inputVehicle.getLicense_plate_no());
-           return ResponseEntity.ok(vehicleRegistrationService.verifyAndAddVehicle(inputVehicle));
+    public ResponseEntity<Response> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
+        Response response= vehicleRegistrationService.verifyAndAddVehicle(inputVehicle);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
+
+
     @GetMapping("/{qrCode}")
-    public ResponseEntity<VehicleVerification> getVehicleDetails(@PathVariable String qrCode) {
-        VehicleVerification vehicle = vehicleRegistrationService.getVehicleByQrCode(qrCode);
-        return ResponseEntity.ok(vehicle);
+    public ResponseEntity<Response> getVehicleDetails(@PathVariable String qrCode) {
+        Response response= vehicleRegistrationService.getVehicleByQrCode(qrCode);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/{id}/update-fuel")
-    public ResponseEntity<VehicleVerification> updateFuelCapacity(@PathVariable Integer id, @RequestBody float request) {
-        VehicleVerification updatedVehicle = vehicleRegistrationService.updateFuelCapacity(id, (int) request);
-        return ResponseEntity.ok(updatedVehicle);
+    public ResponseEntity<Response> updateFuelCapacity(@PathVariable Integer id, @RequestBody float request) {
+        Response response= vehicleRegistrationService.updateFuelCapacity(id,request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
 }
