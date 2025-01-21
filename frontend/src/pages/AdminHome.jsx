@@ -69,11 +69,16 @@ const AdminHome = () => {
               </div>
               <hr className="hr-line" style={{ margin: "10px 0" }} />
               <div>
-                <h5
+                <h6
                   className="card-body"
                   style={{ margin: "0 0 10px 0", fontSize: "1.2rem" }}
+                  
                 >
+                  Lisence No :
                   {station.licenseNumber}
+                </h6>
+                <h5>
+                    Available Fuel Amount :
                 </h5>
                 </div>
               <hr className="hr-line" style={{ margin: "10px 0" }} />
@@ -90,3 +95,4 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
+
