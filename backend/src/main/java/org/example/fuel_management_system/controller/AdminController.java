@@ -7,9 +7,7 @@ import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,10 @@ public class AdminController {
     @GetMapping("/getFuelQuantities")
     public ResponseEntity<List<Fuel>> getFuelQuantities(){
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Station> addProduct(@RequestBody Station station){
+        Station station1 = stationService.addStation(station);
+        return new ResponseEntity<>(station1, HttpStatus.OK);
     }
 }
