@@ -12,10 +12,10 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
+
     @PostMapping("/send/{mail}")
     public String sendMail(@PathVariable String mail, @RequestBody MailStructure mailStructure){
         mailService.sendMail(mail, mailStructure);
-
         return "Mail Sent Successfully!";
     }
 }

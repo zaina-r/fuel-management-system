@@ -1,14 +1,10 @@
 package org.example.fuel_management_system.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 @Entity
-@Data
 public class Fuel {
 
     @Id
@@ -19,7 +15,40 @@ public class Fuel {
 
     private Float availableQuantity;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "fuel")
-    private List<Station> station = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    private Station station;
+
+
+    public int getFuelId() {
+        return fuelId;
+    }
+
+    public void setFuelId(int fuelId) {
+        this.fuelId = fuelId;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public Float getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(Float availableQuantity) {
+        this.availableQuantity = availableQuantity;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
 }

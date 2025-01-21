@@ -1,49 +1,74 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.Repository.FuelStationRepository;
+import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.StationService;
-import org.example.fuel_management_system.service.StationValidationService;
-import org.example.fuel_management_system.utilities.VerificationCodeGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @RestController
-@RequestMapping("/station")
+@RequestMapping("/api/station")
 public class StationController {
 
-    @Autowired
-    private StationService stationService;
+    private  StationService stationService;
+    private  FuelStationRepository fuelStationRepository;
 
-    @Autowired
-    private StationValidationService stationValidationService;
-
-    @Autowired
-    private final VerificationCodeGenerator verificationCodeGenerator;
-
-    public StationController(VerificationCodeGenerator verificationCodeGenerator) {
-        this.verificationCodeGenerator = verificationCodeGenerator;
+    public StationController(StationService stationService, FuelStationRepository fuelStationRepository) {
+        this.stationService = stationService;
+        this.fuelStationRepository = fuelStationRepository;
     }
+
+
+
+
+    @GetMapping("/{stationId}/fuels")
+    public ResponseEntity<Response> getFuelsByStation(@PathVariable int stationId) {
+        Response response=stationService.getFuelsByStationId(stationId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
+    @PostMapping("/{stationId}/fuels")
+    public ResponseEntity<Response > addFuelsToStation(
+            @PathVariable int stationId,
+            @RequestBody List<Fuel> fuels) {
+        Response response=stationService.addFuelToStation(stationId,fuels);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/allstations")
+    public ResponseEntity<Response> allStations(){
+        Response response=stationService.getAllStations();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+
+    }
+
+    @GetMapping("/stations/{id}")
+    public ResponseEntity<Response> findStationById(@PathVariable int id)
+    {
+        Response response=stationService.findStationById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+
+
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registerStation(@RequestBody Station station){
+    public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
+        System.out.println("Jenushan");
+  Response response=stationService.saveOrUpdateStation(station);
+  return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
-        if(stationService.doesStationIdExist(station.getStationId())){
-            return new ResponseEntity<>("Station is already registered!", HttpStatus.BAD_REQUEST);
-        }
-
-
-        if(stationValidationService.isStationIdValid(station.getStationId())){
-            return  new ResponseEntity<>("Station does not Exist!", HttpStatus.BAD_REQUEST);
-        }
-
-        station.setRegistrationDate(LocalDate.now());
-
-        stationService.saveStation(station);
-
-        return new ResponseEntity<>("Station registered Successfully!", HttpStatus.OK);
     }
+
+
+
+
+
 }

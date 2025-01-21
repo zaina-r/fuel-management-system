@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface VehicleVerificationRepository extends JpaRepository<VehicleVerification, Integer> {
-    // Change from findByName to findByVehicleRegNo to match the correct field
+    Optional<VehicleVerification> findByQrCode(String qrCode);
     Optional<VehicleVerification> findByVehicleRegNo(String vehicleRegNo);
+
 }
