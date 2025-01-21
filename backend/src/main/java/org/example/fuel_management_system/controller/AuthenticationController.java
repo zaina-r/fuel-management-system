@@ -62,10 +62,17 @@ public class AuthenticationController {
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
     }
 
-    @PatchMapping("/users/reset-password/verify-otp")
-    public ResponseEntity<Response> resetPassword(@RequestParam String email, @RequestBody ResetPasswordRequest request) throws Exception {
+    @PatchMapping("/users/reset-password")
+    public ResponseEntity<Response> resetPassword(@RequestParam String email, @RequestBody  ResetPasswordRequest request) throws Exception {
 
-        Response response = authenticateService.resetPassword(email, request);
+        Response response = authenticateService.resetPassword(email,request);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @PostMapping("/users/verify-otp/{otp}")
+    public ResponseEntity<Response> verifyOtp(@RequestParam String email, @PathVariable String otp) throws Exception {
+
+        Response response = authenticateService.verifyOtp(email,otp);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

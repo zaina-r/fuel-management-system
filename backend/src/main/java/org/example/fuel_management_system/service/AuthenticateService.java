@@ -303,7 +303,39 @@ public class AuthenticateService {
         return userAccountRepository.save(user);
     }
 
+    public Response verifyOtp(String email, String otp){
+        Response response=new Response();
+        try {
+
+            UserAccount userAccount=getUserByUsername(email);
+
+            ForgotPasswordToken forgotPasswordToken=forgotPasswordService.findByUser(userAccount.getUserId());
+            if (forgotPasswordToken == null) {
+                response.setStatusCode(404);
+                response.setMessage("Invalid or expired token.");
+            }
+            boolean isVerified = forgotPasswordToken.getOtp().equals(otp);
+
+            if (isVerified) {
+                response.setStatusCode(200);
+                response.setMessage("Otp can be verified successfully");
+
+            }
+            else {
+                response.setStatusCode(400);
+                response.setMessage("Wrong OTP provided.");
+
+            }
+        }catch (Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during password reset: " + e.getMessage());
+
+        }
+        return response;
+    }
+
     public Response resetPassword(String email, ResetPasswordRequest resetPasswordRequest){
+        System.out.println(resetPasswordRequest.getOtp()+resetPasswordRequest.getPassword());
         Response response=new Response();
         try {
 
@@ -319,7 +351,7 @@ public class AuthenticateService {
             if (isVerified) {
                 updatePassword(forgotPasswordToken.getUserAccount(), resetPasswordRequest.getPassword());
                 response.setStatusCode(200);
-                response.setMessage("Password updated successfully");
+                response.setMessage("Password can be updated successfully!");
 
             }
             else {
