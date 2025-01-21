@@ -23,8 +23,15 @@ public class AdminController {
     @Autowired
     StationService stationService;
 
+
+
     @GetMapping("/stationInfo")
     public ResponseEntity<List<Station>> getAllStations() {
         return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getFuelQuantities")
+    public ResponseEntity<List<Fuel>> getFuelQuantities(){
+        return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
     }
 }
