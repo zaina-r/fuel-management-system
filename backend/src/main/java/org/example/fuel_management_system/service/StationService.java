@@ -172,12 +172,14 @@ this.authenticateService=authenticateService;
             Response response = new Response();
 
             try {
-                Optional<Station> existingStationOptional = existingStationsRepository.findByLicenseNumber(station.getLicenseNumber());
+                Optional<ExistingStations> existingStationOptional = existingStationsRepository.findByLicenseNumber(station.getLicenseNumber());
+               boolean stationOptional=fuelStationRepository.existsByStationId(station.getStationId());
 
-                if (existingStationOptional.isPresent()) {
-                    Station existingStation = existingStationOptional.get();
-                    existingStation.setStationAddress(station.getStationAddress());
-                    existingStation.setDealerName(station.getDealerName());
+                if (existingStationOptional.get().getLicense_number().equals(station.getLicenseNumber()) &&
+                        existingStationOptional.get().getDealerId().equals(station.getStationId())
+                && !stationOptional
+                ) {
+                    Station existingStation=fuelStationRepository.save(station);
                     existingStation.setRegistrationDate(LocalDate.now());
 
                     String otp = GenerateOtp.generateOtp();
@@ -198,32 +200,8 @@ this.authenticateService=authenticateService;
 
                 } else {
 
-                    Station newStation = new Station();
-                    newStation.setLicenseNumber(station.getLicenseNumber());
-                    newStation.setStationAddress(station.getStationAddress());
-                    newStation.setDealerName(station.getDealerName());
-                    newStation.setRegistrationDate(LocalDate.now());
-                    newStation.setStationId(station.getStationId());
-
-                    Station savedStation = fuelStationRepository.save(newStation);
-
-                    String otp = GenerateOtp.generateOtp();
-                    UserAccount user = userAccountRepository.findByLicenseNumber(savedStation.getLicenseNumber());
-
-                    if (user != null) {
-                        VerificationCode verificationCode = verificationCodeService.generateOtpForStation(savedStation, otp, user.getUsername());
-                        savedStation.setLoginCode(verificationCode.getOtp());
-                        fuelStationRepository.save(savedStation);
-
-                        response.setStatusCode(201);
-                        response.setMessage("New station registered successfully");
-                        response.setStationDto(MapUtils.mapStationEntityToStationDTO(savedStation));
-
-                    } else {
-                        response.setStatusCode(404);
-                        response.setMessage("User associated with license number not found.");
-
-                    }
+                    response.setStatusCode(404);
+                    response.setMessage("Station can not with in the existing stations  .");
 
                 }
 

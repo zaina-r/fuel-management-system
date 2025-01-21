@@ -61,7 +61,6 @@ public class StationController {
 
     @PostMapping("/registration")
     public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
-        System.out.println("Jenushan");
   Response response=stationService.saveOrUpdateStation(station);
   return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
