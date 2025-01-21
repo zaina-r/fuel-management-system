@@ -4,13 +4,10 @@ import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 import { NavLink, useNavigate } from "react-router-dom";
 
-
 function UserLogin() {
   const [action, setAction] = useState("Login");
 
-  const handleLogin=()=>{
-      
-  }
+  const handleLogin = () => {};
   return (
     <>
       <div>
@@ -25,7 +22,9 @@ function UserLogin() {
                 </h1>
                 <p className="my-3">
                   Don't have an account{" "}
-                  <span className="text-blue-700 hover:underline hover:cursor-pointer"><a href="/register">Register here</a></span>
+                  <span className="text-blue-700 hover:underline hover:cursor-pointer">
+                    <a href="/register">Register here</a>
+                  </span>
                 </p>
               </div>
 
@@ -73,11 +72,14 @@ function UserLogin() {
                   <label htmlFor="remember">Remember me</label>
                 </div>
                 <div className="text-blue-900 hover:underline hover:cursor-pointer">
-                  <a href="">Forgot Password?</a>
+                  <a href="/forgotpassword">Forgot Password?</a>
                 </div>
               </div>
               <div className="w-full">
-                <button className="bg-blue-800 w-full text-white p-2" onClick={handleLogin}>
+                <button
+                  className="bg-blue-800 w-full text-white p-2"
+                  onClick={handleLogin}
+                >
                   Sign in
                 </button>
               </div>

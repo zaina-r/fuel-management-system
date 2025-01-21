@@ -19,4 +19,41 @@ export default class UserAccountApi {
     );
     return response.data;
   }
+
+  static async sendOtp(email) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/users/reset-password/send-otp`,
+      {},
+      {
+        params: { email },
+      }
+    );
+    return response.data;
+  }
+
+  static async verifyOtp(email, otp) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/users/verify-otp/${otp}`,
+      {},
+      {
+        params: { email },
+      }
+    );
+    return response.data;
+  }
+
+  static async resetPassword(email, otp, password) {
+    console.log(otp);
+    const response = await axios.patch(
+      `${this.BASE_URL}/api/users/reset-password`,
+      {
+        otp,
+        password,
+      },
+      {
+        params: { email },
+      }
+    );
+    return response.data;
+  }
 }
