@@ -7,6 +7,7 @@ import UserRegisterationForm from "./pages/UserRegisterationForm";
 import ForgotPassword from "./pages/Forgotpassword";
 import Navbar from "./components/Navbar";
 import VehicleRegistration from "./pages/VehicleRegistration";
+import StationRegistration from "./pages/StationRegistration";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
                 element={<VehicleRegistration />}
               />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route
+                path="/stationRegister"
+                element={<StationRegistration />}
+              />
             </Routes>
           </div>
         </div>
