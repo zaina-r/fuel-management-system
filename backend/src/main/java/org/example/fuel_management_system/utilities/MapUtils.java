@@ -49,7 +49,7 @@ public class MapUtils {
     public static FuelDto mapFuelEntityToFuelDTO(Fuel fuel) {
         FuelDto fuelDto = new FuelDto();
 
-       fuelDto.setFuelType(fuel.getFuelType());
+//       fuelDto.setFuelType(fuel.getFuelType());
        fuelDto.setStation(fuelDto.getStation());
        fuelDto.setAvailableQuantity(fuelDto.getAvailableQuantity());
        fuelDto.setFuelId(fuelDto.getFuelId());
