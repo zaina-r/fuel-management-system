@@ -63,6 +63,7 @@ public class VehicleRegistrationService {
             if (verifyVehicle.isPresent()) {
                 response.setMessage("Vehicle already verified");
                 response.setStatusCode(409);
+                return response;
 
             }
 
@@ -93,9 +94,12 @@ public class VehicleRegistrationService {
 
                 }
             }
+            else{
+                response.setMessage("Vehicle not registered");
+                response.setStatusCode(404);
+            }
 
-//            response.setMessage("Vehicle not registered");
-//            response.setStatusCode(404);
+
 
 
         } catch (Exception e) {
