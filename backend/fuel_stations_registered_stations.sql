@@ -9,10 +9,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-DROP TABLE IF EXISTS `registered_stations`;
+DROP TABLE IF EXISTS `existing_stations`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `registered_stations` (
+CREATE TABLE `existing_stations` (
                                        `dealer_id` varchar(255) NOT NULL,
                                        `address` varchar(255) NOT NULL,
                                        `dealer_name` varchar(255) NOT NULL,
@@ -21,11 +21,11 @@ CREATE TABLE `registered_stations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `registered_stations` WRITE;
+LOCK TABLES `existing_stations` WRITE;
 
-/*!40000 ALTER TABLE `registered_stations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `existing_stations` DISABLE KEYS */;
 
-INSERT INTO `registered_stations` (`dealer_id`, `address`, `dealer_name`, `license_number`)
+INSERT INTO `existing_stations` (`dealer_id`, `address`, `dealer_name`, `license_number`)
 VALUES
     ('DE001', '123 Galle Road, Colombo 03', 'Lanka Fuel Station A', 'LIC-SL-001'),
     ('DE002', '56 Kandy Road, Peradeniya', 'Peradeniya Fuel Center', 'LIC-SL-002'),
@@ -58,7 +58,7 @@ VALUES
     ('DE029', '92 A9 Highway, Mullaitivu', 'Mullaitivu Fuel Center', 'LIC-SL-029'),
     ('DE030', '70 Town Road, Monaragala', 'Monaragala Fuel Depot', 'LIC-SL-030');
 
-/*!40000 ALTER TABLE `registered_stations` ENABLE KEYS */;
+/*!40000 ALTER TABLE `existing_stations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

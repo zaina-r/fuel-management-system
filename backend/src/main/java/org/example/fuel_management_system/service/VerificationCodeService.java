@@ -29,23 +29,21 @@ public class VerificationCodeService {
 
     public VerificationCode generateOtpForStation(Station station, String otp,String email) {
 
-        // Check if the station is null to avoid NullPointerException
         if (station == null ) {
             throw new IllegalArgumentException("Station or Station ID cannot be null");
         }
 
         LocalDateTime expirationTime = LocalDateTime.now().plusDays(1);
 
-        // Fetch the existing OTP for the station
         VerificationCode existingOtp = verificationCodeRepository.findByStationId(station.getId());
 
         if (existingOtp != null) {
             if (existingOtp.getExpirationTime().isAfter(LocalDateTime.now())) {
-                // If the OTP is still valid, reuse it
+
                 sendOtp(existingOtp.getOtp(), email);
                 return existingOtp;
             } else {
-                // If the OTP has expired, update it
+
                 existingOtp.setOtp(otp);
                 existingOtp.setExpirationTime(expirationTime);
                 sendOtp(existingOtp.getOtp(), email);
@@ -53,7 +51,6 @@ public class VerificationCodeService {
             }
         }
 
-        // Create a new OTP entry if no existing OTP is found
         VerificationCode newVerificationCode = new VerificationCode();
         newVerificationCode.setId(UUID.randomUUID().toString());
         newVerificationCode.setOtp(otp);

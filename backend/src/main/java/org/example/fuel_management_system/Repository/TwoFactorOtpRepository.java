@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface TwoFactorOtpRepository extends JpaRepository<TwoFactorOtp,String> {
 
      TwoFactorOtp findByUser_UserId(int userId);
+     TwoFactorOtp findByOtp(String otp);
 
 
 

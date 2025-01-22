@@ -1,138 +1,292 @@
 package org.example.fuel_management_system.service;
-
-
-import org.example.fuel_management_system.Dto.Response;
-import org.example.fuel_management_system.Dto.UserAccountDto;
+import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.UserAccountDto;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
+import org.example.fuel_management_system.Request.ResetPasswordRequest;
 import org.example.fuel_management_system.enumpackage.Role;
+import org.example.fuel_management_system.exception.FuelException;
 import org.example.fuel_management_system.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticateService {
 
-    @Autowired
+
     private  PasswordEncoder passwordEncoder;
-    @Autowired
     private  JwtService jwtService;
-    @Autowired
     private  AuthenticationManager authenticationManager;
-    @Autowired
     private  UserAccountRepository userAccountRepository;
-    @Autowired
     private TwoFactorOtpServiceImpl twoFactorOtpService;
-    @Autowired
     private MailService mailService;
-    @Autowired
-    private VerificationCodeService verificationCodeService;
-    @Autowired
     private ExistingStationsServiceImpl existingStationsService;
+    private ForgotPasswordService forgotPasswordService;
 
-
+    public AuthenticateService(PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,
+                               UserAccountRepository userAccountRepository, TwoFactorOtpServiceImpl twoFactorOtpService,
+                               ExistingStationsServiceImpl existingStationsService, MailService mailService, ForgotPasswordService forgotPasswordService) {
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.userAccountRepository = userAccountRepository;
+        this.twoFactorOtpService = twoFactorOtpService;
+        this.existingStationsService = existingStationsService;
+        this.mailService = mailService;
+        this.forgotPasswordService = forgotPasswordService;
+    }
 
     public Response register(UserAccount request){
 
         Response response=new Response();
         try{
-            if(request.getRole()==null||request.getRole().equals(null)){
+            if(request.getRole()==null){
                 request.setRole(Role.VEHICLE_OWNER);
             }
             if (userAccountRepository.existsByUsername(request.getUsername())) {
                 throw new IllegalArgumentException("Username already exists!");
             }
-           request.setPassword(passwordEncoder.encode(request.getPassword()));
+
+            if(request.getPassword()==null || request.getPassword().length()<=4) {
+                throw new IllegalArgumentException("Password Charter Minimum 5 charters!");
+            }
+            request.setPassword(passwordEncoder.encode(request.getPassword()));
+
+            Role role = request.getRole();
+            if (role == Role.FUELSTATION_OWNER) {
+                boolean isLicenseValid = existingStationsService.isLicenseNumberValid(request.getLicenseNumber());
+
+                if(isLicenseValid){
+                    request.setLicenseNumber(request.getLicenseNumber());
+                }
+                else{
+                    throw new IllegalArgumentException("License number is not valid");
+                }
+
+
+            }else if(role == Role.ADMIN){
+                request.setRole(Role.ADMIN);
+            }
+
+
             UserAccount savedUser=userAccountRepository.save(request);
-            //UserAccountDto userAccountDto=
+            UserAccountDto userAccountDto= MapUtils.mapUserEntityToUserDTO(savedUser);
+            String token=jwtService.generateToken(savedUser);
+            response.setToken(token);
+            response.setStatusCode(200);
+            response.setUserAccountDto(userAccountDto);
+            response.setExpirationTime(jwtService.extractExpiration(token));
+
+        }catch (FuelException | IllegalArgumentException e){
+            response.setStatusCode(400);
+            response.setMessage(e.getMessage());
+        }
+
+        catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error Occurred During USer Registration " + e.getMessage());
 
 
         }
+        return response;
+    }
 
-        UserAccount userAccount=new UserAccount();
-        userAccount.setNIC(request.getNIC());
-        userAccount.setTelno(request.getTelno());
-        userAccount.setFirstname(request.getFirstname());
-        userAccount.setLastname(request.getLastname());
-        userAccount.setUsername(request.getUsername());
+    public Response authenticate(UserAccount request){
+        Response response = new Response();
+        try{
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+            UserAccount userAccount = userAccountRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+            String token = jwtService.generateToken(userAccount);
+            Date expirationTime = jwtService.extractExpiration(token);
+            UserAccountDto userAccountDto = MapUtils.mapUserEntityToUserDTO(userAccount);
+            if (userAccount.getRole().equals(Role.FUELSTATION_OWNER)) {
 
+                 String otp=GenerateOtp.generateOtp();
+                TwoFactorOtp oldTwoFactorOtp = twoFactorOtpService.findByUser(userAccount.getUserId());
+                if (oldTwoFactorOtp != null) {
+                    twoFactorOtpService.deleteTwoFactorOtp(oldTwoFactorOtp);
+                }
 
-        Role role = request.getRole();
+                TwoFactorOtp newTwoFactorOtp = twoFactorOtpService.createTwoFactorOtp(userAccount, otp, token);
 
-        if (role == Role.FUELSTATION_OWNER) {
-            userAccount.setRole(Role.FUELSTATION_OWNER);
-        } else if (role == Role.ADMIN) {
-            userAccount.setRole(Role.ADMIN);
-        }
+                MailStructure mailStructure = new MailStructure();
+                mailStructure.setSubject("Your Two-Factor Email Verification");
+                mailStructure.setMessage("Your email verification code is " + otp);
+                mailService.sendMail(userAccount.getUsername(), mailStructure);
 
-
-
-
-        if(request.getPassword()==null || request.getPassword().length()<=4) {
-            throw new IllegalArgumentException("Password Charter Minimum 5 charters!");
-        }
-
-        userAccount.setPassword(passwordEncoder.encode(request.getPassword()));
-        userAccount=userAccountRepository.save(userAccount);
-        String token=jwtService.generateToken(userAccount);
-        if(role==Role.FUELSTATION_OWNER && request.getLicenseNumber()!=null){
-            String licenseNumber = request.getLicenseNumber();
-
-            boolean isLicenseValid = existingStationsService.isLicenseNumberValid(licenseNumber);
-            if(isLicenseValid){
-                userAccount.setLicenseNumber(licenseNumber);
+                response.setMessage("Two-factor authentication OTP sent to your email.");
+            } else {
+                response.setMessage("The account has been logged in successfully.");
             }
-            else{
-                throw new IllegalArgumentException("License number is not valid");
-            }
- }
-        userAccountRepository.save(userAccount);
-  
-        return new AuthenticationResponse(token,"The account has been registered successfully");
+
+
+            response.setStatusCode(200);
+            response.setToken(token);
+            response.setRole(userAccount.getRole());
+            response.setExpirationTime(expirationTime);
+            response.setUserAccountDto(userAccountDto);
+
+
+
+
+
+        }catch (IllegalArgumentException e) {
+            response.setStatusCode(400);
+            response.setMessage(e.getMessage());
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during authentication: " + e.getMessage());
+        }
+
+        return response;
     }
 
+    public Response getAllAccounts() {
 
+        Response response=new Response();
+        try {
+            List<UserAccount>userAccountList=userAccountRepository.findAll();
+            List<UserAccountDto>userAccountDtoList=MapUtils.mapUserListEntityToUserListDTO(userAccountList);
+            response.setUserAccountDtoList(userAccountDtoList);
+            response.setStatusCode(200);
+            response.setMessage("successful");
+        }catch (Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error getting all users " + e.getMessage());
+        }
+        return response;
 
-    public AuthenticationResponse authenticate(UserAccount request){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
-        UserAccount userAccount=userAccountRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token=jwtService.generateToken(userAccount);
-        UserAccount userAccount1=getUserByUsername(request.getUsername());
-        if(userAccount1.getRole().equals(Role.FUELSTATION_OWNER)){
-            String otp= GenerateOtp.generateOtp();
-            TwoFactorOtp oldTwoFactorOtp=twoFactorOtpService.findByUser(userAccount1.getUserId());
-            if(oldTwoFactorOtp!=null){
-                twoFactorOtpService.deleteTwoFactorOtp(oldTwoFactorOtp);
+    }
+
+    public Response getAccountById(int userId) {
+        Response response = new Response();
+
+        try {
+            UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("User not found"));
+            if (userAccount == null) {
+                response.setStatusCode(404);
+                response.setMessage("User account does not exist");
+            }else {
+                UserAccountDto userDTO = MapUtils.mapUserEntityToUserDTO(userAccount);
+                response.setStatusCode(200);
+                response.setMessage("Account retrieved successfully");
+                response.setUserAccountDto(userDTO);
             }
-            TwoFactorOtp newTwoFactorOtp=twoFactorOtpService.createTwoFactorOtp(userAccount1,otp,token);
-            MailStructure mailStructure=new MailStructure();
-            mailStructure.setSubject("Your two factor  email verification");
-            mailStructure.setMessage("Your email verification code is  "+otp);
-            mailService.sendMail(userAccount1.getUsername(),mailStructure);
+
+        } catch (FuelException e) {
+            response.setStatusCode(404);
+            response.setMessage(e.getMessage());
+
+        } catch (Exception e) {
+
+            response.setStatusCode(500);
+            response.setMessage("Error getting all users " + e.getMessage());
+        }
+        return response;
+    }
+
+    public Response getUsersByRole(Role role) {
+        Response response=new Response();
+        try {
+            List<UserAccount> userAccounts = userAccountRepository.findByRole(role);
+            if (userAccounts == null || userAccounts.isEmpty()) {
+                response.setStatusCode(404);
+                response.setMessage("No users found for the given role");
+            }
+            else {
+                response.setStatusCode(200);
+                response.setMessage("Users retrieved successfully");
+                response.setUserAccountDtoList(MapUtils.mapUserListEntityToUserListDTO(userAccounts));
+            }
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error retrieving users by role: " + e.getMessage());
+
+        }
+        return response;
+
+    }
+
+    public Response verifySigningOtp(String otp,int userId){
+        Response response = new Response();
+
+        try {
+
+            TwoFactorOtp twoFactorOtp = twoFactorOtpService.findByUser(userId);
+            if (twoFactorOtp == null) {
+                response.setStatusCode(404);
+                response.setMessage("OTP not found for the given user.");
+
+            }
+
+
+            boolean isOtpValid = twoFactorOtpService.verifyTwoFactorOtp(twoFactorOtp, otp);
+            if (!isOtpValid) {
+                response.setStatusCode(400);
+                response.setMessage("Invalid or expired OTP.");
+            }
+
+
+            UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("User not found"));
+            String jwt = jwtService.generateToken(userAccount);
+
+            response.setToken(jwt);
+            response.setMessage("Two-factor authentication successfully completed.");
+            response.setStatusCode(200);
+            response.setUserAccountDto(MapUtils.mapUserEntityToUserDTO(userAccount));
+
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during OTP verification: " + e.getMessage());
+
+        }
+        return response;
+    }
+
+    public Response sendForgetPasswordOtp(String email){
+        Response response=new Response();
+        try{
+            UserAccount userAccount=getUserByUsername(email);
+            if(userAccount==null){
+                response.setStatusCode(404);
+                response.setMessage("User not found with provided email.");
+            }
+            String otp = GenerateOtp.generateOtp();
+            UUID uuid = UUID.randomUUID();
+            String id = uuid.toString();
+            ForgotPasswordToken token =forgotPasswordService.findByUser(userAccount.getUserId());
+
+            if (token == null) {
+                token = forgotPasswordService.createToken(userAccount, id, otp, email);
+            }
+
+            MailStructure mailStructure = new MailStructure();
+            mailStructure.setSubject("Your forgot Password Verification Code");
+            mailStructure.setMessage("Your verification code is " + token.getOtp());
+            mailService.sendMail(email, mailStructure);
+
+            response.setStatusCode(200);
+            response.setMessage("Password reset OTP sent successfully");
+
+
+
+        }catch(Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during OTP generation or email sending: " + e.getMessage());
 
 
         }
-        return new AuthenticationResponse(token,"The account has been login successfully");
-    }
-
-
-    public List<UserAccount> getAllAccounts() {
-        return userAccountRepository.findAll();
-    }
-
-    public UserAccount getAccountById(int userId) {
-        return userAccountRepository.findById(userId).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
-    }
-
-    public List<UserAccount> getUsersByRole(Role role) {
-        return  userAccountRepository.findByRole(role);
+        return response;
     }
 
     public UserAccount getUserByUsername(String username){
@@ -143,16 +297,77 @@ public class AuthenticateService {
         return null;
     }
 
-    public UserAccount findByUserProfileByJwt(String jwt) {
-        String email=jwtService.extractUsername(jwt);
-        UserAccount userAccount=userAccountRepository.findByUsername(email).get();
-        return userAccount;
-    }
 
     public UserAccount updatePassword(UserAccount user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         return userAccountRepository.save(user);
     }
+
+    public Response verifyOtp(String email, String otp){
+        Response response=new Response();
+        try {
+
+            UserAccount userAccount=getUserByUsername(email);
+
+            ForgotPasswordToken forgotPasswordToken=forgotPasswordService.findByUser(userAccount.getUserId());
+            if (forgotPasswordToken == null) {
+                response.setStatusCode(404);
+                response.setMessage("Invalid or expired token.");
+            }
+            boolean isVerified = forgotPasswordToken.getOtp().equals(otp);
+
+            if (isVerified) {
+                response.setStatusCode(200);
+                response.setMessage("Otp can be verified successfully");
+
+            }
+            else {
+                response.setStatusCode(400);
+                response.setMessage("Wrong OTP provided.");
+
+            }
+        }catch (Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during password reset: " + e.getMessage());
+
+        }
+        return response;
+    }
+
+    public Response resetPassword(String email, ResetPasswordRequest resetPasswordRequest){
+        System.out.println(resetPasswordRequest.getOtp()+resetPasswordRequest.getPassword());
+        Response response=new Response();
+        try {
+
+            UserAccount userAccount=getUserByUsername(email);
+
+            ForgotPasswordToken forgotPasswordToken=forgotPasswordService.findByUser(userAccount.getUserId());
+            if (forgotPasswordToken == null) {
+                response.setStatusCode(404);
+                response.setMessage("Invalid or expired token.");
+            }
+            boolean isVerified = forgotPasswordToken.getOtp().equals(resetPasswordRequest.getOtp());
+
+            if (isVerified) {
+                updatePassword(forgotPasswordToken.getUserAccount(), resetPasswordRequest.getPassword());
+                response.setStatusCode(200);
+                response.setMessage("Password can be updated successfully!");
+
+            }
+            else {
+                response.setStatusCode(400);
+                response.setMessage("Wrong OTP provided.");
+
+            }
+        }catch (Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error occurred during password reset: " + e.getMessage());
+
+        }
+        return response;
+    }
+
+
 
 
 

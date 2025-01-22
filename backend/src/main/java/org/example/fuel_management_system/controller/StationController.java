@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
@@ -14,8 +15,8 @@ import java.util.List;
 @RequestMapping("/api/station")
 public class StationController {
 
-    private final StationService stationService;
-    private final FuelStationRepository fuelStationRepository;
+    private  StationService stationService;
+    private  FuelStationRepository fuelStationRepository;
 
     public StationController(StationService stationService, FuelStationRepository fuelStationRepository) {
         this.stationService = stationService;
@@ -26,45 +27,47 @@ public class StationController {
 
 
     @GetMapping("/{stationId}/fuels")
-    public ResponseEntity<List<Fuel>> getFuelsByStation(@PathVariable int stationId) {
-        List<Fuel> fuels = stationService.getFuelsByStationId(stationId);
-        return ResponseEntity.ok(fuels);
+    public ResponseEntity<Response> getFuelsByStation(@PathVariable int stationId) {
+        Response response=stationService.getFuelsByStationId(stationId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 
     @PostMapping("/{stationId}/fuels")
-    public ResponseEntity<String > addFuelsToStation(
+    public ResponseEntity<Response > addFuelsToStation(
             @PathVariable int stationId,
             @RequestBody List<Fuel> fuels) {
-        Station updatedStation = stationService.addFuelToStation(stationId, fuels);
-        return ResponseEntity.ok("Fuel Added successfully");
-    }
-
-
-    @PostMapping("/registration")
-    public ResponseEntity<String> registerStation(@RequestBody Station station) throws Exception {
-        try{
-        if(fuelStationRepository.existsByStationId(station.getStationId())){
-            throw new Exception("Station already exists");
-        }
-
-        Station registeredStations=stationService.saveStation(station);
-
-        return new ResponseEntity<>("Station registered Successfully!", HttpStatus.OK);
-    }catch (Exception e){
-            return new ResponseEntity<>("Station already exists",HttpStatus.BAD_REQUEST);
-        }
-
+        Response response=stationService.addFuelToStation(stationId,fuels);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/allstations")
-    public List<Station> allStations(){
-          return stationService.getAllStations();
+    public ResponseEntity<Response> allStations(){
+        Response response=stationService.getAllStations();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+
     }
 
     @GetMapping("/stations/{id}")
-    public Station findStationById(@PathVariable int id)
+    public ResponseEntity<Response> findStationById(@PathVariable int id)
     {
-        return stationService.findStationById(id);
+        Response response=stationService.findStationById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
     }
+
+
+
+    @PostMapping("/registration")
+    public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
+  Response response=stationService.saveOrUpdateStation(station);
+  return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+    }
+
+
+
+
 
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from "react-router-dom";
 
 // import { motion } from "motion/react";
 // import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <>
       <div className=" absolute top-0 z-50 w-full">
@@ -24,9 +24,13 @@ const Navbar = () => {
               <li className="hover:text-gray-300 cursor-pointer">Contact</li>
             </ul>
           </div>
-
-          <div className="hidden md:block">
-            <button className="primary-btn">Log in</button>
+          <div className="flex gap-3">
+            <div className="hidden md:block">
+              <button className="primary-btn "><NavLink to="/login">Sign in</NavLink></button>
+            </div>
+            <div className="hidden md:block">
+              <button className="primary-btn"><NavLink to="/register">Sign up</NavLink> </button>
+            </div>
           </div>
 
           <div className="md:hidden">
