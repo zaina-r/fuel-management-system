@@ -72,7 +72,7 @@ const VehicleRegistration = () => {
     }
     try {
       const response = await VehicleApi.registerVehicle(formData);
-      console.log(response);
+      console.log(response.message);
       if (response.statusCode === 200) {
         setSuccess("Vehicle registration successful");
         setInstruction(false);
@@ -88,7 +88,7 @@ const VehicleRegistration = () => {
         setError("");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "An unexpected error occurred");
+      setError(response?.message || "An unexpected error occurred");
     }
   };
 
