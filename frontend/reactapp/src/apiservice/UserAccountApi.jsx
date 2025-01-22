@@ -20,6 +20,25 @@ export default class UserAccountApi {
     return response.data;
   }
 
+  static async loginUser(registration) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/login`,
+      registration
+    );
+    return response.data;
+  }
+
+  static async verifySigningOtp(otp, userId) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/two_factor/otp/${otp}`,
+      {},
+      {
+        params: { userId },
+      }
+    );
+    return response.data;
+  }
+
   static async sendOtp(email) {
     const response = await axios.post(
       `${this.BASE_URL}/api/users/reset-password/send-otp`,

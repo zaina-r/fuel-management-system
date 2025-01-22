@@ -5,6 +5,7 @@ import password_icon from "../Assets/password.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
+import UserAccountApi from "../apiservice/UserAccountApi";
 
 function UserLogin() {
   const [action, setAction] = useState("Login");
@@ -34,18 +35,17 @@ function UserLogin() {
       console.log("The response is " + response);
       if (response.statusCode === 200) {
         const id = response.userAccountDto.userId;
-        localStorage.setItem("userId", id);
         const role = response.userAccountDto.role;
+        const email = response.userAccountDto.email;
+        localStorage.setItem("userId", id);
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("role", role);
         if (role == "VEHICLE_OWNER") {
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("role", response.role);
-          setSuccessMessage("User has successfully login");
+          setSuccess("User has successfully login");
           navigate("/");
-        }
-        if (role == "FUELSTATION_OWNER") {
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("role", response.role);
+        } else if (role == "FUELSTATION_OWNER") {
           setOtpBar(true);
+          setSuccess("OTP sent to your email. Please verify.");
         }
       }
     } catch (error) {
@@ -85,8 +85,9 @@ function UserLogin() {
     setError("");
 
     try {
-      const result = await UserAccountApi.verifyOtp(otpValue);
-      console.log(result);
+      const userId = localStorage.getItem("userId");
+      const result = await UserAccountApi.verifySigningOtp(otpValue, userId);
+      console.log("The result is " + result);
       if (result.statusCode == 200) {
         console.log("OTP verified successfully!");
         navigate("/");
@@ -100,13 +101,12 @@ function UserLogin() {
     }
   };
 
-  
   return (
     <>
       <div>
         <div className="bg-slate-800 h-44 "></div>
-        {error && <Error error={error} setError={setError}/>}
-        {success && <Success success={success} setSuccess={setSuccess}/>}
+        {error && <Error error={error} setError={setError} />}
+        {success && <Success success={success} setSuccess={setSuccess} />}
         <div className="container text-sm mt-24">
           <div className="flex items-center w-full">
             <div className="w-1/2">
