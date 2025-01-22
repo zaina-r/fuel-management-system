@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
 
+
 function App() {
   return (
     <>
