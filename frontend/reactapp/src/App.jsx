@@ -10,6 +10,7 @@ import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
 import Contact from "./pages/Contact";
 
+
 function App() {
   return (
     <>

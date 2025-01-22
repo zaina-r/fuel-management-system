@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import UserAccountApi from "../apiservice/UserAccountApi";
+import Error from "../responseDisplay/Error";
+import Success from "../responseDisplay/Success";
 
 const UserRegisterationForm = () => {
   const [licese, setLicense] = useState(false);
@@ -39,6 +41,7 @@ const UserRegisterationForm = () => {
   };
 
   const handleChange = (e) => {
+    setError("")
     const { name, value } = e.target;
 
     if (name === "role") {
@@ -198,8 +201,8 @@ const UserRegisterationForm = () => {
           </div>
 
           <div className="w-1/2 flex flex-col  mt-3">
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <Error error={error} setError={setError}/>}
+            {success && <Success success={success} setSuccess={setSuccess}/>}
             <form onSubmit={handleSubmit} className="register-form">
               <h1 className="text-4xl font-extrabold text-neutral-800 m-5">
                 Sign up

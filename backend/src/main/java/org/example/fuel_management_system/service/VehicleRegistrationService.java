@@ -64,6 +64,7 @@ public class VehicleRegistrationService {
                 response.setMessage("Vehicle already verified");
                 response.setStatusCode(409);
                 return response;
+
             }
 
             Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
@@ -78,10 +79,14 @@ public class VehicleRegistrationService {
                     vehiclesDto.setVehicle_type(inputVehicle.getVehicle_type());
                     vehiclesDto.setMaximumFuelCapacity(inputVehicle.getMaximumFuelCapacity());
                     vehiclesDto.setAvailableFuelCapacity(inputVehicle.getAvailableFuelCapacity());
+                    vehiclesDto.setQrCode(inputVehicle.getQrCode());
+                    vehiclesDto.setFuel_type(inputVehicle.getFuel_type());
+                    vehiclesDto.setLicense_plate_no(inputVehicle.getLicense_plate_no());
 
                     response.setVehiclesDto(vehiclesDto);
+
                     response.setMessage("Vehicle verified and added successfully");
-                    response.setStatusCode(201);
+                    response.setStatusCode(200);
 
                 } else {
                     response.setMessage("License plate number mismatch");
@@ -89,9 +94,12 @@ public class VehicleRegistrationService {
 
                 }
             }
+            else{
+                response.setMessage("Vehicle not registered");
+                response.setStatusCode(404);
+            }
 
-            response.setMessage("Vehicle not registered");
-            response.setStatusCode(404);
+
 
 
         } catch (Exception e) {
