@@ -21,10 +21,16 @@ public class VehicleRegistrationController {
         this.vehicleRegistrationService = vehicleRegistrationService;
     }
 
-    @PostMapping("/verifyAndAddVehicle")
+    @PostMapping("/verifyAndAddVehicle/{userId}")
     public ResponseEntity<Response> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle,@PathVariable int userId) {
         Response response= vehicleRegistrationService.verifyAndAddVehicle(inputVehicle,userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+    @GetMapping("/allVehicleDetails/{userId}")
+    public ResponseEntity<Response> allVehicleDetails(@PathVariable int userId){
+      Response response= vehicleRegistrationService.allVehicleDetails(userId);
+      return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 

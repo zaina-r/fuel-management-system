@@ -9,10 +9,13 @@ import org.example.fuel_management_system.Repository.VehicleVerificationReposito
 import org.example.fuel_management_system.model.Registeredvehicles;
 import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.model.VehicleVerification;
+import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
@@ -187,6 +190,29 @@ public class VehicleRegistrationService {
             response.setStatusCode(500);
 
         }
+        return response;
+    }
+
+    public Response allVehicleDetails(@PathVariable int id) {
+        Response response = new Response();
+
+        try {
+            Optional<List<VehicleVerification>> vehicleVerifications = vehicleVerificationRepository.findByUserAccount_UserId(id);
+
+            if (vehicleVerifications.isPresent() && !vehicleVerifications.get().isEmpty()) {
+                List<VehiclesDto> vehiclesDtoList = MapUtils.mapVehicleListEntityToVehicleDTOList(vehicleVerifications.get());
+                response.setVehiclesDtoList(vehiclesDtoList);
+                response.setMessage("Vehicle details retrieved successfully");
+                response.setStatusCode(200);
+            } else {
+                response.setMessage("No vehicles found for the given user ID");
+                response.setStatusCode(404);
+            }
+        } catch (Exception e) {
+            response.setMessage("An error occurred while retrieving vehicle details");
+            response.setStatusCode(500);
+        }
+
         return response;
     }
 
