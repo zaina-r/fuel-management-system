@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import VehicleApi from "../apiservice/VehicleApi";
 import { QRCodeSVG } from "qrcode.react";
+import { toPng } from "html-to-image";
+
 
 const VehicleRegistration = () => {
   const [error, setError] = useState("");
@@ -20,12 +22,30 @@ const VehicleRegistration = () => {
 
   // }
 
+  const qrRef = useRef(null);
+
+
   const [formData, setFormData] = useState({
     license_plate_no: "",
     vehicle_type: "",
     vehicleRegNo: "",
     fuel_type: "",
   });
+
+  const downloadQR = () => {
+    if (qrRef.current) {
+      toPng(qrRef.current, { cacheBust: true })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = "vehicle-qr-code.png";
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((err) => {
+          console.error("Error generating image:", err);
+        });
+    }
+  };
 
   const validateForm = () => {
     const { license_plate_no, vehicle_type, vehicleRegNo, fuel_type } =
@@ -184,8 +204,12 @@ const VehicleRegistration = () => {
           </div>
         )}
         {qrData && (
-          <div className="grid grid-cols-2 ">
-            <div className="text-white text-sm px-3 py-4">
+ 
+          <div className="grid grid-cols-2">
+            <div className="text-white text-sm px-3 py-4 ">
+ 
+            
+ 
               <h1 className="text-xl font-bold  ">Vehcile Details</h1>
               <table className="mt-3">
                 <tbody>
@@ -234,17 +258,49 @@ const VehicleRegistration = () => {
                 </tbody>
               </table>
               <div className="text-center my-3">
-                <button className="bg-green-600 w-full py-1">Download</button>
+
+                <button
+                  className="bg-green-600 w-full py-1"
+                  onClick={downloadQR}
+                >
+                  Download
+                </button>
               </div>
             </div>
-            <div className="  flex flex-col items-center ">
-              {/* <img
-              src="../src/Assets/car0031-QRCODE.png"
-              alt=""
-              className="h-[300px] w-[300px]"
-            /> */}
-              <QRCodeSVG value={qrData.qrCode} size={300} />
-              {/* <p className="text-white text-xs">QR_CODE</p> */}
+            <div className="  flex flex-col items-center justify-center mb-8 ">
+              <div
+                ref={qrRef}
+                style={{
+                  display: "inline-block",
+                  padding: "10px 35px",
+                  border: "1px solid #ccc",
+                  // borderRadius: "10px",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <div
+                  style={{
+                    marginBottom: "",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  {qrData.license_plate_no}
+                </div>
+                <QRCodeSVG value={qrData.qrCode} size={230} />
+                <div
+                  style={{
+                    marginTop: "",
+                    fontSize: "16px",
+                    color: "#555",
+                    textAlign: "center",
+                  }}
+                >
+                  {qrData.qrCode}
+                </div>
+              </div>
+
             </div>
           </div>
         )}
