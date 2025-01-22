@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.FuelService;
@@ -24,7 +25,7 @@ public class AdminController {
 
 
     @GetMapping("/stationInfo")
-    public ResponseEntity<List<Station>> getAllStations() {
+    public ResponseEntity<Response> getAllStations() {
         return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
     }
 
