@@ -8,6 +8,7 @@ import ForgotPassword from "./pages/Forgotpassword";
 import Navbar from "./components/Navbar";
 import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
+import Contact from "./pages/Contact";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 path="/stationRegister"
                 element={<StationRegistration />}
               />
+              <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
         </div>

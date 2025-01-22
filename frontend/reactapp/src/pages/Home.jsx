@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Carousel } from "@material-tailwind/react";
-// import Footer from "../components/Footer";
-import Footer from "../components/Header";
-import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [bd, setBd] = useState(false);
@@ -14,9 +12,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <div>
-          <Header/>
-        </div>
+        <div></div>
         <div className="  relative flex items-center justify-center h-screen overflow-hidden">
           <video
             src="../src/assets/11641333-uhd_4096_2160_24fps (1).mp4"
@@ -248,7 +244,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
