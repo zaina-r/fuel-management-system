@@ -6,15 +6,141 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 function UserLogin() {
   const [action, setAction] = useState("Login");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [otpBar, setOtpBar] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {};
+  const validate = async () => {
+    console.log(password);
+    console.log(username);
+    if (username && password) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleLogin = async () => {
+    if (!validate()) {
+      setError("fill the input fields");
+    }
+
+    try {
+      const response = await UserAccountApi.loginUser({ username, password });
+      console.log("The response is " + response);
+      if (response.statusCode === 200) {
+        const id = response.userAccountDto.userId;
+        localStorage.setItem("userId", id);
+        const role = response.userAccountDto.role;
+        if (role == "VEHICLE_OWNER") {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("role", response.role);
+          setSuccessMessage("User has successfully login");
+          navigate("/");
+        }
+        if (role == "FUELSTATION_OWNER") {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("role", response.role);
+          setOtpBar(true);
+        }
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || error.message);
+    }
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+
+  const handleOtpChange = (e, index) => {
+    const value = e.target.value;
+    const updatedOtp = [...otp];
+    updatedOtp[index] = value;
+    setOtp(updatedOtp);
+
+    if (value && index < otp.length - 1) {
+      document.getElementById(`otp-input-${index + 1}`).focus();
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const otpValue = otp.join("");
+
+    if (otpValue.length < 6) {
+      setError("Please enter a valid 6-digit OTP.");
+      return;
+    }
+
+    setError("");
+
+    try {
+      const result = await UserAccountApi.verifyOtp(otpValue);
+      console.log(result);
+      if (result.statusCode == 200) {
+        console.log("OTP verified successfully!");
+        navigate("/");
+      } else {
+        setError("OTP verification failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setError("There was an error verifying the OTP. Please try again.");
+    } finally {
+    }
+  };
+
+  
   return (
     <>
       <div>
         <div className="bg-slate-800 h-44 "></div>
+        {error && <p>{error}</p>}
+        {successMessage && <p>{successMessage}</p>}
         <div className="container text-sm mt-24">
           <div className="flex items-center w-full">
-            <div className="w-1/2">ejlnlkefnkle</div>
+            <div className="w-1/2">
+              {otpBar && (
+                <div className="m-5 flex justify-center items-center">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col items-center space-y-4"
+                  >
+                    {/* OTP Input Fields */}
+                    <div className="flex space-x-2">
+                      {otp.map((_, index) => (
+                        <input
+                          key={index}
+                          id={`otp-input-${index}`}
+                          type="text"
+                          maxLength="1"
+                          value={otp[index]}
+                          onChange={(e) => handleOtpChange(e, index)}
+                          onFocus={(e) => e.target.select()}
+                          className="w-12 h-12 text-center text-2xl border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      ))}
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
             <div className="w-1/2 flex flex-col gap-5">
               <div>
                 <h1 className="text-4xl font-extrabold text-neutral-800">
@@ -36,6 +162,7 @@ function UserLogin() {
                   <input
                     type="text"
                     placeholder="name@gmail.com"
+                    onChange={handleUsernameChange}
                     className="bg-gray-200 p-1 rounded-sm text-md w-full"
                   />
                   <div className="absolute right-2 top-2 ">
@@ -55,6 +182,7 @@ function UserLogin() {
                   <input
                     type="text"
                     placeholder="your password"
+                    onChange={handlePasswordChange}
                     className="bg-gray-200 p-1 rounded-sm text-md w-full"
                   />
                   <div className="absolute right-2 top-2 ">
