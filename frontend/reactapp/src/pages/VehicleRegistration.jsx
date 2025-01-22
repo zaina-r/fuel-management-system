@@ -5,6 +5,7 @@ import VehicleApi from "../apiservice/VehicleApi";
 import { QRCodeSVG } from "qrcode.react";
 import { toPng } from "html-to-image";
 
+
 const VehicleRegistration = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -20,7 +21,9 @@ const VehicleRegistration = () => {
   //   qrCode:null
 
   // }
+
   const qrRef = useRef(null);
+
 
   const [formData, setFormData] = useState({
     license_plate_no: "",
@@ -65,6 +68,7 @@ const VehicleRegistration = () => {
     e.preventDefault();
     if (!validateForm()) {
       setError("fill the all fields");
+      return;
     }
     try {
       const response = await VehicleApi.registerVehicle(formData);
@@ -81,9 +85,10 @@ const VehicleRegistration = () => {
           vehicleRegNo: "",
           fuel_type: "",
         });
+        setError("");
       }
     } catch (error) {
-      setError(error.response?.data?.message || error.message);
+      setError(error.response?.data?.message || "An unexpected error occurred");
     }
   };
 
@@ -199,8 +204,12 @@ const VehicleRegistration = () => {
           </div>
         )}
         {qrData && (
+ 
           <div className="grid grid-cols-2">
             <div className="text-white text-sm px-3 py-4 ">
+ 
+            
+ 
               <h1 className="text-xl font-bold  ">Vehcile Details</h1>
               <table className="mt-3">
                 <tbody>
@@ -249,6 +258,7 @@ const VehicleRegistration = () => {
                 </tbody>
               </table>
               <div className="text-center my-3">
+
                 <button
                   className="bg-green-600 w-full py-1"
                   onClick={downloadQR}
@@ -290,6 +300,7 @@ const VehicleRegistration = () => {
                   {qrData.qrCode}
                 </div>
               </div>
+
             </div>
           </div>
         )}
