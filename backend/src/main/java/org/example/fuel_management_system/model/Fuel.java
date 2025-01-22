@@ -11,9 +11,9 @@ public class Fuel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fuelId;
 
-    private String fuelType;
+    private Float availableDiselQuantity;
 
-    private Float availableQuantity;
+    private Float availablePetrolQuantity;
 
     @ManyToOne
     @JoinColumn(name = "station_id")
@@ -28,20 +28,20 @@ public class Fuel {
         this.fuelId = fuelId;
     }
 
-    public String getFuelType() {
-        return fuelType;
+    public Float getAvailableDiselQuantity() {
+        return availableDiselQuantity;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
+    public void setAvailableDiselQuantity(Float availableDiselQuantity) {
+        this.availableDiselQuantity = availableDiselQuantity;
     }
 
-    public Float getAvailableQuantity() {
-        return availableQuantity;
+    public Float getAvailablePetrolQuantity() {
+        return availablePetrolQuantity;
     }
 
-    public void setAvailableQuantity(Float availableQuantity) {
-        this.availableQuantity = availableQuantity;
+    public void setAvailablePetrolQuantity(Float availablePetrolQuantity) {
+        this.availablePetrolQuantity = availablePetrolQuantity;
     }
 
     public Station getStation() {
