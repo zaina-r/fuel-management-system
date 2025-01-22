@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
 import Contact from "./pages/Contact";
+import About from "./pages/About";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <div className="content">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/about" element={<About/>} />
               <Route exact path="/login" element={<UserLogin />} />
               <Route path="/register" element={<UserRegisterationForm />} />
               <Route
