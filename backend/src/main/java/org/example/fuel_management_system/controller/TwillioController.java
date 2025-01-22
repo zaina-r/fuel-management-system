@@ -1,6 +1,6 @@
 package org.example.fuel_management_system.controller;
 
-
+/*
 import org.example.fuel_management_system.service.TwillioService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,3 +25,4 @@ public class TwillioController {
         return twillioService.sendNotification(phoneNumber, message);
     }
 }
+*/

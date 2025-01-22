@@ -22,8 +22,8 @@ public class VehicleRegistrationController {
     }
 
     @PostMapping("/verifyAndAddVehicle")
-    public ResponseEntity<Response> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle) {
-        Response response= vehicleRegistrationService.verifyAndAddVehicle(inputVehicle);
+    public ResponseEntity<Response> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle,@PathVariable int userId) {
+        Response response= vehicleRegistrationService.verifyAndAddVehicle(inputVehicle,userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }

@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.example.fuel_management_system.model.UserAccount;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VehiclesDto {
@@ -15,6 +16,15 @@ public class VehiclesDto {
     private float maximumFuelCapacity;
     private float availableFuelCapacity;
     private String qrCode;
+    private UserAccount userAccount;
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
 
     public int getVehicleId() {
         return vehicleId;
