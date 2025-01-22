@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif;
+    color: #333;
+    background-image: url('https://get.coupa.com/rs/950-OLU-185/images/ESG-Risk-Supply-Chains_LP_Background-narrow.jpg'); /* Replace with your actual image URL */
+  background-size: cover; /* Ensure the image covers the entire page */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-attachment: fixed;
+  }
+  
+  .about-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header */
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+  }
+  
+  .header .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Hero Section */
+  .hero {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full screen height */
+  
+  color: white; /* Ensure text is readable on the background */
+  text-align: center;
+  padding: 20px;
+  }
+  
+  .hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  /* Main Content */
+  .main-content {
+    padding: 50px 20px;
+    max-width: 1200px;
+    color: #e4e6eb;
+  }
+  
+  .section {
+    margin-bottom: 40px;
+  }
+  
+  .section h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .section p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .values {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .values div {
+    flex: 1;
+    background: #4b4747;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  /* Footer */
+  .footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .footer .quick-links a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .footer .quick-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer .contact-info p {
+    margin: 5px 0;
+  }
+  
+  .footer .social-media a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+  }
