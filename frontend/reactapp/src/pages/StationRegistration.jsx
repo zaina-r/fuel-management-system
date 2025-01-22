@@ -54,23 +54,26 @@ const StationRegistration = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Station Registration Form
+    <>
+    <div className="bg-slate-800 h-44 "></div>
+    <div className=" container text-sm ">
+    <div className="flex items-center justify-center  py-12 w-1/2 ">
+      <div className="w-full max-w-md bg-white p-5 rounded-lg shadow-lg">
+        <h2 className="text-4xl font-bold text-neutral-800  mb-6">
+          Station Registration 
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-7">
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
           {success && (
             <p className="mt-4 text-green-500 text-center">{success}</p>
           )}
-          <div>
+          <div className="space-y-2">
             <label
               htmlFor="licenseNumber"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 "
             >
-              Licence No:
+              Licence No
             </label>
             <input
               type="text"
@@ -78,16 +81,16 @@ const StationRegistration = () => {
               value={formData.licenseNumber}
               onChange={handleChange}
               placeholder="Enter Licence No"
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+               className="bg-gray-200 p-1 rounded-sm text-md w-full  "
             />
           </div>
 
-          <div>
+          <div className="space-y-2">
             <label
               htmlFor="stationId"
               className="block text-sm font-medium text-gray-700"
             >
-              Station ID:
+              Station ID
             </label>
             <input
               type="text"
@@ -95,16 +98,16 @@ const StationRegistration = () => {
               value={formData.stationId}
               onChange={handleChange}
               placeholder="10XXXX"
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+               className="bg-gray-200 p-1 rounded-sm text-md w-full"
             />
           </div>
 
-          <div>
+          <div className="space-y-2">
             <label
               htmlFor="dealerName"
               className="block text-sm font-medium text-gray-700"
             >
-              Dealer Name:
+              Dealer Name
             </label>
             <input
               type="text"
@@ -112,16 +115,16 @@ const StationRegistration = () => {
               value={formData.dealerName}
               onChange={handleChange}
               placeholder="Enter Dealer's Name"
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+               className="bg-gray-200 p-1 rounded-sm text-md w-full"
             />
           </div>
 
-          <div>
+          <div className="space-y-2">
             <label
               htmlFor="stationAddress"
               className="block text-sm font-medium text-gray-700"
             >
-              Station Address:
+              Station Address
             </label>
             <input
               type="text"
@@ -129,21 +132,27 @@ const StationRegistration = () => {
               value={formData.stationAddress}
               onChange={handleChange}
               placeholder="Station Address"
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+             className="bg-gray-200 p-1 rounded-sm text-md w-full"
             />
           </div>
 
-          <div className="mt-6">
+          <div className="mb-6 ">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+               className="bg-blue-800 w-full   text-white p-2"
             >
               Submit
             </button>
           </div>
         </form>
       </div>
+      <div className="w-1/2 bg-red-800 h-4">
+             {/* <img src="src/Assets/photo-1697575806262-c3553b142b54.avif" alt=""  className="w-[400px] h-[400px]"/> */}
+      </div>
     </div>
+    </div>
+   
+    </>
   );
 };
 
