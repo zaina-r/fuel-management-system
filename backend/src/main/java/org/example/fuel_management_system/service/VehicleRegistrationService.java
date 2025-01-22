@@ -1,5 +1,8 @@
 package org.example.fuel_management_system.service;
 
+import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.VehiclesDto;
+import org.example.fuel_management_system.Qrcode.Qrcode;
 import org.example.fuel_management_system.Repository.RegisteredVehicleRepository;
 import org.example.fuel_management_system.Repository.VehicleVerificationRepository;
 import org.example.fuel_management_system.model.Registeredvehicles;
@@ -15,91 +18,164 @@ import static java.util.Objects.requireNonNull;
 @Service
 public class VehicleRegistrationService {
 
-    @Autowired
+
     private VehicleVerificationRepository vehicleVerificationRepository;
-
-    @Autowired
     private RegisteredVehicleRepository registeredVehicleRepository;
+    private Qrcode qrcode;
 
-    public VehicleVerification verifyAndAddVehicle(VehicleVerification inputVehicle) {
-        System.out.println(inputVehicle.getLicense_plate_no());
-        requireNonNull(inputVehicle, "Input vehicle cannot be null");
-        if(inputVehicle.getVehicle_type().equals("Car")){
-            inputVehicle.setMaximumFuelCapacity(5L);
-            inputVehicle.setAvailableFuelCapacity(5L);
-        }
-        if(inputVehicle.getVehicle_type().equals("Motorcycle")){
-            inputVehicle.setMaximumFuelCapacity(3L);
-            inputVehicle.setAvailableFuelCapacity(3L);
-        }
-        if(inputVehicle.getVehicle_type().equals("Van")){
-            inputVehicle.setMaximumFuelCapacity(6L);
-            inputVehicle.setAvailableFuelCapacity(6L);
-        }
-        if(inputVehicle.getVehicle_type().equals("Truck")){
-            inputVehicle.setMaximumFuelCapacity(8L);
-            inputVehicle.setAvailableFuelCapacity(8L);
-        }
+    public VehicleRegistrationService(VehicleVerificationRepository vehicleVerificationRepository, RegisteredVehicleRepository registeredVehicleRepository) {
+        this.vehicleVerificationRepository = vehicleVerificationRepository;
+        this.registeredVehicleRepository = registeredVehicleRepository;
+    }
 
-        // Generate and set the QR code for the vehicle
-        inputVehicle.setQrCode(generateQrCode());
+    public Response verifyAndAddVehicle(VehicleVerification inputVehicle) {
+        Response response = new Response();
 
-        Optional<VehicleVerification>verifyVehicle=vehicleVerificationRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
-        if(verifyVehicle.isPresent()){
-                return null;
+        try {
+            requireNonNull(inputVehicle, "Input vehicle cannot be null");
 
-            }else{
-            Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
-            System.out.println(registeredVehicle.isPresent());
-            if (registeredVehicle.isPresent()) {
+            switch (inputVehicle.getVehicle_type()) {
+                case "Car":
+                    inputVehicle.setMaximumFuelCapacity(5L);
+                    inputVehicle.setAvailableFuelCapacity(5L);
+                    break;
+                case "Motorcycle":
+                    inputVehicle.setMaximumFuelCapacity(3L);
+                    inputVehicle.setAvailableFuelCapacity(3L);
+                    break;
+                case "Van":
+                    inputVehicle.setMaximumFuelCapacity(6L);
+                    inputVehicle.setAvailableFuelCapacity(6L);
+                    break;
+                case "Truck":
+                    inputVehicle.setMaximumFuelCapacity(8L);
+                    inputVehicle.setAvailableFuelCapacity(8L);
+                    break;
+                default:
+                    response.setMessage("Invalid vehicle type");
+                    response.setStatusCode(400);
+                    return response;
+            }
 
+            inputVehicle.setQrCode(qrcode.generateQrCode());
 
-                String li=registeredVehicle.get().getLicencePlateNo();
-
-
-
-                if(inputVehicle.getLicense_plate_no().equals(li)){
-                    vehicleVerificationRepository.save(inputVehicle);
-                    return inputVehicle;
-                }
+            Optional<VehicleVerification> verifyVehicle = vehicleVerificationRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
+            if (verifyVehicle.isPresent()) {
+                response.setMessage("Vehicle already verified");
+                response.setStatusCode(409);
+                return response;
 
             }
 
+            Optional<Registeredvehicles> registeredVehicle = registeredVehicleRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
+            if (registeredVehicle.isPresent()) {
+                String licencePlateNo = registeredVehicle.get().getLicencePlateNo();
+
+                if (inputVehicle.getLicense_plate_no().equals(licencePlateNo)) {
+                    vehicleVerificationRepository.save(inputVehicle);
+
+                    VehiclesDto vehiclesDto = new VehiclesDto();
+                    vehiclesDto.setVehicleRegNo(inputVehicle.getVehicleRegNo());
+                    vehiclesDto.setVehicle_type(inputVehicle.getVehicle_type());
+                    vehiclesDto.setMaximumFuelCapacity(inputVehicle.getMaximumFuelCapacity());
+                    vehiclesDto.setAvailableFuelCapacity(inputVehicle.getAvailableFuelCapacity());
+                    vehiclesDto.setQrCode(inputVehicle.getQrCode());
+                    vehiclesDto.setFuel_type(inputVehicle.getFuel_type());
+                    vehiclesDto.setLicense_plate_no(inputVehicle.getLicense_plate_no());
+
+                    response.setVehiclesDto(vehiclesDto);
+
+                    response.setMessage("Vehicle verified and added successfully");
+                    response.setStatusCode(200);
+
+                } else {
+                    response.setMessage("License plate number mismatch");
+                    response.setStatusCode(400);
+
+                }
+            }
+            else{
+                response.setMessage("Vehicle not registered");
+                response.setStatusCode(404);
+            }
+
+
+
+
+        } catch (Exception e) {
+            response.setMessage("An error occurred: " + e.getMessage());
+            response.setStatusCode(500);
+
         }
-
-
-
-
-        return null;
+        return response;
     }
 
-    public String generateQrCode() {
+    public Response getVehicleByQrCode(String qrCode) {
+        Response response = new Response();
 
-         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        try {
+            Optional<VehicleVerification> vehicle = vehicleVerificationRepository.findByQrCode(qrCode);
+            if (vehicle.isPresent()) {
+                VehiclesDto vehiclesDto = new VehiclesDto();
+                vehiclesDto.setVehicleRegNo(vehicle.get().getVehicleRegNo());
+                vehiclesDto.setVehicle_type(vehicle.get().getVehicle_type());
+                vehiclesDto.setMaximumFuelCapacity(vehicle.get().getMaximumFuelCapacity());
+                vehiclesDto.setAvailableFuelCapacity(vehicle.get().getAvailableFuelCapacity());
 
+                response.setVehiclesDto(vehiclesDto);
+                response.setMessage("Vehicle found successfully");
+                response.setStatusCode(200);
 
-         SecureRandom random = new SecureRandom();
+            } else {
+                response.setMessage("Vehicle not found");
+                response.setStatusCode(404);
 
+            }
+        } catch (Exception e) {
+            response.setMessage("An error occurred: " + e.getMessage());
+            response.setStatusCode(500);
 
-         StringBuilder sb = new StringBuilder();
-
-         for (int i = 0; i < 12; i++) {
-
-             int randomIndex = random.nextInt(characters.length());
-             sb.append(characters.charAt(randomIndex));
-         }
-         System.out.println(sb.toString());
-         return sb.toString();
+        }
+        return response;
     }
 
-    public VehicleVerification getVehicleByQrCode(String qrCode) {
-        return vehicleVerificationRepository.findByQrCode(qrCode)
-                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+    public Response updateFuelCapacity(Integer id, float fuelDispensed) {
+        Response response = new Response();
+
+        try {
+            VehicleVerification vehicle = vehicleVerificationRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+            if (vehicle.getAvailableFuelCapacity() < fuelDispensed) {
+                response.setMessage("Insufficient fuel capacity available");
+                response.setStatusCode(400);
+
+            }
+
+            vehicle.setAvailableFuelCapacity(vehicle.getAvailableFuelCapacity() - fuelDispensed);
+            vehicleVerificationRepository.save(vehicle);
+
+            VehiclesDto vehiclesDto = new VehiclesDto();
+            vehiclesDto.setVehicleRegNo(vehicle.getVehicleRegNo());
+            vehiclesDto.setVehicle_type(vehicle.getVehicle_type());
+            vehiclesDto.setMaximumFuelCapacity(vehicle.getMaximumFuelCapacity());
+            vehiclesDto.setAvailableFuelCapacity(vehicle.getAvailableFuelCapacity());
+
+            response.setVehiclesDto(vehiclesDto);
+            response.setMessage("Fuel capacity updated successfully");
+            response.setStatusCode(200);
+
+        } catch (RuntimeException e) {
+            response.setMessage(e.getMessage());
+            response.setStatusCode(404); // Not Found
+
+        } catch (Exception e) {
+            response.setMessage("An error occurred: " + e.getMessage());
+            response.setStatusCode(500);
+
+        }
+        return response;
     }
-    public VehicleVerification updateFuelCapacity(Integer id, int fuelDispensed) {
-        VehicleVerification vehicle = vehicleVerificationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
-        vehicle.setAvailableFuelCapacity(vehicle.getAvailableFuelCapacity() - fuelDispensed);
-        return vehicleVerificationRepository.save(vehicle);
-    }
+
 }
+

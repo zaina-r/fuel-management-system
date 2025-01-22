@@ -11,11 +11,9 @@ public class Fuel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fuelId;
 
-    private String petrol;
-    private String disel;
+    private Float availableDiselQuantity;
 
-    private Float availablePetrolQuantiy;
-    private Float availableDiselQuantiy;
+    private Float availablePetrolQuantity;
 
     @ManyToOne
     @JoinColumn(name = "station_id")
@@ -30,6 +28,21 @@ public class Fuel {
         this.fuelId = fuelId;
     }
 
+    public Float getAvailableDiselQuantity() {
+        return availableDiselQuantity;
+    }
+
+    public void setAvailableDiselQuantity(Float availableDiselQuantity) {
+        this.availableDiselQuantity = availableDiselQuantity;
+    }
+
+    public Float getAvailablePetrolQuantity() {
+        return availablePetrolQuantity;
+    }
+
+    public void setAvailablePetrolQuantity(Float availablePetrolQuantity) {
+        this.availablePetrolQuantity = availablePetrolQuantity;
+    }
 
     public Station getStation() {
         return station;
@@ -37,37 +50,5 @@ public class Fuel {
 
     public void setStation(Station station) {
         this.station = station;
-    }
-
-    public String getPetrol() {
-        return petrol;
-    }
-
-    public void setPetrol(String petrol) {
-        this.petrol = petrol;
-    }
-
-    public String getDisel() {
-        return disel;
-    }
-
-    public void setDisel(String disel) {
-        this.disel = disel;
-    }
-
-    public Float getAvailablePetrolQuantiy() {
-        return availablePetrolQuantiy;
-    }
-
-    public void setAvailablePetrolQuantiy(Float availablePetrolQuantiy) {
-        this.availablePetrolQuantiy = availablePetrolQuantiy;
-    }
-
-    public Float getAvailableDiselQuantiy() {
-        return availableDiselQuantiy;
-    }
-
-    public void setAvailableDiselQuantiy(Float availableDiselQuantiy) {
-        this.availableDiselQuantiy = availableDiselQuantiy;
     }
 }

@@ -49,4 +49,11 @@ public class TwoFactorOtpServiceImpl  {
         twoFactorOtpRepository.delete(twoFactorOTP);
 
     }
+
+    public TwoFactorOtp findByOtp(String otp) {
+        return twoFactorOtpRepository.findByOtp(otp);
+
+    }
+
+
 }

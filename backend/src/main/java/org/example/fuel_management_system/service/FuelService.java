@@ -1,5 +1,7 @@
 package org.example.fuel_management_system.service;
 
+import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.StationDto;
 import org.example.fuel_management_system.Repository.FuelRepository;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.Fuel;
@@ -19,11 +21,14 @@ public class FuelService {
     private FuelStationRepository fuelStationRepository;
 
     public Fuel addFuel(int stationId, float petrolCapacity, float dieselCapacity) {
-        Station fuelStation=stationService.findStationById(stationId);
+        Response response=stationService.findStationById(stationId);
+        StationDto stationDto= response.getStationDto();
+        Station fuelStation=new Station(stationDto.getId(),stationDto.getStationId(),stationDto.getStationAddress(),
+                stationDto.getDealerName(),stationDto.getLicenseNumber(),stationDto.getRegistrationDate(),stationDto.getLoginCode(),stationDto.getFuel());
         Fuel fuel=new Fuel();
         fuel.setStation(fuelStation);
-        fuel.setAvailablePetrolQuantiy(petrolCapacity);
-        fuel.setAvailableDiselQuantiy(dieselCapacity);
+        fuel.setAvailablePetrolQuantity(petrolCapacity);
+        fuel.setAvailableDiselQuantity(dieselCapacity);
         return fuelRepository.save(fuel);
     }
 

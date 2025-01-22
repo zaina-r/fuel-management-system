@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ExistingStationsRepository extends JpaRepository<ExistingStations, Integer> {
     boolean existsByLicenseNumber(String LicenseNumber);
-    @Query("SELECT s FROM Station s WHERE s.licenseNumber = :licenseNumber")
-    Optional<Station> findByLicenseNumber(String licenseNumber);
+
+    Optional<ExistingStations> findByLicenseNumber(String licenseNumber);
+    ExistingStations findByDealerId(String dealerId);
 }
