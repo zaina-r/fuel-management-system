@@ -30,6 +30,22 @@ public class Station {
     @JsonIgnore
     private List<Fuel> fuel = new ArrayList<>();
 
+
+    public Station(int id, String stationId, String stationAddress, String dealerName, String licenseNumber, LocalDate registrationDate, String loginCode, List<Fuel> fuel) {
+        this.id = id;
+        this.stationId = stationId;
+        this.stationAddress = stationAddress;
+        this.dealerName = dealerName;
+        this.licenseNumber = licenseNumber;
+        this.registrationDate = registrationDate;
+        this.loginCode = loginCode;
+        this.fuel = fuel;
+    }
+
+    public Station() {
+
+    }
+
     public int getId() {
         return id;
     }
