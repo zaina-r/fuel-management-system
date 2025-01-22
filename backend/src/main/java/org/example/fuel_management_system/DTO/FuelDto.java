@@ -7,8 +7,9 @@ public class FuelDto {
 
 
     private int fuelId;
-    private String fuelType;
-    private Float availableQuantity;
+    private Float availableDiselQuantity;
+
+    private Float availablePetrolQuantity;
     private Station station;
 
     public int getFuelId() {
@@ -19,20 +20,20 @@ public class FuelDto {
         this.fuelId = fuelId;
     }
 
-    public String getFuelType() {
-        return fuelType;
+    public Float getAvailableDiselQuantity() {
+        return availableDiselQuantity;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
+    public void setAvailableDiselQuantity(Float availableDiselQuantity) {
+        this.availableDiselQuantity = availableDiselQuantity;
     }
 
-    public Float getAvailableQuantity() {
-        return availableQuantity;
+    public Float getAvailablePetrolQuantity() {
+        return availablePetrolQuantity;
     }
 
-    public void setAvailableQuantity(Float availableQuantity) {
-        this.availableQuantity = availableQuantity;
+    public void setAvailablePetrolQuantity(Float availablePetrolQuantity) {
+        this.availablePetrolQuantity = availablePetrolQuantity;
     }
 
     public Station getStation() {
