@@ -12,7 +12,14 @@ export default class VehicleApi {
   }
 
   static async registerVehicle(vehicleDetails){
-    const response=await axios.post(`${this.BASE_URL}/api/verifyAndAddVehicle`,vehicleDetails);
+    const userId=localStorage.getItem("userId");
+    const response=await axios.post(`${this.BASE_URL}/api/verifyAndAddVehicle/${userId}`,vehicleDetails);
+    return response.data;
+  }
+
+  static async getVehicleDetails(){
+    const userId=localStorage.getItem("userId");
+    const response=await axios.get(`${this.BASE_URL}/api/allVehicleDetails/${userId}`);
     return response.data;
   }
 }
