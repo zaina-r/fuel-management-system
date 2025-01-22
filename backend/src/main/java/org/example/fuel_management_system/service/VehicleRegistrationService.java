@@ -134,10 +134,11 @@ public class VehicleRegistrationService {
             Optional<VehicleVerification> vehicle = vehicleVerificationRepository.findByQrCode(qrCode);
             if (vehicle.isPresent()) {
                 VehiclesDto vehiclesDto = new VehiclesDto();
-                vehiclesDto.setVehicleRegNo(vehicle.get().getVehicleRegNo());
+                vehiclesDto.setLicense_plate_no(vehicle.get().getLicense_plate_no());
                 vehiclesDto.setVehicle_type(vehicle.get().getVehicle_type());
-                vehiclesDto.setMaximumFuelCapacity(vehicle.get().getMaximumFuelCapacity());
+                vehiclesDto.setFuel_type(vehicle.get().getFuel_type());
                 vehiclesDto.setAvailableFuelCapacity(vehicle.get().getAvailableFuelCapacity());
+                vehiclesDto.setVehicleId(vehicle.get().getVehicleId());
 
                 response.setVehiclesDto(vehiclesDto);
                 response.setMessage("Vehicle found successfully");
@@ -170,6 +171,7 @@ public class VehicleRegistrationService {
             }
 
             vehicle.setAvailableFuelCapacity(vehicle.getAvailableFuelCapacity() - fuelDispensed);
+            System.out.println(vehicle.getAvailableFuelCapacity());
             vehicleVerificationRepository.save(vehicle);
 
             VehiclesDto vehiclesDto = new VehiclesDto();
