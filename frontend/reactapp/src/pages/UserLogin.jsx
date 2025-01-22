@@ -9,7 +9,7 @@ function UserLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [success, setSuccess] = useState("");
   const [otpBar, setOtpBar] = useState(false);
   const navigate = useNavigate();
 
@@ -103,8 +103,8 @@ function UserLogin() {
     <>
       <div>
         <div className="bg-slate-800 h-44 "></div>
-        {error && <p>{error}</p>}
-        {successMessage && <p>{successMessage}</p>}
+        {error && <Error error={error} setError={setError}/>}
+        {success && <Success success={success} setSuccess={setSuccess}/>}
         <div className="container text-sm mt-24">
           <div className="flex items-center w-full">
             <div className="w-1/2">
