@@ -4,8 +4,10 @@ import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.DTO.VehiclesDto;
 import org.example.fuel_management_system.Qrcode.Qrcode;
 import org.example.fuel_management_system.Repository.RegisteredVehicleRepository;
+import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.example.fuel_management_system.Repository.VehicleVerificationRepository;
 import org.example.fuel_management_system.model.Registeredvehicles;
+import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.model.VehicleVerification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,14 @@ public class VehicleRegistrationService {
     private VehicleVerificationRepository vehicleVerificationRepository;
     private RegisteredVehicleRepository registeredVehicleRepository;
     private Qrcode qrcode;
+    private UserAccountRepository userAccountRepository;
 
     public VehicleRegistrationService(VehicleVerificationRepository vehicleVerificationRepository, RegisteredVehicleRepository registeredVehicleRepository) {
         this.vehicleVerificationRepository = vehicleVerificationRepository;
         this.registeredVehicleRepository = registeredVehicleRepository;
     }
 
-    public Response verifyAndAddVehicle(VehicleVerification inputVehicle) {
+    public Response verifyAndAddVehicle(VehicleVerification inputVehicle,int userId) {
         Response response = new Response();
 
         try {
@@ -73,6 +76,16 @@ public class VehicleRegistrationService {
 
                 if (inputVehicle.getLicense_plate_no().equals(licencePlateNo)) {
                     vehicleVerificationRepository.save(inputVehicle);
+                    Optional<UserAccount> userAccount = userAccountRepository.findById(userId);
+                    if (userAccount.isEmpty()) {
+                        response.setMessage("User account not found");
+                        response.setStatusCode(404);
+                        return response;
+                    }
+
+                    inputVehicle.setUserAccount(userAccount.get());
+
+                    vehicleVerificationRepository.save(inputVehicle);
 
                     VehiclesDto vehiclesDto = new VehiclesDto();
                     vehiclesDto.setVehicleRegNo(inputVehicle.getVehicleRegNo());
@@ -82,7 +95,7 @@ public class VehicleRegistrationService {
                     vehiclesDto.setQrCode(inputVehicle.getQrCode());
                     vehiclesDto.setFuel_type(inputVehicle.getFuel_type());
                     vehiclesDto.setLicense_plate_no(inputVehicle.getLicense_plate_no());
-
+                    vehiclesDto.setUserAccount(userAccount.get());
                     response.setVehiclesDto(vehiclesDto);
 
                     response.setMessage("Vehicle verified and added successfully");
@@ -103,7 +116,7 @@ public class VehicleRegistrationService {
 
 
         } catch (Exception e) {
-            response.setMessage("An error occurred: " + e.getMessage());
+            response.setMessage("Invalid vehicle registration number and chessy number  ");
             response.setStatusCode(500);
 
         }
@@ -132,7 +145,7 @@ public class VehicleRegistrationService {
 
             }
         } catch (Exception e) {
-            response.setMessage("An error occurred: " + e.getMessage());
+            response.setMessage("Invalid vehicle registration number and chessy number  ");
             response.setStatusCode(500);
 
         }
@@ -166,11 +179,11 @@ public class VehicleRegistrationService {
             response.setStatusCode(200);
 
         } catch (RuntimeException e) {
-            response.setMessage(e.getMessage());
+            response.setMessage("Invalid vehicle registration number and chessy number  ");
             response.setStatusCode(404); // Not Found
 
         } catch (Exception e) {
-            response.setMessage("An error occurred: " + e.getMessage());
+            response.setMessage("Invalid vehicle registration number and chessy number  ");
             response.setStatusCode(500);
 
         }

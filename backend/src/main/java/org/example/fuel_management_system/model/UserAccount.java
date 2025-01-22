@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class UserAccount implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<VehicleVerification>vehicleVerifications=new ArrayList<>();
 
     private String licenseNumber;
 
