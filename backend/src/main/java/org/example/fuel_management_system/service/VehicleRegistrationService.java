@@ -27,6 +27,7 @@ public class VehicleRegistrationService {
     private VehicleVerificationRepository vehicleVerificationRepository;
     private RegisteredVehicleRepository registeredVehicleRepository;
     private Qrcode qrcode;
+    @Autowired
     private UserAccountRepository userAccountRepository;
 
     public VehicleRegistrationService(VehicleVerificationRepository vehicleVerificationRepository, RegisteredVehicleRepository registeredVehicleRepository) {
@@ -78,7 +79,7 @@ public class VehicleRegistrationService {
                 String licencePlateNo = registeredVehicle.get().getLicencePlateNo();
 
                 if (inputVehicle.getLicense_plate_no().equals(licencePlateNo)) {
-                    vehicleVerificationRepository.save(inputVehicle);
+
                     Optional<UserAccount> userAccount = userAccountRepository.findById(userId);
                     if (userAccount.isEmpty()) {
                         response.setMessage("User account not found");
@@ -119,7 +120,7 @@ public class VehicleRegistrationService {
 
 
         } catch (Exception e) {
-            response.setMessage("Invalid vehicle registration number and chessy number  ");
+             response.setMessage(e.getMessage());
             response.setStatusCode(500);
 
         }
@@ -193,14 +194,14 @@ public class VehicleRegistrationService {
         return response;
     }
 
-    public Response allVehicleDetails(@PathVariable int id) {
+    public Response allVehicleDetails(int id) {
         Response response = new Response();
 
         try {
-            Optional<List<VehicleVerification>> vehicleVerifications = vehicleVerificationRepository.findByUser_UserId(id);
-
-            if (vehicleVerifications.isPresent() && !vehicleVerifications.get().isEmpty()) {
-                List<VehiclesDto> vehiclesDtoList = MapUtils.mapVehicleListEntityToVehicleDTOList(vehicleVerifications.get());
+            List<VehicleVerification> vehicleVerifications = vehicleVerificationRepository.findByUser_UserId(id);
+            System.out.println("Vehicle verifications : " +vehicleVerifications);
+            if (vehicleVerifications!=null) {
+                List<VehiclesDto> vehiclesDtoList = MapUtils.mapVehicleListEntityToVehicleDTOList(vehicleVerifications);
                 response.setVehiclesDtoList(vehiclesDtoList);
                 response.setMessage("Vehicle details retrieved successfully");
                 response.setStatusCode(200);
