@@ -10,6 +10,7 @@ import org.example.fuel_management_system.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -23,6 +24,16 @@ public class JwtService {
     @Autowired
     private HttpServletRequest request;
 
+    public String extractJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        throw new IllegalArgumentException("JWT token is missing or malformed");
+    }
+
+
+
     public String generateToken(UserAccount userAccount){
         return Jwts
                 .builder()
@@ -33,7 +44,7 @@ public class JwtService {
                 .compact();
     }
 
-    private SecretKey getSignKey() {
+    private static  SecretKey getSignKey() {
         byte[] keyBytes= Decoders.BASE64URL.decode(STATIC_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -55,7 +66,7 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    public Date extractExpiration(String token) {
+    public  Date extractExpiration(String token) {
         return extractClaim(token,Claims::getExpiration);
     }
 
@@ -63,13 +74,13 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public  <T> T extractClaim(String token, Function<Claims,T>resolver) {
+    public    <T> T extractClaim(String token, Function<Claims,T>resolver) {
         Claims claims=extractAllClaims(token);
         return resolver.apply(claims);
 
     }
 
-    public Claims extractAllClaims(String token) {
+    public  Claims extractAllClaims(String token) {
         return Jwts
                 .parser()
                 .verifyWith(getSignKey())
