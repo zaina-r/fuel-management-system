@@ -11,21 +11,21 @@ export default class Authentication {
     };
   }
   static isAuthenticated() {
-    const token = localStorage.getItem('token')
-    return !!token
-}
+    const token = localStorage.getItem("token");
+    return !!token;
+  }
 
-static isFuelStationOwner() {
-    const role = localStorage.getItem('role')
-    return role === 'FUELSTATION_OWNER'
-}
+  static isFuelStationOwner() {
+    const role = localStorage.getItem("role");
+    return role === "FUELSTATION_OWNER";
+  }
 
-static isVehicleOwner() {
-    const role = localStorage.getItem('role')
-    return role === 'VEHICLE_OWNER'
-}
-static logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
-}
+  static isVehicleOwner() {
+    const role = localStorage.getItem("role");
+    return role === "VEHICLE_OWNER";
+  }
+  static logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+  }
 }

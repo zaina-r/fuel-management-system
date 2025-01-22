@@ -1,69 +1,102 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import { toPng } from "html-to-image";
+import VehicleApi from "../apiservice/VehicleApi";
+import Error from "../responseDisplay/Error";
+import Success from "../responseDisplay/Success";
+import { useState } from "react";
 
 const DisplayVehicleDetails = () => {
-  const [qrData, setQrData] = useState({
-    qrCode: "https://example.com/vehicle",
-    textAbove: "Vehicle QR Code",
-    textBelow: "Scan this code for vehicle details",
-  });
-
-  const qrRef = useRef(null);
-
-  const downloadQR = () => {
-    if (qrRef.current) {
-      toPng(qrRef.current, { cacheBust: true })
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.download = "vehicle-qr-code.png";
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((err) => {
-          console.error("Error generating image:", err);
-        });
-    }
+     const [error, setError] = useState("");
+     const [success, setSuccess] = useState("")
+     const [qrVehicleData,setQrVehicleData] = useState([]); 
+     
+     useEffect(() => { 
+        getAllQr(); 
+      }, []);
+         
+  const getAllQr = async () => { 
+    try {
+        const response = await VehicleApi.getVehicleDetails();
+   
+        
+          setQrVehicleData(response.vehiclesDtoList);
+        //   console.log(response.vehiclesDtoList);
+          console.log(qrVehicleData);    
+        //   setSuccess("Vehicle details retrieved successfully!");
+          setError("");
+        
+      } catch (err) {
+        setError(err.message || "An unexpected error occurred.");
+        setSuccess("");
+      }
   };
 
+  
+
+
+
+
+
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <div
-        ref={qrRef}
-        style={{
-          display: "inline-block",
-          padding: "20px",
-          border: "1px solid #ccc",
-          borderRadius: "10px",
-          backgroundColor: "#fff",
-        }}
-      >
-        <div style={{ marginBottom: "10px", fontSize: "18px", fontWeight: "bold" }}>
-          {qrData.textAbove}
-        </div>
-        <QRCodeSVG value={qrData.qrCode} size={250} />
-        <div style={{ marginTop: "10px", fontSize: "16px", color: "#555" }}>
-          {qrData.textBelow}
-        </div>
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={downloadQR}
-          style={{
-            backgroundColor: "#007BFF",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Download QR Code
-        </button>
-      </div>
-    </div>
+    <>
+      <div className="bg-slate-800 h-44 "></div>
+      {error && <Error error={error} setError={setError} />}
+      {success && <Success success={success} setSuccess={setSuccess} />}
+      <div className="container my-24">
+        {qrVehicleData.map((vehicle,index)=>
+              <div className="bg-gray-800 rounded-xl my-10" key={index}>
+              <div className="flex justify-center  h-[300px] text-white">
+                <div className="w-1/4  p-7">
+                  <QRCodeSVG value={vehicle.qrCode} size={230} />
+                </div>
+                <div className="w-3/4 p-20">
+                  <div className="grid grid-cols-2 p-2">
+                    <div>
+                      <span>Vehicle Number:</span>
+                      <span>{vehicle.license_plate_no}</span>
+                    </div>
+                    <div>
+                      <span>Chassis Number:</span>
+                      <span>{vehicle.vehicleRegNo}</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 p-2">
+                    <div>
+                      <span>VehicleType:</span>
+                      <span>{vehicle.vehicle_type}</span>
+                    </div>
+                    <div>
+                      <span>FuelType:</span>
+                      <span>{vehicle.fuel_type}</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 p-2">
+                    <div>
+                      <span>Maximum Fuel Capacity:</span>
+                      <span>{vehicle.maximumFuelCapacity}</span>
+                    </div>
+                    <div>
+                      <span>Available Fuel Capacity:</span>
+                      <span>{vehicle.availableFuelCapacity}</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 p-2">
+                    <div>
+                      <span>QRCode:</span>
+                      <span>{vehicle.qrCode}</span>
+                    </div>
+                    <div>
+                      <button className="bg-green-600 w-full py-1">download</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>)}
+          </div>
+        
+       
+    </>
   );
 };
 
 export default DisplayVehicleDetails;
-

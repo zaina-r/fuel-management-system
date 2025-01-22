@@ -87,6 +87,9 @@ const VehicleRegistration = () => {
         });
         setError("");
       }
+      else{
+        setError(response.message)
+      }
     } catch (error) {
       setError(response?.message || "An unexpected error occurred");
     }

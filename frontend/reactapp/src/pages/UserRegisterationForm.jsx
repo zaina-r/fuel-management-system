@@ -82,6 +82,7 @@ const UserRegisterationForm = () => {
         setError("");
         setSuccess("User Account Registration successful!");
       }
+      
     } catch (error) {
       setSuccess("");
       setError(error.response?.data?.message || error.message);
