@@ -197,7 +197,7 @@ public class VehicleRegistrationService {
         Response response = new Response();
 
         try {
-            Optional<List<VehicleVerification>> vehicleVerifications = vehicleVerificationRepository.findByUserAccount_UserId(id);
+            Optional<List<VehicleVerification>> vehicleVerifications = vehicleVerificationRepository.findByUser_UserId(id);
 
             if (vehicleVerifications.isPresent() && !vehicleVerifications.get().isEmpty()) {
                 List<VehiclesDto> vehiclesDtoList = MapUtils.mapVehicleListEntityToVehicleDTOList(vehicleVerifications.get());
