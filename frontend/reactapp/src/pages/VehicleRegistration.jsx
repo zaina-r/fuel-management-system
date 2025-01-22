@@ -2,24 +2,24 @@ import { useState } from "react";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import VehicleApi from "../apiservice/VehicleApi";
-import {QRCodeSVG} from 'qrcode.react';
+import { QRCodeSVG } from "qrcode.react";
 
 const VehicleRegistration = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [instruction,setInstruction]=useState(true);
-  const [qrData,setQrData] = useState()
-    // {
-    //   license_plate_no: "",
-    //   vehicle_type: "",
-    //   vehicleRegNo: "",
-    //   fuel_type: "",
-    //   maximumFuelCapacity: "",
-    //   availableFuelCapacity: "",
-    //   qrCode:null
+  const [instruction, setInstruction] = useState(true);
+  const [qrData, setQrData] = useState();
+  // {
+  //   license_plate_no: "",
+  //   vehicle_type: "",
+  //   vehicleRegNo: "",
+  //   fuel_type: "",
+  //   maximumFuelCapacity: "",
+  //   availableFuelCapacity: "",
+  //   qrCode:null
 
-    // }
-  
+  // }
+
   const [formData, setFormData] = useState({
     license_plate_no: "",
     vehicle_type: "",
@@ -48,6 +48,7 @@ const VehicleRegistration = () => {
     e.preventDefault();
     if (!validateForm()) {
       setError("fill the all fields");
+      return;
     }
     try {
       const response = await VehicleApi.registerVehicle(formData);
@@ -64,9 +65,10 @@ const VehicleRegistration = () => {
           vehicleRegNo: "",
           fuel_type: "",
         });
+        setError("");
       }
     } catch (error) {
-      setError(error.response?.data?.message || error.message);
+      setError(error.response?.data?.message || "An unexpected error occurred");
     }
   };
 
@@ -149,80 +151,104 @@ const VehicleRegistration = () => {
         </div>
       </div>
       <div className="h-[300PX] w-[600px] bg-gradient-to-r from-slate-800 to-gray-800 ml-96 transform -translate-y-56 translate-x-96 rounded-lg">
-                    
-        {instruction &&  (    <div className="">
-                  <div className="py-3 px-9">
-                        <h1 className="text-xl text-white my-1">Vehicle Number</h1>
-                        <p className="text-xs text-neutral-400 my-2">The vehicle number is a unique identifier assigned to your vehicle. It is usually displayed on the license plate and is required for legal and identification purposes. Please enter the complete registration number without spaces or special characters</p>
-                        <p className="text-neutral-200 text-xs my-1">Example: "ABC1234, DL5C4567"</p>
-                  </div>
-                  <div className="py-3 px-9">
-                  <h1 className="text-xl text-white my-1">Chassis Number</h1>
-                        <p className="text-xs text-neutral-400 my-2"> The chassis number (also known as the VIN or Vehicle Identification Number) is a unique 17-character code that identifies your vehicle. It can be found on the chassis or frame of your vehicle and may be listed in your vehicle's documentation (e.g., registration papers). This number is crucial for tracking and verifying the vehicle's history</p>
-                        <p className="text-neutral-200 text-xs my-1">Example: "1HGBH41JXMN109186"</p>
-
-                  </div>
-                  
-            </div> )
-}
-        {qrData && (
-        <div className="grid grid-cols-2 ">
-        
-          <div className="text-white text-sm px-3 py-4">
-            <h1 className="text-xl font-bold  ">Vehcile Details</h1>
-            <table className="mt-3">
-              <tbody>
-                <tr className="">
-                  <td className="">Vehicle Number</td>
-                  <td className="text-right pl-20 py-1 text-neutral-400 ">
-                    {qrData.license_plate_no}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Chassis Number</td>
-                  <td className="text-right py-1  text-neutral-400">{qrData.vehicleRegNo}</td>
-                </tr>
-                <tr>
-                  <td>Vehicle Type</td>
-                  <td className="text-right py-1  text-neutral-400">{qrData.vehicle_type}</td>
-                </tr>
-                <tr>
-                  <td>Fuel Type</td>
-                  <td className="text-right py-1  text-neutral-400">{qrData.fuel_type}</td>
-                </tr>
-                <tr>
-                  <td>Available Fuel</td>
-                  <td className="text-right py-1  text-neutral-400">{qrData.availableFuelCapacity}</td>
-                </tr>
-                <tr>
-                  <td>Maximum Fuel</td>
-                  <td className="text-right py-1  text-neutral-400">{qrData.maximumFuelCapacity}</td>
-                </tr>
-                <tr>
-                  <td>QR Code</td>
-                  <td className="text-right py-1  text-neutral-400">
-                    {qrData.qrCode}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div className="text-center my-3">
-              <button className="bg-green-600 w-full py-1">Download</button>
+        {instruction && (
+          <div className="">
+            <div className="py-3 px-9">
+              <h1 className="text-xl text-white my-1">Vehicle Number</h1>
+              <p className="text-xs text-neutral-400 my-2">
+                The vehicle number is a unique identifier assigned to your
+                vehicle. It is usually displayed on the license plate and is
+                required for legal and identification purposes. Please enter the
+                complete registration number without spaces or special
+                characters
+              </p>
+              <p className="text-neutral-200 text-xs my-1">
+                Example: "ABC1234, DL5C4567"
+              </p>
+            </div>
+            <div className="py-3 px-9">
+              <h1 className="text-xl text-white my-1">Chassis Number</h1>
+              <p className="text-xs text-neutral-400 my-2">
+                {" "}
+                The chassis number (also known as the VIN or Vehicle
+                Identification Number) is a unique 17-character code that
+                identifies your vehicle. It can be found on the chassis or frame
+                of your vehicle and may be listed in your vehicle's
+                documentation (e.g., registration papers). This number is
+                crucial for tracking and verifying the vehicle's history
+              </p>
+              <p className="text-neutral-200 text-xs my-1">
+                Example: "1HGBH41JXMN109186"
+              </p>
             </div>
           </div>
-          <div className="  flex flex-col items-center ">
-            {/* <img
+        )}
+        {qrData && (
+          <div className="grid grid-cols-2 ">
+            <div className="text-white text-sm px-3 py-4">
+              <h1 className="text-xl font-bold  ">Vehcile Details</h1>
+              <table className="mt-3">
+                <tbody>
+                  <tr className="">
+                    <td className="">Vehicle Number</td>
+                    <td className="text-right pl-20 py-1 text-neutral-400 ">
+                      {qrData.license_plate_no}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Chassis Number</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.vehicleRegNo}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Vehicle Type</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.vehicle_type}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Fuel Type</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.fuel_type}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Available Fuel</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.availableFuelCapacity}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Maximum Fuel</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.maximumFuelCapacity}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>QR Code</td>
+                    <td className="text-right py-1  text-neutral-400">
+                      {qrData.qrCode}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="text-center my-3">
+                <button className="bg-green-600 w-full py-1">Download</button>
+              </div>
+            </div>
+            <div className="  flex flex-col items-center ">
+              {/* <img
               src="../src/Assets/car0031-QRCODE.png"
               alt=""
               className="h-[300px] w-[300px]"
             /> */}
-             <QRCodeSVG value={qrData.qrCode} size={300} />
-            {/* <p className="text-white text-xs">QR_CODE</p> */}
+              <QRCodeSVG value={qrData.qrCode} size={300} />
+              {/* <p className="text-white text-xs">QR_CODE</p> */}
+            </div>
           </div>
-        </div>
         )}
-      </div> 
-        
+      </div>
     </>
   );
 };
