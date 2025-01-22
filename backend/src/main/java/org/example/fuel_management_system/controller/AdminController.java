@@ -34,8 +34,8 @@ public class AdminController {
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
     }
 
-//    public ResponseEntity<Station> addProduct(@RequestBody Station station){
-//        Station station1 = stationService.addStation(station);
-//        return new ResponseEntity<>(station1, HttpStatus.OK);
-//    }
+   /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
+        Station station1 = stationService.addStation(station);
+        return new ResponseEntity<>(station1, HttpStatus.OK);
+    }*/
 }
