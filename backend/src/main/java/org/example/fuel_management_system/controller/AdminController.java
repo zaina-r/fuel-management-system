@@ -1,7 +1,9 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.model.ExistingStations;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
+import org.example.fuel_management_system.service.ExistingStationsServiceImpl;
 import org.example.fuel_management_system.service.FuelService;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class AdminController {
     @Autowired
     StationService stationService;
 
-
+    @Autowired
+    ExistingStationsServiceImpl existingStationsService;
 
     @GetMapping("/stationInfo")
     public ResponseEntity<List<Station>> getAllStations() {
@@ -33,8 +36,11 @@ public class AdminController {
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Station> addProduct(@RequestBody Station station){
-        Station station1 = stationService.addStation(station);
-        return new ResponseEntity<>(station1, HttpStatus.OK);
+    @PostMapping("/addStation")
+    public ResponseEntity<ExistingStations> addStation(@RequestBody ExistingStations existingStation){
+        ExistingStations existingStations1 = existingStationsService.addStation(existingStation);
+        return new ResponseEntity<>(existingStations1, HttpStatus.OK);
     }
+
+
 }
