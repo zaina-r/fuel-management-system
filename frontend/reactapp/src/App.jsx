@@ -10,6 +10,7 @@ import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import DisplayVehicleDetails from "./pages/DisplayVehicleDetails";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                 path="/vehicleRegister"
                 element={<VehicleRegistration />}
               />
+              <Route path="/vehicleHistory" element={<DisplayVehicleDetails/>}/>
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route
                 path="/stationRegister"
