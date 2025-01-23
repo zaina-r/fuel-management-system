@@ -26,28 +26,28 @@ public class StationController {
 
 
 
-    @GetMapping("/{stationId}/fuels")
+    /*@GetMapping("/{stationId}/fuels")
     public ResponseEntity<Response> getFuelsByStation(@PathVariable int stationId) {
         Response response=stationService.getFuelsByStationId(stationId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
+    }/*
 
 
-    @PostMapping("/{stationId}/fuels")
+    /*@PostMapping("/{stationId}/fuels")
     public ResponseEntity<Response > addFuelsToStation(
             @PathVariable int stationId,
             @RequestBody List<Fuel> fuels) {
-        Response response=stationService.addFuelToStation(stationId,fuels);
+       // Response response=stationService.addFuelToStation(stationId,fuels);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+    }*/
 
-    @GetMapping("/allstations")
+    /*@GetMapping("/allstations")
     public ResponseEntity<Response> allStations(){
         Response response=stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
 
-    }
+    }/*/
 
     @GetMapping("/stations/{id}")
     public ResponseEntity<Response> findStationById(@PathVariable int id)
@@ -66,8 +66,8 @@ public class StationController {
 
     }
     @PostMapping("/mobile/{loginCode}")
-    public ResponseEntity<Response>getStationUsingMobile(@PathVariable String LoginCode){
-        Response response=stationService.findByLoginCode(LoginCode);
+    public ResponseEntity<Response>getStationUsingMobile( @PathVariable String loginCode){
+        Response response=stationService.findByLoginCode(loginCode);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

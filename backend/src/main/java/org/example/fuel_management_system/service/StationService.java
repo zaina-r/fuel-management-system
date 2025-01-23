@@ -44,7 +44,7 @@ this.authenticateService=authenticateService;
     }
 
 
-
+/*
     public Response getFuelsByStationId(int stationId) {
         Response response = new Response();
         try {
@@ -88,7 +88,7 @@ this.authenticateService=authenticateService;
 
         return response;
     }
-
+*/
     public Response findStationById(int id) {
         Response response = new Response();
 
@@ -112,7 +112,7 @@ this.authenticateService=authenticateService;
         return response;
     }
 
-    public Response addFuelToStation(int stationId, List<Fuel> fuels) {
+    /*public Response addFuelToStation(int stationId, List<Fuel> fuels) {
         Response response = new Response();
 
         try {
@@ -142,7 +142,7 @@ this.authenticateService=authenticateService;
 
         }
         return response;
-    }
+    }*/
 
     public boolean doesStationIdExist(String stationName){
 
@@ -185,7 +185,7 @@ this.authenticateService=authenticateService;
                     String otp = GenerateOtp.generateOtp();
                     UserAccount user = userAccountRepository.findByLicenseNumber(existingStation.getLicenseNumber());
 
-                    if (user != null) {
+                    if (user != null  ) {
                         VerificationCode verificationCode = verificationCodeService.generateOtpForStation(existingStation, otp, user.getUsername());
                         existingStation.setLoginCode(verificationCode.getOtp());
                         existingStation.setRegistrationDate(LocalDate.now());
@@ -226,6 +226,8 @@ this.authenticateService=authenticateService;
         }
         return response;
     }
+
+
 }
 
 

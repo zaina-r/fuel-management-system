@@ -15,7 +15,7 @@ public class Fuel {
 
     private Float availablePetrolQuantity;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "station_id")
     private Station station;
 
