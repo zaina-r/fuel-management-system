@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import UserAccountApi from "../apiservice/UserAccountApi";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
+import { motion } from "framer-motion";
+import { SlideUp } from "../animation/direction";
+import { SlideLeft } from "../animation/direction";
 
 const UserRegisterationForm = () => {
   const [licese, setLicense] = useState(false);
@@ -41,7 +44,7 @@ const UserRegisterationForm = () => {
   };
 
   const handleChange = (e) => {
-    setError("")
+    setError("");
     const { name, value } = e.target;
 
     if (name === "role") {
@@ -82,7 +85,6 @@ const UserRegisterationForm = () => {
         setError("");
         setSuccess("User Account Registration successful!");
       }
-      
     } catch (error) {
       setSuccess("");
       setError(error.response?.data?.message || error.message);
@@ -96,27 +98,47 @@ const UserRegisterationForm = () => {
         <div className="flex justify-center w-full">
           <div className="relative w-1/2 bg-[url('..\src\Assets\fuel2.jpg')] bg-cover bg-center bg-no-repeat">
             <div className="absolute inset-0 bg-black opacity-80 p-8 text-white">
-              <h1 className="text-white text-2xl mb-5">
+              <motion.h1
+                variants={SlideUp(0.1)}
+                initial="hidden"
+                whileInView={"visible"}
+                className="text-white text-2xl mb-5"
+              >
                 Register for FuelPass
-              </h1>
+              </motion.h1>
               <div className="flex flex-col gap-3">
-                <p className="flex items-center gap-2">
+                <motion.p
+                  variants={SlideUp(0.2)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-center gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>First Name</span>
-                </p>
-                <p className="flex items-center gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.4)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-center gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>Last Name</span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.3)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -132,8 +154,13 @@ const UserRegisterationForm = () => {
                       "123456789456V / 200023002913"
                     </span>{" "}
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.4)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -150,8 +177,13 @@ const UserRegisterationForm = () => {
                       Example:"+94123456789"
                     </span>{" "}
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.5)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -164,8 +196,13 @@ const UserRegisterationForm = () => {
                     include letters, numbers, and underscores. <br />
                     <span className="text-white">Example:name@gmail.com</span>
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.6)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -181,8 +218,13 @@ const UserRegisterationForm = () => {
                       Example:xxxxxx atlease 4 characters
                     </span>
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.7)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -196,14 +238,19 @@ const UserRegisterationForm = () => {
                       Example:xxxxxx secure license code for fuel station
                     </span>
                   </span>
-                </p>
+                </motion.p>
               </div>
             </div>
           </div>
 
-          <div className="w-1/2 flex flex-col  mt-3">
-            {error && <Error error={error} setError={setError}/>}
-            {success && <Success success={success} setSuccess={setSuccess}/>}
+          <motion.div
+                variants={SlideLeft(0.2)}
+                initial="hidden"
+                whileInView={"visible"}
+            className="w-1/2 flex flex-col  mt-3"
+          >
+            {error && <Error error={error} setError={setError} />}
+            {success && <Success success={success} setSuccess={setSuccess} />}
             <form onSubmit={handleSubmit} className="register-form">
               <h1 className="text-4xl font-extrabold text-neutral-800 m-5">
                 Sign up
@@ -336,7 +383,7 @@ const UserRegisterationForm = () => {
                 </p>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

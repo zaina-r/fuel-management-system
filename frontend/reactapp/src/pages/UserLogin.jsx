@@ -6,14 +6,17 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import UserAccountApi from "../apiservice/UserAccountApi";
+import { Oval } from "react-loader-spinner";
+import { FaTimes} from "react-icons/fa";
 
 function UserLogin() {
   const [action, setAction] = useState("Login");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [otpBar, setOtpBar] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validate = async () => {
@@ -29,7 +32,7 @@ function UserLogin() {
     if (!validate()) {
       setError("fill the input fields");
     }
-
+    setLoading(true);
     try {
       const response = await UserAccountApi.loginUser({ username, password });
       console.log("The response is " + response);
@@ -50,6 +53,8 @@ function UserLogin() {
       }
     } catch (error) {
       setError(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,6 +64,9 @@ function UserLogin() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  const handleFaTimes = (e) => {
+    setOtpBar(false);
+ }
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
@@ -81,7 +89,7 @@ function UserLogin() {
       setError("Please enter a valid 6-digit OTP.");
       return;
     }
-
+    setLoading(true);
     setError("");
 
     try {
@@ -97,7 +105,9 @@ function UserLogin() {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       setError("There was an error verifying the OTP. Please try again.");
-    } 
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -173,10 +183,28 @@ function UserLogin() {
               </div>
               <div className="w-full">
                 <button
-                  className="bg-blue-800 w-full text-white p-2"
+                  className={`bg-blue-800 w-full text-white p-2 flex items-center justify-center ${
+                    loading
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-blue-600"
+                  }`}
+                  disabled={loading}
                   onClick={handleLogin}
                 >
-                  Sign in
+                  {loading ? (
+                    <Oval
+                      height={24}
+                      width={24}
+                      color="white"
+                      visible={true}
+                      ariaLabel="oval-loading"
+                      secondaryColor="white"
+                      strokeWidth={3}
+                      strokeWidthSecondary={3}
+                    />
+                  ) : (
+                    "Sign In"
+                  )}
                 </button>
               </div>
               <div className="flex items-center">
@@ -206,8 +234,9 @@ function UserLogin() {
         </div>
       </div>
       {otpBar && (
-        <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-50 ">
-          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-60 ">
+        <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-80 ">
+          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 relative">
+          <FaTimes className="absolute top-5 right-5 cursor-pointer" size={20}  onClick={handleFaTimes} />
             <h1 className="text-2xl font-medium text-center ">
               Verify your email
             </h1>
@@ -218,7 +247,10 @@ function UserLogin() {
                 className="w-[100px] h-[100px] "
               />
             </div>
-            <p className="text-center mb-5">Enter the verification code we sent to email</p>
+            <p className="text-center mb-5">
+              Enter the 6-digit verification code that was sent to your email
+            </p>
+
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-center space-y-4"
@@ -246,6 +278,7 @@ function UserLogin() {
               >
                 Submit
               </button>
+              <p className="text-xs">Didn't receive code?<a href="" className="text-blue-800 hover:underline">Request again</a></p>
             </form>
           </div>
         </div>

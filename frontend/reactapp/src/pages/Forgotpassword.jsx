@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import UserAccountApi from "../apiservice/UserAccountApi";
 import { useNavigate } from "react-router-dom";
-
+import { Oval } from "react-loader-spinner";
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSendOtp = async () => {
     try {
+      setLoading(true);
       if (email.trim() === "") {
         setMessage("Please enter a valid email.");
         return;
@@ -24,16 +26,17 @@ const ForgotPassword = () => {
       const errorMessage =
         error.response?.data?.message || error.message || "An error occurred.";
       setMessage(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangeOtp = (value, index) => {
-    if (!/^\d$/.test(value) && value !== "") return; 
+    if (!/^\d$/.test(value) && value !== "") return;
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
     setOtp(updatedOtp);
 
-    
     if (value !== "" && index < 5) {
       document.getElementById(`otp-input-${index + 1}`).focus();
     }
@@ -47,7 +50,7 @@ const ForgotPassword = () => {
 
   const handleVerifyOtp = async () => {
     try {
-      const otpValue = otp.join(""); 
+      const otpValue = otp.join("");
       if (otpValue.length < 6) {
         setMessage("Please enter the complete 6-digit OTP.");
         return;
@@ -70,13 +73,17 @@ const ForgotPassword = () => {
       const errorMessage =
         error.response?.data?.message || error.message || "An error occurred.";
       setMessage(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleResetPassword = async () => {
     try {
+      setLoading(true);
       if (newPassword.trim() === "") {
         setMessage("Please enter a new password.");
+        setLoading(false);
         return;
       }
       const email = localStorage.getItem("email");
@@ -98,6 +105,8 @@ const ForgotPassword = () => {
       const errorMessage =
         error.response?.data?.message || error.message || "An error occurred.";
       setMessage(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -122,18 +131,40 @@ const ForgotPassword = () => {
               />
               <button
                 onClick={handleSendOtp}
-                className="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-600"
+                className={`bg-blue-800 w-full text-white p-2 flex items-center justify-center ${
+                  loading
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-blue-600"
+                }`}
+                disabled={loading}
               >
-                Send OTP
+                {loading ? (
+                  <Oval
+                    height={24}
+                    width={24}
+                    color="white"
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="white"
+                    strokeWidth={3}
+                    strokeWidthSecondary={3}
+                  />
+                ) : (
+                  "Send OTP"
+                )}
               </button>
-              {message && <p className="mt-2 text-red-500 text-sm">{message}</p>}
+              {message && (
+                <p className="mt-2 text-red-500 text-sm">{message}</p>
+              )}
             </div>
           )}
 
           {step === 2 && (
             <div className="bg-white p-6 w-full backdrop-blur-sm text-center">
               <h2 className="text-3xl font-bold mb-3 text-center">Enter OTP</h2>
-              <p className="my-6 text-center">Enter the 6-digit verification code that was sent to your email</p>
+              <p className="my-6 text-center">
+                Enter the 6-digit verification code that was sent to your email
+              </p>
               <div className="flex justify-center gap-3 mb-6 ">
                 {otp.map((value, index) => (
                   <input
@@ -151,10 +182,15 @@ const ForgotPassword = () => {
               <button
                 onClick={handleVerifyOtp}
                 className="w-[200px] bg-blue-800 text-white py-2 rounded hover:bg-blue-600 mt-5"
+                disabled={loading}
               >
-                Verify OTP
+                {loading ? "Verifying..." : "Verify OTP"}
               </button>
-              {message && <p className="mt-2 text-red-500 text-sm text-center">{message}</p>}
+              {message && (
+                <p className="mt-2 text-red-500 text-sm text-center">
+                  {message}
+                </p>
+              )}
             </div>
           )}
 
@@ -171,10 +207,13 @@ const ForgotPassword = () => {
               <button
                 onClick={handleResetPassword}
                 className="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-600"
+                disabled={loading}
               >
-                Reset Password
+                {loading ? "Resetting..." : "Reset Password"}
               </button>
-              {message && <p className="mt-2 text-red-500 text-sm">{message}</p>}
+              {message && (
+                <p className="mt-2 text-red-500 text-sm">{message}</p>
+              )}
             </div>
           )}
 

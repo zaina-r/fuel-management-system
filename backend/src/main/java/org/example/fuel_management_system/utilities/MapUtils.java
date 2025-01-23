@@ -32,10 +32,11 @@ public class MapUtils {
     }
     public static StationDto mapStationEntityToStationDTO(Station station) {
         StationDto stationDto = new StationDto();
+        //station details
 
         stationDto.setId(station.getId());
          stationDto.setStationId(station.getStationId());
-         stationDto.setStationAddress(stationDto.getStationAddress());
+         stationDto.setStationAddress(station.getStationAddress());
          stationDto.setLoginCode(station.getLoginCode());
          stationDto.setLicenseNumber(station.getLicenseNumber());
          stationDto.setFuel(station.getFuel());
@@ -57,7 +58,7 @@ public class MapUtils {
        fuelDto.setAvailablePetrolQuantity(fuel.getAvailablePetrolQuantity());
        fuelDto.setAvailableDiselQuantity(fuel.getAvailableDiselQuantity());
 
-       fuelDto.setFuelId(fuelDto.getFuelId());
+       fuelDto.setFuelId(fuel.getFuelId());
 
         return fuelDto;
     }
@@ -75,6 +76,8 @@ public class MapUtils {
         vehiclesDto.setAvailableFuelCapacity(vehicleVerification.getAvailableFuelCapacity());
         vehiclesDto.setLicense_plate_no(vehicleVerification.getLicense_plate_no());
         vehiclesDto.setQrCode(vehicleVerification.getQrCode());
+        vehiclesDto.setVehicleId(vehicleVerification.getVehicleId());
+        vehiclesDto.setFuel_type(vehicleVerification.getFuel_type());
         vehiclesDto.setUserAccount(vehicleVerification.getUserAccount());
 
         return vehiclesDto;

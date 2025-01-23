@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Authentication from "../apiservice/Authentication";
+import { SlideDown } from "../animation/direction";
+import { motion } from "framer-motion";
 
 // import { motion } from "motion/react";
 // import { useNavigate } from "react-router-dom";
@@ -17,7 +19,12 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className=" absolute top-0 z-50 w-full">
+      <motion.div
+        variants={SlideDown(0.2)}
+        initial="hidden"
+        whileInView={"visible"}
+        className=" absolute top-0 z-50 w-full"
+      >
         <div className="flex flex-wrap justify-between items-center text-white font-bold px-4 py-6 md:px-10 lg:px-36">
           <div>
             <h1 className="text-xl sm:text-2xl">
@@ -35,19 +42,24 @@ const Navbar = () => {
               </li>
               <li className="hover:text-gray-300 cursor-pointer">Service</li>
               <li className="hover:text-gray-300 cursor-pointer">Contact</li>
-             {isVehicleOwner && (
+              {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                 <NavLink to="/vehicleRegister">VehicleRegister</NavLink> 
-                </ li>
+                  <NavLink to="/vehicleRegister">VehicleRegister</NavLink>
+                </li>
               )}
-                {isVehicleOwner && (
+              {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                 <NavLink to="/vehicleHistory">VehicleHistory</NavLink> 
-                </ li>
+                  <NavLink to="/vehicleHistory">VehicleHistory</NavLink>
+                </li>
               )}
               {isFuelStationOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/stationRegister">FuelStationRegister</NavLink>
+                </li>
+              )}
+              {isFuelStationOwner && (
+                <li className="hover:text-gray-300 cursor-pointer">
+                  <NavLink to="/StationHistory">StationHistory</NavLink>
                 </li>
               )}
             </ul>
@@ -78,7 +90,7 @@ const Navbar = () => {
             <button className="text-white"></button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

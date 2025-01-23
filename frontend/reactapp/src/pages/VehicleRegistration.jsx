@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import VehicleApi from "../apiservice/VehicleApi";
@@ -6,24 +6,15 @@ import { QRCodeSVG } from "qrcode.react";
 import { toPng } from "html-to-image";
 
 
+
 const VehicleRegistration = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [instruction, setInstruction] = useState(true);
   const [qrData, setQrData] = useState();
-  // {
-  //   license_plate_no: "",
-  //   vehicle_type: "",
-  //   vehicleRegNo: "",
-  //   fuel_type: "",
-  //   maximumFuelCapacity: "",
-  //   availableFuelCapacity: "",
-  //   qrCode:null
-
-  // }
+  const [loading, setLoading] = useState(false);
 
   const qrRef = useRef(null);
-
 
   const [formData, setFormData] = useState({
     license_plate_no: "",
@@ -70,15 +61,13 @@ const VehicleRegistration = () => {
       setError("fill the all fields");
       return;
     }
+    setLoading(true);
     try {
       const response = await VehicleApi.registerVehicle(formData);
-      console.log(response.message);
       if (response.statusCode === 200) {
         setSuccess("Vehicle registration successful");
         setInstruction(false);
         setQrData(response.vehiclesDto);
-        console.log(qrData);
-        // console.log(response.vehiclesDto.vehicleRegNo)
         setFormData({
           license_plate_no: "",
           vehicle_type: "",
@@ -86,14 +75,24 @@ const VehicleRegistration = () => {
           fuel_type: "",
         });
         setError("");
-      }
-      else{
-        setError(response.message)
+      } else {
+        setError(response.message);
       }
     } catch (error) {
       setError(response?.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError("");
+      setSuccess("");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [error, success]);
 
   return (
     <>
@@ -167,8 +166,37 @@ const VehicleRegistration = () => {
             </div>
 
             <br />
-            <button type="submit" className="bg-blue-800 p-2 text-white">
-              Register Vehicle
+
+            <button
+              type="submit"
+              className={`bg-blue-800 p-2 text-white flex items-center justify-center ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
+            >
+              {loading && (
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8V12H4z"
+                  ></path>
+                </svg>
+              )}
+              {loading ? "Processing..." : "Register Vehicle"}
             </button>
           </form>
         </div>
@@ -207,12 +235,8 @@ const VehicleRegistration = () => {
           </div>
         )}
         {qrData && (
- 
           <div className="grid grid-cols-2">
             <div className="text-white text-sm px-3 py-4 ">
- 
-            
- 
               <h1 className="text-xl font-bold  ">Vehcile Details</h1>
               <table className="mt-3">
                 <tbody>
@@ -261,7 +285,6 @@ const VehicleRegistration = () => {
                 </tbody>
               </table>
               <div className="text-center my-3">
-
                 <button
                   className="bg-green-600 w-full py-1"
                   onClick={downloadQR}
@@ -303,7 +326,6 @@ const VehicleRegistration = () => {
                   {qrData.qrCode}
                 </div>
               </div>
-
             </div>
           </div>
         )}

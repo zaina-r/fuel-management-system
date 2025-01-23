@@ -26,12 +26,12 @@ public class Station {
     private String loginCode;
 
 
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Fuel> fuel = new ArrayList<>();
+    private Fuel fuel ;
 
 
-    public Station(int id, String stationId, String stationAddress, String dealerName, String licenseNumber, LocalDate registrationDate, String loginCode, List<Fuel> fuel) {
+    public Station(int id, String stationId, String stationAddress, String dealerName, String licenseNumber, LocalDate registrationDate, String loginCode, Fuel fuel) {
         this.id = id;
         this.stationId = stationId;
         this.stationAddress = stationAddress;
@@ -102,11 +102,11 @@ public class Station {
         this.loginCode = loginCode;
     }
 
-    public List<Fuel> getFuel() {
+    public Fuel getFuel() {
         return fuel;
     }
 
-    public void setFuel(List<Fuel> fuel) {
+    public void setFuel(Fuel fuel) {
         this.fuel = fuel;
     }
 }

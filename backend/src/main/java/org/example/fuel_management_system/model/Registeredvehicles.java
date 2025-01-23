@@ -45,7 +45,7 @@ public class Registeredvehicles {
     @Column(name = "resitration_expiry_date")
     private String registrationExpiryDate;
 
-    @Column(name = "vehicle_color")
+
     private String vehicleColor;
 
     @Column(name = "vehicle_year")

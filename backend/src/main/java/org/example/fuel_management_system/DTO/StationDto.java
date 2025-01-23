@@ -16,13 +16,22 @@ public class StationDto {
     private String stationAddress;
 
     private String dealerName;
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
+    }
+
     private String licenseNumber;
 
     private LocalDate registrationDate;
 
     private String loginCode;
 
-    private List<Fuel> fuel = new ArrayList<>();
+    private Fuel fuel ;
 
     public int getId() {
         return id;
@@ -76,15 +85,10 @@ public class StationDto {
         return loginCode;
     }
 
+
     public void setLoginCode(String loginCode) {
         this.loginCode = loginCode;
     }
 
-    public List<Fuel> getFuel() {
-        return fuel;
-    }
 
-    public void setFuel(List<Fuel> fuel) {
-        this.fuel = fuel;
-    }
 }

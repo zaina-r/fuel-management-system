@@ -29,10 +29,10 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/stationInfo")
+  /*  @GetMapping("/stationInfo")
     public ResponseEntity<Response> getAllStations() {
         return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/getFuelQuantities")
     public ResponseEntity<List<Fuel>> getFuelQuantities(){
