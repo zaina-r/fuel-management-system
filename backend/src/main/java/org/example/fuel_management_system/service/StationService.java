@@ -213,7 +213,20 @@ this.authenticateService=authenticateService;
             return response;
         }
 
+    public Response findByLoginCode(String loginCode) {
+        Optional<Station> station=fuelStationRepository.findByLoginCode(loginCode);
+        Response response=new Response();
+        if(station.isPresent()){
+            response.setStatusCode(200);
+            response.setMessage("Station found successfully");
+            response.setStationDto(MapUtils.mapStationEntityToStationDTO(station.get()));
+        }else{
+            response.setStatusCode(404);
+            response.setMessage("Station with login code "+loginCode+"not found");
+        }
+        return response;
     }
+}
 
 
 

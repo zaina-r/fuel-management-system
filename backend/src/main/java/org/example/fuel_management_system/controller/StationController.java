@@ -65,6 +65,11 @@ public class StationController {
   return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
+    @PostMapping("/mobile/{loginCode}")
+    public ResponseEntity<Response>getStationUsingMobile(@PathVariable String LoginCode){
+        Response response=stationService.findByLoginCode(LoginCode);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 
 

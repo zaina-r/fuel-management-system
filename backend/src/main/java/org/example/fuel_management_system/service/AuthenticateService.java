@@ -315,6 +315,7 @@ public class AuthenticateService {
             if (forgotPasswordToken == null) {
                 response.setStatusCode(404);
                 response.setMessage("Invalid or expired token.");
+                return response;
             }
             boolean isVerified = forgotPasswordToken.getOtp().equals(otp);
 
@@ -326,6 +327,7 @@ public class AuthenticateService {
             else {
                 response.setStatusCode(400);
                 response.setMessage("Wrong OTP provided.");
+                return response;
 
             }
         }catch (Exception e){
@@ -340,6 +342,11 @@ public class AuthenticateService {
         System.out.println(resetPasswordRequest.getOtp()+resetPasswordRequest.getPassword());
         Response response=new Response();
         try {
+            if(resetPasswordRequest.getPassword().length()<=4){
+                response.setStatusCode(400);
+                response.setMessage("Password must be at least 4 charters");
+                return response;
+            }
 
             UserAccount userAccount=getUserByUsername(email);
 
@@ -354,12 +361,13 @@ public class AuthenticateService {
                 updatePassword(forgotPasswordToken.getUserAccount(), resetPasswordRequest.getPassword());
                 response.setStatusCode(200);
                 response.setMessage("Password can be updated successfully!");
+                return response;
 
             }
             else {
                 response.setStatusCode(400);
                 response.setMessage("Wrong OTP provided.");
-
+                 return response;
             }
         }catch (Exception e){
             response.setStatusCode(500);
