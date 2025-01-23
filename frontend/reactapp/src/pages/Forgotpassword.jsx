@@ -170,7 +170,7 @@ const ForgotPassword = () => {
               />
               <button
                 onClick={handleResetPassword}
-                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                className="w-full bg-blue-800 text-white py-2 rounded hover:bg-blue-600"
               >
                 Reset Password
               </button>
@@ -188,7 +188,7 @@ const ForgotPassword = () => {
               </h2>
               <button
                 onClick={() => navigate("/login")}
-                className="w-full p-2 border-b-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-blue-800 border-b-2  text-white mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 Go to Login
               </button>
