@@ -88,7 +88,7 @@ function UserLogin() {
       const userId = localStorage.getItem("userId");
       const result = await UserAccountApi.verifySigningOtp(otpValue, userId);
       console.log("The result is " + result);
-      if (result.statusCode == 200) {
+      if (result.statusCode === 200) {
         console.log("OTP verified successfully!");
         navigate("/");
       } else {
@@ -97,8 +97,7 @@ function UserLogin() {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       setError("There was an error verifying the OTP. Please try again.");
-    } finally {
-    }
+    } 
   };
 
   return (
@@ -109,40 +108,7 @@ function UserLogin() {
         {success && <Success success={success} setSuccess={setSuccess} />}
         <div className="container text-sm mt-24">
           <div className="flex items-center w-full">
-            <div className="w-1/2">
-              {otpBar && (
-                <div className="m-5 flex justify-center items-center">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col items-center space-y-4"
-                  >
-                    {/* OTP Input Fields */}
-                    <div className="flex space-x-2">
-                      {otp.map((_, index) => (
-                        <input
-                          key={index}
-                          id={`otp-input-${index}`}
-                          type="text"
-                          maxLength="1"
-                          value={otp[index]}
-                          onChange={(e) => handleOtpChange(e, index)}
-                          onFocus={(e) => e.target.select()}
-                          className="w-12 h-12 text-center text-2xl border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      ))}
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              )}
-            </div>
+            <div className="w-1/2"></div>
             <div className="w-1/2 flex flex-col gap-5">
               <div>
                 <h1 className="text-4xl font-extrabold text-neutral-800">
@@ -239,6 +205,51 @@ function UserLogin() {
           </div>
         </div>
       </div>
+      {otpBar && (
+        <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-50 ">
+          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-60 ">
+            <h1 className="text-2xl font-medium text-center ">
+              Verify your email
+            </h1>
+            <div className="flex justify-center my-10">
+              <img
+                src="..\src\Assets\726623.png"
+                alt=""
+                className="w-[100px] h-[100px] "
+              />
+            </div>
+            <p className="text-center mb-5">Enter the verification code we sent to email</p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-center space-y-4"
+            >
+              {/* OTP Input Fields */}
+              <div className="flex space-x-2">
+                {otp.map((_, index) => (
+                  <input
+                    key={index}
+                    id={`otp-input-${index}`}
+                    type="text"
+                    maxLength="1"
+                    value={otp[index]}
+                    onChange={(e) => handleOtpChange(e, index)}
+                    onFocus={(e) => e.target.select()}
+                    className="w-12 h-12 text-center text-2xl border bg-neutral-300 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                ))}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="mt-4 px-6 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

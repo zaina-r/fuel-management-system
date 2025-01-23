@@ -11,4 +11,5 @@ public interface FuelStationRepository extends JpaRepository<Station, Integer> {
 
     Optional<Station> findByDealerName(String stationName);
     boolean existsByStationId(String stationId);
+    Optional<Station> findByLoginCode(String LoginCode);
 }
