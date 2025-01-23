@@ -226,6 +226,7 @@ public class AuthenticateService {
             if (twoFactorOtp == null) {
                 response.setStatusCode(404);
                 response.setMessage("OTP not found for the given user.");
+                return response;
 
             }
 
@@ -234,6 +235,7 @@ public class AuthenticateService {
             if (!isOtpValid) {
                 response.setStatusCode(400);
                 response.setMessage("Invalid or expired OTP.");
+                return response;
             }
 
 
