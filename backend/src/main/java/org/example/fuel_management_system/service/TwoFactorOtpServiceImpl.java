@@ -41,7 +41,10 @@ public class TwoFactorOtpServiceImpl  {
 
 
     public boolean verifyTwoFactorOtp(TwoFactorOtp twoFactorOTP, String otp) {
-        return twoFactorOTP.getOtp().equals(otp);
+        if(twoFactorOTP.getOtp().equals(otp)){
+            return true;
+        }
+        return false;
     }
 
 
