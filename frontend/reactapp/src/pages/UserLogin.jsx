@@ -113,18 +113,19 @@ function UserLogin() {
   return (
     <>
       <div>
-        <div className="bg-slate-800 h-44 "></div>
+        <div className="bg-slate-800 h-screen fixed w-full">
         {error && <Error error={error} setError={setError} />}
         {success && <Success success={success} setSuccess={setSuccess} />}
-        <div className="container text-sm mt-24">
+        
+        <div className="container text-sm my-56 ">
           <div className="flex items-center w-full">
             <div className="w-1/2"></div>
             <div className="w-1/2 flex flex-col gap-5">
               <div>
-                <h1 className="text-4xl font-extrabold text-neutral-800">
+                <h1 className="text-4xl font-extrabold text-white">
                   Sign in
                 </h1>
-                <p className="my-3">
+                <p className="my-3 text-neutral-400">
                   Don't have an account{" "}
                   <span className="text-blue-700 hover:underline hover:cursor-pointer">
                     <a href="/register">Register here</a>
@@ -133,7 +134,7 @@ function UserLogin() {
               </div>
 
               <div>
-                <div className="my-1">
+                <div className="my-1 text-neutral-400">
                   <label htmlFor="email">Username</label>
                 </div>
                 <div className="relative">
@@ -153,7 +154,7 @@ function UserLogin() {
                 </div>
               </div>
               <div>
-                <div className="my-1">
+                <div className="my-1 text-neutral-400">
                   <label htmlFor="password">Password</label>
                 </div>
                 <div className="relative">
@@ -172,12 +173,12 @@ function UserLogin() {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center ">
                 <div>
                   <input type="checkbox" />
-                  <label htmlFor="remember">Remember me</label>
+                  <label htmlFor="remember" className="text-neutral-400">Remember me</label>
                 </div>
-                <div className="text-blue-900 hover:underline hover:cursor-pointer">
+                <div className="text-blue-700 hover:underline hover:cursor-pointer">
                   <a href="/forgotpassword">Forgot Password?</a>
                 </div>
               </div>
@@ -235,8 +236,8 @@ function UserLogin() {
       </div>
       {otpBar && (
         <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-80 ">
-          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 relative">
-          <FaTimes className="absolute top-5 right-5 cursor-pointer" size={20}  onClick={handleFaTimes} />
+          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 ">
+            <FaTimes className="absolute top-5 right-5 cursor-pointer" size={20}  onClick={handleFaTimes} />
             <h1 className="text-2xl font-medium text-center ">
               Verify your email
             </h1>
@@ -283,6 +284,9 @@ function UserLogin() {
           </div>
         </div>
       )}
+          
+        </div>
+       
     </>
   );
 }
