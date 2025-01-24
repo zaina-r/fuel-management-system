@@ -2,7 +2,7 @@ export const SlideUp = (delay) => {
     return {
       hidden: {
         opacity: 0,
-        y: 100,
+        y:100,
       },
       visible: {
         opacity: 1,
@@ -41,6 +41,23 @@ export const SlideUp = (delay) => {
         x: 0,
         transition: {
           duration: 1,
+          delay: delay,
+        },
+      },
+    };
+  };
+
+  export const SlideDown = (delay) => {
+    return {
+      hidden: {
+        opacity: 0,
+        y:-50,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.7,
           delay: delay,
         },
       },

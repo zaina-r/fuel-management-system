@@ -244,7 +244,7 @@ const UserRegisterationForm = () => {
           </div>
 
           <motion.div
-                variants={SlideLeft(0.7)}
+                variants={SlideLeft(0.2)}
                 initial="hidden"
                 whileInView={"visible"}
             className="w-1/2 flex flex-col  mt-3"

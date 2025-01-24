@@ -230,8 +230,8 @@ function UserLogin() {
         </div>
       </div>
       {otpBar && (
-        <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-50 ">
-          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-60 ">
+        <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-80 ">
+          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 ">
             <h1 className="text-2xl font-medium text-center ">
               Verify your email
             </h1>
