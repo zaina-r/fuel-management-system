@@ -24,7 +24,7 @@ export default class StationAccountApi {
     const stationId = localStorage.getItem("stationId");
 
     const response = await axios.get(
-      `${this.BASE_URL}/api/fuel/allFuels/${stationId}`,
+      `${this.BASE_URL}/api/station/stations/${stationId}`,
       {}
     );
 

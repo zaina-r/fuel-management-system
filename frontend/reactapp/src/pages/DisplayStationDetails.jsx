@@ -13,8 +13,8 @@ const LoadingSpinner = () => (
 function DisplayStationDetails() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [stationData, setStationData] = useState(null); // Initialize as null
-  const [loading, setLoading] = useState(true); // State for loading
+  const [stationData, setStationData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAllData();
@@ -30,8 +30,8 @@ function DisplayStationDetails() {
       const response = await StationAccountApi.getStationDetails();
       console.log("API Response:", response); // Log the full response to inspect its structure
 
-      if (response && response.fuelDto) {
-        setStationData(response.fuelDto);
+      if (response) {
+        setStationData(response.stationDto);
         setLoading(false);
       } else {
         setError("Invalid data structure received.");
@@ -59,37 +59,39 @@ function DisplayStationDetails() {
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Station ID:</span>
-                    <span>{stationData.station?.stationId || "N/A"}</span>
+                    <span>{stationData.stationId || "N/A"}</span>
                   </div>
                   <div>
                     <span>Station Address:</span>
-                    <span>{stationData.station?.stationAddress || "N/A"}</span>
+                    <span>{stationData.stationAddress || "N/A"}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Dealer Name:</span>
-                    <span>{stationData.station?.dealerName || "N/A"}</span>
+                    <span>{stationData.dealerName || "N/A"}</span>
                   </div>
                   <div>
                     <span>License Number:</span>
-                    <span>{stationData.station?.licenseNumber || "N/A"}</span>
+                    <span>{stationData.licenseNumber || "N/A"}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Available Petrol Capacity:</span>
-                    <span>{stationData.availablePetrolQuantity || "N/A"}</span>
+                    <span>
+                      {stationData.fuel?.availablePetrolQuantity || 0}
+                    </span>
                   </div>
                   <div>
                     <span>Available Diesel Capacity:</span>
-                    <span>{stationData.availableDiselQuantity || "N/A"}</span>
+                    <span>{stationData.fuel?.availableDiselQuantity || 0}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Login Code:</span>
-                    <span>{stationData.station?.loginCode || "N/A"}</span>
+                    <span>{stationData.loginCode || "N/A"}</span>
                   </div>
                 </div>
               </div>
