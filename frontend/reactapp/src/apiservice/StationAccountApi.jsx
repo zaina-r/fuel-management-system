@@ -21,10 +21,10 @@ export default class StationAccountApi {
   }
 
   static async getStationDetails() {
-    const stationId = localStorage.getItem("stationId");
+    const stationI = localStorage.getItem("stationId");
 
     const response = await axios.get(
-      `${this.BASE_URL}/api/station/stations/${stationId}`,
+      `${this.BASE_URL}/api/station/stations/${stationI}`,
       {}
     );
 
