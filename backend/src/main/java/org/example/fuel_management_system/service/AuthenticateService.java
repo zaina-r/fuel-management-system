@@ -262,6 +262,7 @@ public class AuthenticateService {
             if(userAccount==null){
                 response.setStatusCode(404);
                 response.setMessage("User not found with provided email.");
+                   return response;
             }
             String otp = GenerateOtp.generateOtp();
             UUID uuid = UUID.randomUUID();
