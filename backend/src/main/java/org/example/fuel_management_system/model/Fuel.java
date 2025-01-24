@@ -11,14 +11,31 @@ public class Fuel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fuelId;
 
-    private Float availableDiselQuantity;
+    private Float availableDieselQuantity;
+    private float weeklyDieselAllocation;
 
     private Float availablePetrolQuantity;
+    private float weeklyPetrolAllocation;
 
     @OneToOne
     @JoinColumn(name = "station_id")
     private Station station;
 
+    public float getWeeklyDieselAllocation() {
+        return weeklyDieselAllocation;
+    }
+
+    public void setWeeklyDieselAllocation(float weeklyDieselAllocation) {
+        this.weeklyDieselAllocation = weeklyDieselAllocation;
+    }
+
+    public float getWeeklyPetrolAllocation() {
+        return weeklyPetrolAllocation;
+    }
+
+    public void setWeeklyPetrolAllocation(float weeklyPetrolAllocation) {
+        this.weeklyPetrolAllocation = weeklyPetrolAllocation;
+    }
 
     public int getFuelId() {
         return fuelId;
@@ -28,12 +45,12 @@ public class Fuel {
         this.fuelId = fuelId;
     }
 
-    public Float getAvailableDiselQuantity() {
-        return availableDiselQuantity;
+    public Float getAvailableDieselQuantity() {
+        return availableDieselQuantity;
     }
 
-    public void setAvailableDiselQuantity(Float availableDiselQuantity) {
-        this.availableDiselQuantity = availableDiselQuantity;
+    public void setAvailableDieselQuantity(Float availableDieselQuantity) {
+        this.availableDieselQuantity = availableDieselQuantity;
     }
 
     public Float getAvailablePetrolQuantity() {
