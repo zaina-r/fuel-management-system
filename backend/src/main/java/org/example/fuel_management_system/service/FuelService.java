@@ -131,4 +131,23 @@ public class FuelService {
     }
 
 
+    public Response fuelDetails(int stationId){
+        Response response = new Response();
+        try {
+            Fuel fuels = fuelRepository.findByStationId(stationId);
+            response.setStatusCode(200);
+            response.setMessage("Fuels retrieved successfully");
+            response.setFuelDto(MapUtils.mapFuelEntityToFuelDTO(fuels));
+
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while retrieving Fuels: " + e.getMessage());
+
+        }
+
+
+        return response;
+    }
+
+
 }

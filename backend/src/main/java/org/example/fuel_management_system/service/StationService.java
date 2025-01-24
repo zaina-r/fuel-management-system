@@ -69,7 +69,7 @@ this.authenticateService=authenticateService;
 
         }
         return response;
-    }
+    }*/
 
     public Response getAllStations() {
         Response response = new Response();
@@ -88,7 +88,7 @@ this.authenticateService=authenticateService;
 
         return response;
     }
-*/
+
     public Response findStationById(int id) {
         Response response = new Response();
 
@@ -179,13 +179,14 @@ this.authenticateService=authenticateService;
                         existingStationOptional.get().getDealerId().equals(station.getStationId())
                 && !stationOptional
                 ) {
-                    Station existingStation=fuelStationRepository.save(station);
-                    existingStation.setRegistrationDate(LocalDate.now());
 
-                    String otp = GenerateOtp.generateOtp();
-                    UserAccount user = userAccountRepository.findByLicenseNumber(existingStation.getLicenseNumber());
+                    UserAccount user = userAccountRepository.findByLicenseNumber(station.getLicenseNumber());
+
+
 
                     if (user != null  ) {
+                        Station existingStation=fuelStationRepository.save(station);
+                        String otp = GenerateOtp.generateOtp();
                         VerificationCode verificationCode = verificationCodeService.generateOtpForStation(existingStation, otp, user.getUsername());
                         existingStation.setLoginCode(verificationCode.getOtp());
                         existingStation.setRegistrationDate(LocalDate.now());
@@ -196,6 +197,7 @@ this.authenticateService=authenticateService;
                     } else {
                         response.setStatusCode(404);
                         response.setMessage("User associated with license number not found.");
+
                     }
 
                 } else {

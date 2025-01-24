@@ -75,6 +75,8 @@ public class MapUtils {
         vehiclesDto.setAvailableFuelCapacity(vehicleVerification.getAvailableFuelCapacity());
         vehiclesDto.setLicense_plate_no(vehicleVerification.getLicense_plate_no());
         vehiclesDto.setQrCode(vehicleVerification.getQrCode());
+        vehiclesDto.setVehicleId(vehicleVerification.getVehicleId());
+        vehiclesDto.setFuel_type(vehicleVerification.getFuel_type());
         vehiclesDto.setUserAccount(vehicleVerification.getUserAccount());
 
         return vehiclesDto;

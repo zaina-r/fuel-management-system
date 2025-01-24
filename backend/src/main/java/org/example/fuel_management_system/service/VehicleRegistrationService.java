@@ -92,6 +92,7 @@ public class VehicleRegistrationService {
                     vehicleVerificationRepository.save(inputVehicle);
 
                     VehiclesDto vehiclesDto = new VehiclesDto();
+                    vehiclesDto.setVehicleId(inputVehicle.getVehicleId());
                     vehiclesDto.setVehicleRegNo(inputVehicle.getVehicleRegNo());
                     vehiclesDto.setVehicle_type(inputVehicle.getVehicle_type());
                     vehiclesDto.setMaximumFuelCapacity(inputVehicle.getMaximumFuelCapacity());
@@ -177,6 +178,7 @@ public class VehicleRegistrationService {
             VehiclesDto vehiclesDto = new VehiclesDto();
             vehiclesDto.setVehicleRegNo(vehicle.getVehicleRegNo());
             vehiclesDto.setVehicle_type(vehicle.getVehicle_type());
+
             vehiclesDto.setMaximumFuelCapacity(vehicle.getMaximumFuelCapacity());
             vehiclesDto.setAvailableFuelCapacity(vehicle.getAvailableFuelCapacity());
 

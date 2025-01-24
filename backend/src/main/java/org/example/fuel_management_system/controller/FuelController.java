@@ -28,10 +28,14 @@ public class FuelController {
     public ResponseEntity<Response> updateFuel(@PathVariable int stationId, @RequestBody FuelRequest request){
             Response response=fuelService.updateFuel(stationId,request);
             return ResponseEntity.status(HttpStatus.OK).body(response);
-
-
-
-
     }
+
+    @GetMapping("/allFuels/{stationId}")
+    public ResponseEntity<Response> allStations(@PathVariable int stationId){
+        Response response=fuelService.fuelDetails(stationId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 
 }

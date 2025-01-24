@@ -41,13 +41,11 @@ public class StationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }*/
 
-    /*@GetMapping("/allstations")
+    @GetMapping("/allstations")
     public ResponseEntity<Response> allStations(){
         Response response=stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
-
-
-    }/*/
+    }
 
     @GetMapping("/stations/{id}")
     public ResponseEntity<Response> findStationById(@PathVariable int id)
