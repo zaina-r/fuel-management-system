@@ -93,8 +93,8 @@ const UserRegisterationForm = () => {
 
   return (
     <>
-      <div className="bg-slate-800 h-32 "></div>
-      <div className="container  text-sm mt-10 ">
+      <div className="bg-slate-800 h-screen w-full fixed">
+      <div className="container  text-sm my-44 ">
         <div className="flex justify-center w-full">
           <div className="relative w-1/2 bg-[url('..\src\Assets\fuel2.jpg')] bg-cover bg-center bg-no-repeat">
             <div className="absolute inset-0 bg-black opacity-80 p-8 text-white">
@@ -252,24 +252,24 @@ const UserRegisterationForm = () => {
             {error && <Error error={error} setError={setError} />}
             {success && <Success success={success} setSuccess={setSuccess} />}
             <form onSubmit={handleSubmit} className="register-form">
-              <h1 className="text-4xl font-extrabold text-neutral-800 m-5">
+              <h1 className="text-4xl font-extrabold text-white m-5">
                 Sign up
               </h1>
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">firstname</label>
+                  <label className="block my-1 text-neutral-400">firstname</label>
                   <input
                     type="text"
                     name="firstname"
                     value={formData.firstname}
                     onChange={handleChange}
                     placeholder="firstname"
-                    className="bg-gray-200 p-1 rounded-sm text-md w-full"
+                    className="bg-gray-200 p-1 rounded-sm text-md w-full "
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">lastname</label>
+                  <label className="block my-1 text-neutral-400">lastname</label>
                   <input
                     type="text"
                     name="lastname"
@@ -283,7 +283,7 @@ const UserRegisterationForm = () => {
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">NIC</label>
+                  <label className="block my-1 text-neutral-400">NIC</label>
                   <input
                     type="text"
                     name="nic"
@@ -294,7 +294,7 @@ const UserRegisterationForm = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">Telphn No</label>
+                  <label className="block my-1 text-neutral-400">Telphn No</label>
                   <input
                     type="text"
                     name="telno"
@@ -308,7 +308,7 @@ const UserRegisterationForm = () => {
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">username</label>
+                  <label className="block my-1 text-neutral-400">username</label>
                   <input
                     type="email"
                     name="username"
@@ -319,7 +319,7 @@ const UserRegisterationForm = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">Password</label>
+                  <label className="block my-1 text-neutral-400">Password</label>
                   <input
                     type="password"
                     name="password"
@@ -331,7 +331,7 @@ const UserRegisterationForm = () => {
                 </div>
               </div>
               <div className="m-5 flex flex-col   gap-3">
-                <label>Role</label>
+                <label className="text-neutral-400">Role</label>
                 <select
                   name="role"
                   value={formData.role}
@@ -345,7 +345,7 @@ const UserRegisterationForm = () => {
               </div>
               {licese && (
                 <div className="m-5">
-                  <label htmlFor="" className="block my-1">
+                  <label htmlFor="" className="block my-1 text-neutral-400">
                     License Number
                   </label>
                   <input
@@ -360,9 +360,9 @@ const UserRegisterationForm = () => {
               )}
               <div className="m-5">
                 <input type="checkbox" />
-                <label className="ml-2">
+                <label className="ml-2 text-neutral-400">
                   I agree to the{" "}
-                  <a href="" className="text-blue-700">
+                  <a href="" className="text-blue-600">
                     terms and conditions
                   </a>
                 </label>
@@ -375,9 +375,9 @@ const UserRegisterationForm = () => {
                 Create an account
               </button>
               <div className="ml-5 mt-3 text-xs">
-                <p className="text-neutral-600">
+                <p className="text-white">
                   Already have an account?
-                  <a href="/login" className="text-blue-800">
+                  <a href="/login" className="text-blue-600">
                     Login here
                   </a>{" "}
                 </p>
@@ -386,6 +386,8 @@ const UserRegisterationForm = () => {
           </motion.div>
         </div>
       </div>
+      </div>
+     
     </>
   );
 };
