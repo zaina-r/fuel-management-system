@@ -1,9 +1,12 @@
 package org.example.fuel_management_system.service;
 
+import org.example.fuel_management_system.DTO.FuelAllocation;
 import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.Repository.ExistingStationsRepository;
+import org.example.fuel_management_system.Repository.FuelRepository;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.model.ExistingStations;
+import org.example.fuel_management_system.model.Fuel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,10 +17,12 @@ public class AdminService {
 
     private final FuelStationRepository fuelStationRepository;
     private final ExistingStationsRepository existingStationsRepository;
+    private final FuelRepository fuelRepository;
 
-    public AdminService(FuelStationRepository fuelStationRepository, ExistingStationsRepository existingStationsRepository){
+    public AdminService(FuelStationRepository fuelStationRepository, ExistingStationsRepository existingStationsRepository, FuelRepository fuelRepository){
         this.fuelStationRepository = fuelStationRepository;
         this.existingStationsRepository = existingStationsRepository;
+        this.fuelRepository = fuelRepository;
     }
 
     public List<StationWithRegistrationStatus> getStationWithStatus(){
@@ -38,6 +43,20 @@ public class AdminService {
         }
 
         return stationList;
+    }
+
+    public void updateWeeklyFuelAllocation (FuelAllocation fuelAllocation) {
+
+        Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getDealerId(), fuelAllocation.getWeeklyDieselAmount(), fuelAllocation.getWeeklyPetrolAmount());
+
+        if (fuel != null) {
+
+            fuel.setWeeklyDieselAllocation(fuelAllocation.getWeeklyDieselAmount());
+            fuel.setWeeklyPetrolAllocation(fuelAllocation.getWeeklyPetrolAmount());
+            fuelRepository.save(fuel);
+        } else {
+            throw new RuntimeException("Fuel entry not found for dealer ID: " + fuelAllocation.getDealerId());
+        }
     }
 
 }

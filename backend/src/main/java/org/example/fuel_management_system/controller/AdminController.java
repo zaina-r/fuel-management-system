@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.FuelAllocation;
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.model.Fuel;
@@ -44,6 +45,11 @@ public class AdminController {
     @GetMapping("/get-stations-with-status")
     public List<StationWithRegistrationStatus> getStationsWithStatus() {
         return adminService.getStationWithStatus();
+    }
+
+    @PostMapping("/update-weekly-fuel-allocation")
+    public void updateWeeklyFuelAllocation(@RequestBody FuelAllocation fuelAllocation){
+        adminService.updateWeeklyFuelAllocation(fuelAllocation);
     }
 
    /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
