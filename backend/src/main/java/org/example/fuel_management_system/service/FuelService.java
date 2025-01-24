@@ -1,6 +1,5 @@
 package org.example.fuel_management_system.service;
 
-import org.example.fuel_management_system.DTO.FuelDto;
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.DTO.StationDto;
 import org.example.fuel_management_system.Repository.FuelRepository;
@@ -47,7 +46,7 @@ public class FuelService {
         Fuel fuel = new Fuel();
         fuel.setStation(fuelStation);
         fuel.setAvailablePetrolQuantity(petrolCapacity);
-        fuel.setAvailableDiselQuantity(dieselCapacity);
+        fuel.setAvailableDieselQuantity(dieselCapacity);
 
 
         fuel = fuelRepository.save(fuel);
@@ -103,7 +102,7 @@ public class FuelService {
 
         } else if ("diesel".equals(fuelType)) { // Correct spelling for diesel
             // Handle diesel update
-            Float availableDiesel = stationFuel.getAvailableDiselQuantity();
+            Float availableDiesel = stationFuel.getAvailableDieselQuantity();
 
             if (availableDiesel < requestedQuantity) {
                 result.setMessage("Insufficient diesel available");
@@ -112,7 +111,7 @@ public class FuelService {
             }
 
             // Deduct requested diesel quantity
-            stationFuel.setAvailableDiselQuantity(availableDiesel - requestedQuantity);
+            stationFuel.setAvailableDieselQuantity(availableDiesel - requestedQuantity);
 
         } else {
 

@@ -19,7 +19,7 @@ public class FuelController {
 
     @PostMapping("/addfuel/{stationId}")
     public ResponseEntity<Response> addFuel(@PathVariable int stationId, @RequestBody Fuel fuel){
-        Response response=fuelService.addFuel(stationId,fuel.getAvailablePetrolQuantity(),fuel.getAvailableDiselQuantity());
+        Response response=fuelService.addFuel(stationId,fuel.getAvailablePetrolQuantity(),fuel.getAvailableDieselQuantity());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
