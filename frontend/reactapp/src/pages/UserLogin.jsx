@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 function UserLogin() {
   const [action, setAction] = useState("Login");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [otpBar, setOtpBar] = useState(false);
