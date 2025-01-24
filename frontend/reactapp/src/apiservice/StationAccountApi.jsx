@@ -19,4 +19,12 @@ export default class StationAccountApi {
     );
     return response.data;
   }
+
+  static async getStationDetails(registration) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/station/registration`,
+      registration
+    );
+    return response.data;
+  }
 }

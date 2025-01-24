@@ -2,6 +2,7 @@ import { useState } from "react";
 import StationAccountApi from "../apiservice/StationAccountApi";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
+import { Oval } from "react-loader-spinner";
 
 const StationRegistration = () => {
   const [error, setError] = useState("");
@@ -47,6 +48,7 @@ const StationRegistration = () => {
           dealerName: "",
           stationAddress: "",
         });
+        localStorage.setItem("stationId", stas);
         setError("");
         setSuccess("Otp can be sent successful!");
         setTimeout(() => setSuccess(""), 5000);
