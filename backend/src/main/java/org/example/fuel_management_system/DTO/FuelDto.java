@@ -1,15 +1,14 @@
 package org.example.fuel_management_system.DTO;
 
-import jakarta.persistence.*;
 import org.example.fuel_management_system.model.Station;
 
 public class FuelDto {
 
 
     private int fuelId;
-    private Float availableDiselQuantity;
-
+    private Float availableDieselQuantity;
     private Float availablePetrolQuantity;
+
     private Station station;
 
     public int getFuelId() {
@@ -20,12 +19,12 @@ public class FuelDto {
         this.fuelId = fuelId;
     }
 
-    public Float getAvailableDiselQuantity() {
-        return availableDiselQuantity;
+    public Float getAvailableDieselQuantity() {
+        return availableDieselQuantity;
     }
 
-    public void setAvailableDiselQuantity(Float availableDiselQuantity) {
-        this.availableDiselQuantity = availableDiselQuantity;
+    public void setAvailableDieselQuantity(Float availableDieselQuantity) {
+        this.availableDieselQuantity = availableDieselQuantity;
     }
 
     public Float getAvailablePetrolQuantity() {

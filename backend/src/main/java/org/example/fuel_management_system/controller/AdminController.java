@@ -1,8 +1,11 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.FuelAllocation;
 import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
+import org.example.fuel_management_system.service.AdminService;
 import org.example.fuel_management_system.service.FuelService;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,11 @@ public class AdminController {
     @Autowired
     StationService stationService;
 
+    AdminService adminService;
 
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
   /*  @GetMapping("/stationInfo")
     public ResponseEntity<Response> getAllStations() {
@@ -32,6 +39,17 @@ public class AdminController {
     @GetMapping("/getFuelQuantities")
     public ResponseEntity<List<Fuel>> getFuelQuantities(){
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get-stations-with-status")
+    public List<StationWithRegistrationStatus> getStationsWithStatus() {
+        return adminService.getStationWithStatus();
+    }
+
+    @PostMapping("/update-weekly-fuel-allocation")
+    public void updateWeeklyFuelAllocation(@RequestBody FuelAllocation fuelAllocation){
+        adminService.updateWeeklyFuelAllocation(fuelAllocation);
     }
 
    /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
