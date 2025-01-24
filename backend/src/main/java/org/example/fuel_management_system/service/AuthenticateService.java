@@ -88,12 +88,12 @@ public class AuthenticateService {
 
         }catch (FuelException | IllegalArgumentException e){
             response.setStatusCode(400);
-            response.setMessage(e.getMessage());
+            response.setMessage("Username or Password is incorrect");
         }
 
         catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error Occurred During USer Registration " + e.getMessage());
+            response.setMessage("Username or Password is incorrect");
 
 
         }
@@ -142,10 +142,10 @@ public class AuthenticateService {
 
         }catch (IllegalArgumentException e) {
             response.setStatusCode(400);
-            response.setMessage(e.getMessage());
+            response.setMessage("Username or Password is incorrect");
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error occurred during authentication: " + e.getMessage());
+            response.setMessage("Username or Password is incorrect ");
         }
 
         return response;
