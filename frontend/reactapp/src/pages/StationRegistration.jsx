@@ -41,16 +41,19 @@ const StationRegistration = () => {
     try {
       const response = await StationAccountApi.registerStation(formData);
 
+      console.log(response.data);
       if (response.statusCode === 200) {
+        const id = response.stationDto.id;
+        localStorage.setItem("stationId", id);
         setFormData({
           licenseNumber: "",
           stationId: "",
           dealerName: "",
           stationAddress: "",
         });
-        localStorage.setItem("stationId", stas);
+
         setError("");
-        setSuccess("Otp can be sent successful!");
+        setSuccess("Successfully registered Otp can be sentfull!");
         setTimeout(() => setSuccess(""), 5000);
       } else {
         setError(response?.message || error.message);

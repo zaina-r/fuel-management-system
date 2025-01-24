@@ -35,19 +35,24 @@ const Navbar = () => {
               </li>
               <li className="hover:text-gray-300 cursor-pointer">Service</li>
               <li className="hover:text-gray-300 cursor-pointer">Contact</li>
-             {isVehicleOwner && (
+              {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                 <NavLink to="/vehicleRegister">VehicleRegister</NavLink> 
-                </ li>
+                  <NavLink to="/vehicleRegister">VehicleRegister</NavLink>
+                </li>
               )}
-                {isVehicleOwner && (
+              {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                 <NavLink to="/vehicleHistory">VehicleHistory</NavLink> 
-                </ li>
+                  <NavLink to="/vehicleHistory">VehicleHistory</NavLink>
+                </li>
               )}
               {isFuelStationOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/stationRegister">FuelStationRegister</NavLink>
+                </li>
+              )}
+              {isFuelStationOwner && (
+                <li className="hover:text-gray-300 cursor-pointer">
+                  <NavLink to="/StationHistory">StationHistory</NavLink>
                 </li>
               )}
             </ul>

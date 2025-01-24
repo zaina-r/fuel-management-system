@@ -19,6 +19,7 @@ const DisplayVehicleDetails = () => {
       const response = await VehicleApi.getVehicleDetails();
 
       setQrVehicleData(response.vehiclesDtoList);
+      console.log(response.vehiclesDtoList);
 
       console.log(qrVehicleData);
 

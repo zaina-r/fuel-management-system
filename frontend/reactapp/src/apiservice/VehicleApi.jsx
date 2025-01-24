@@ -22,7 +22,9 @@ export default class VehicleApi {
 
   static async getVehicleDetails() {
     const userId = localStorage.getItem("userId");
-    const response = await axios.get(`${this.BASE_URL}/api/allFuels/${userId}`);
+    const response = await axios.get(
+      `${this.BASE_URL}/api/allVehicleDetails/${userId}`
+    );
     return response.data;
   }
 }

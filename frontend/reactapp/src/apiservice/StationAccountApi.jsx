@@ -20,11 +20,14 @@ export default class StationAccountApi {
     return response.data;
   }
 
-  static async getStationDetails(registration) {
-    const response = await axios.post(
-      `${this.BASE_URL}/api/station/registration`,
-      registration
+  static async getStationDetails() {
+    const stationId = localStorage.getItem("stationId");
+
+    const response = await axios.get(
+      `${this.BASE_URL}/api/fuel/allFuels/${stationId}`,
+      {}
     );
+
     return response.data;
   }
 }
