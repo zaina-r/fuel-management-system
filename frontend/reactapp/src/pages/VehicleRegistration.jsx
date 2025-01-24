@@ -5,6 +5,8 @@ import VehicleApi from "../apiservice/VehicleApi";
 import { QRCodeSVG } from "qrcode.react";
 import { toPng } from "html-to-image";
 
+
+
 const VehicleRegistration = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
