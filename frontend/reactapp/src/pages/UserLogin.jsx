@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 function UserLogin() {
   const [action, setAction] = useState("Login");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [otpBar, setOtpBar] = useState(false);
@@ -243,8 +243,9 @@ function UserLogin() {
               />
             </div>
             <p className="text-center mb-5">
-              Enter the verification code we sent to email
+              Enter the 6-digit verification code that was sent to your email
             </p>
+
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-center space-y-4"
@@ -272,6 +273,7 @@ function UserLogin() {
               >
                 Submit
               </button>
+              <p className="text-xs">Didn't receive code?<a href="" className="text-blue-800 hover:underline">Request again</a></p>
             </form>
           </div>
         </div>
