@@ -59,21 +59,21 @@ function DisplayStationDetails() {
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Station ID:</span>
-                    <span>{stationData.stationId || "N/A"}</span>
+                    <span>{stationData.stationId || "Not Found"}</span>
                   </div>
                   <div>
                     <span>Station Address:</span>
-                    <span>{stationData.stationAddress || "N/A"}</span>
+                    <span>{stationData.stationAddress || "Not Found"}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 p-2">
                   <div>
                     <span>Dealer Name:</span>
-                    <span>{stationData.dealerName || "N/A"}</span>
+                    <span>{stationData.dealerName || "Not Found"}</span>
                   </div>
                   <div>
                     <span>License Number:</span>
-                    <span>{stationData.licenseNumber || "N/A"}</span>
+                    <span>{stationData.licenseNumber || "Not Found"}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 p-2">
