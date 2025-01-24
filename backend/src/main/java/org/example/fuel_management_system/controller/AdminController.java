@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.controller;
 
 import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.AdminService;
@@ -37,6 +38,12 @@ public class AdminController {
     @GetMapping("/getFuelQuantities")
     public ResponseEntity<List<Fuel>> getFuelQuantities(){
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get-stations-with-status")
+    public List<StationWithRegistrationStatus> getStationsWithStatus() {
+        return adminService.getStationWithStatus();
     }
 
    /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
