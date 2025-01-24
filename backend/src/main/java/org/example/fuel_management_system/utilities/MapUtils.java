@@ -32,6 +32,7 @@ public class MapUtils {
     }
     public static StationDto mapStationEntityToStationDTO(Station station) {
         StationDto stationDto = new StationDto();
+        //station details
 
         stationDto.setId(station.getId());
          stationDto.setStationId(station.getStationId());
