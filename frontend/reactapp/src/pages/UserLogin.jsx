@@ -7,6 +7,7 @@ import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import UserAccountApi from "../apiservice/UserAccountApi";
 import { Oval } from "react-loader-spinner";
+import { FaTimes} from "react-icons/fa";
 
 function UserLogin() {
   const [action, setAction] = useState("Login");
@@ -63,6 +64,9 @@ function UserLogin() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  const handleFaTimes = (e) => {
+    setOtpBar(false);
+ }
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
@@ -231,7 +235,8 @@ function UserLogin() {
       </div>
       {otpBar && (
         <div className="block fixed z-1 left-0 top-0 w-full h-full bg-black bg-opacity-80 ">
-          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 ">
+          <div className="bg-white container rounded-2xl py-10 max-w-[500px] my-40 relative">
+          <FaTimes className="absolute top-5 right-5 cursor-pointer" size={20}  onClick={handleFaTimes} />
             <h1 className="text-2xl font-medium text-center ">
               Verify your email
             </h1>
