@@ -35,7 +35,7 @@ public class MapUtils {
 
         stationDto.setId(station.getId());
          stationDto.setStationId(station.getStationId());
-         stationDto.setStationAddress(stationDto.getStationAddress());
+         stationDto.setStationAddress(station.getStationAddress());
          stationDto.setLoginCode(station.getLoginCode());
          stationDto.setLicenseNumber(station.getLicenseNumber());
          stationDto.setFuel(station.getFuel());
