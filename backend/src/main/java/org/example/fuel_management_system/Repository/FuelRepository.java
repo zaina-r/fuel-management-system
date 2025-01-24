@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface FuelRepository extends JpaRepository<Fuel,Integer> {
     Fuel findByStationId(int stationId);
+
+    Fuel findByStationId(String dealerId, double dieselAmount, double petrolAmount);
 }
