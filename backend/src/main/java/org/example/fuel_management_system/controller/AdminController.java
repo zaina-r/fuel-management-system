@@ -26,4 +26,11 @@ public class AdminController {
     public List<StationFuelDto> getStationDetails() {
         return stationService.getStationFuelData();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Station> updateStation(@PathVariable int id, @RequestBody Station stationDetails) {
+        Station updatedStation = stationService.updateStation(id, stationDetails);
+        return ResponseEntity.ok(updatedStation);
+    }
+
 }

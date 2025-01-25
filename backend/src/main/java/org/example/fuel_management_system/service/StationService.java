@@ -226,7 +226,7 @@ this.authenticateService=authenticateService;
         station.setDealerName(stationDetails.getDealerName());
         station.setLicenseNumber(stationDetails.getLicenseNumber());
         station.setRegistrationDate(stationDetails.getRegistrationDate());
-        // Update other fields as needed
+
         return fuelStationRepository.save(station);
     }
 
