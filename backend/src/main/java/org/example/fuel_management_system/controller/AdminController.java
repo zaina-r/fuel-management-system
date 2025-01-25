@@ -33,4 +33,10 @@ public class AdminController {
         return ResponseEntity.ok(updatedStation);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteStation(@PathVariable int id) {
+        stationService.deleteStation(id);
+        return ResponseEntity.ok("Station deleted successfully!");
+    }
+
 }
