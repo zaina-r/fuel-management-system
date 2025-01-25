@@ -230,6 +230,12 @@ this.authenticateService=authenticateService;
         return fuelStationRepository.save(station);
     }
 
+    public void deleteStation(int id) {
+        Station station = fuelStationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Station not found with id: " + id));
+        fuelStationRepository.delete(station);
+    }
+
     }
 
 
