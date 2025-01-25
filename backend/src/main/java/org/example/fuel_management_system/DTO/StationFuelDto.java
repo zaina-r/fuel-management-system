@@ -1,5 +1,7 @@
 package org.example.fuel_management_system.DTO;
 
+import java.time.LocalDate;
+
 public class StationFuelDto {
     private String stationId;
     private String stationAddress;
@@ -13,12 +15,12 @@ public class StationFuelDto {
 
     }
 
-    public StationFuelDto(String stationId, String stationAddress, String dealerName, String licenseNumber, String registrationDate, Float availableDiselQuantity, Float availablePetrolQuantity) {
+    public StationFuelDto(String stationId, String stationAddress, String dealerName, String licenseNumber, LocalDate registrationDate, Float availableDiselQuantity, Float availablePetrolQuantity) {
         this.stationId = stationId;
         this.stationAddress = stationAddress;
         this.dealerName = dealerName;
         this.licenseNumber = licenseNumber;
-        this.registrationDate = registrationDate;
+        this.registrationDate = String.valueOf(registrationDate);
         this.availableDiselQuantity = availableDiselQuantity;
         this.availablePetrolQuantity = availablePetrolQuantity;
     }
@@ -55,11 +57,11 @@ public class StationFuelDto {
         this.licenseNumber = licenseNumber;
     }
 
-    public String getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(String registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
