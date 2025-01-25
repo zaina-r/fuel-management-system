@@ -8,7 +8,7 @@ const Home = () => {
 
   const handleBg = () => {
     setBd(!bd);
-  };
+  };                                                                                                                                        
   return (
     <>
       <div>
@@ -17,8 +17,8 @@ const Home = () => {
           <video
             src="../src/assets/11641333-uhd_4096_2160_24fps (1).mp4"
             autoPlay
-            loop
-            muted
+            loop                                                           
+            muted                                                                       
             className="absolute w-auto min-w-full min-h-full object-cover shadow-2xl "
           ></video>
 
