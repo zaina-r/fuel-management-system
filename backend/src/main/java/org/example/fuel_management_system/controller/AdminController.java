@@ -27,7 +27,7 @@ public class AdminController {
     @Autowired
     ExistingStationsServiceImpl existingStationsService;
 
-    @GetMapping("/stationInfo")
+    @GetMapping("/allStationInfo")
     public ResponseEntity<Response> getAllStations() {
         return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
     }
@@ -37,11 +37,9 @@ public class AdminController {
         return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
     }
 
-    @PostMapping("/addStation")
-    public ResponseEntity<ExistingStations> addStation(@RequestBody ExistingStations existingStation){
-        ExistingStations existingStations1 = existingStationsService.addStation(existingStation);
-        return new ResponseEntity<>(existingStations1, HttpStatus.OK);
+    @GetMapping("/getStation/{userId}")
+    public ResponseEntity<ReqRes> getUSerByID(@PathVariable Integer userId){
+        return ResponseEntity.ok(usersManagementService.getUsersById(userId));
+
     }
-
-
 }
