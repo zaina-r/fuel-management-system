@@ -1,13 +1,16 @@
 package org.example.fuel_management_system.DTO;
 
+import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.Date;
 
 public class StationFuelDto {
     private String stationId;
     private String stationAddress;
     private String dealerName;
     private String licenseNumber;
-    private String registrationDate;
+    private LocalDate registrationDate;
     private Float availableDiselQuantity;
     private Float availablePetrolQuantity;
 
@@ -20,7 +23,7 @@ public class StationFuelDto {
         this.stationAddress = stationAddress;
         this.dealerName = dealerName;
         this.licenseNumber = licenseNumber;
-        this.registrationDate = String.valueOf(registrationDate);
+        this.registrationDate = registrationDate;
         this.availableDiselQuantity = availableDiselQuantity;
         this.availablePetrolQuantity = availablePetrolQuantity;
     }
