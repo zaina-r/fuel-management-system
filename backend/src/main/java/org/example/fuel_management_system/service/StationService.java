@@ -2,6 +2,7 @@ package org.example.fuel_management_system.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.StationFuelDto;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.ExistingStationsRepository;
 import org.example.fuel_management_system.Repository.FuelRepository;
@@ -212,6 +213,10 @@ this.authenticateService=authenticateService;
 
             return response;
         }
+
+    public List<StationFuelDto> getStationFuelData() {
+        return fuelStationRepository.fetchStationFuelData();
+    }
 
     }
 
