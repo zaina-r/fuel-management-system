@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.controller;
 
 import org.example.fuel_management_system.DTO.Response;
+import org.example.fuel_management_system.DTO.StationFuelDto;
 import org.example.fuel_management_system.model.ExistingStations;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
@@ -19,27 +20,10 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    FuelService fuelService;
-
-    @Autowired
     StationService stationService;
 
-    @Autowired
-    ExistingStationsServiceImpl existingStationsService;
-
-    @GetMapping("/allStationInfo")
-    public ResponseEntity<Response> getAllStations() {
-        return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
-    }
-
-    @GetMapping("/getFuelQuantities")
-    public ResponseEntity<List<Fuel>> getFuelQuantities(){
-        return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
-    }
-
-    @GetMapping("/getStation/{userId}")
-    public ResponseEntity<ReqRes> getUSerByID(@PathVariable Integer userId){
-        return ResponseEntity.ok(usersManagementService.getUsersById(userId));
-
+    @GetMapping("/stationDetails")
+    public List<StationFuelDto> getStationDetails() {
+        return stationService.getStationFuelData();
     }
 }
