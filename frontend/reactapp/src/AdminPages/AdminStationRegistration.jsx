@@ -25,7 +25,7 @@ const AdminStationRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/station/register", formData);
+      const response = await axios.post("http://localhost:8080/api/admin/addStation", formData);
       setSuccessMessage("Station registered successfully!");
       setErrorMessage("");
       setFormData({
