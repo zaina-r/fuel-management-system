@@ -5,6 +5,9 @@ import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import { useState } from "react";
 import { toPng } from "html-to-image";
+import { motion } from "framer-motion";
+import { SlideRight } from "../animation/direction";
+import { SlideUp } from "../animation/direction";
 
 
 const DisplayVehicleDetails = () => {
@@ -12,6 +15,8 @@ const DisplayVehicleDetails = () => {
   const [success, setSuccess] = useState("");
   const [qrVehicleData, setQrVehicleData] = useState([]);
   const [qrData, setQrData] = useState();
+
+
 
 
   const qrRef = useRef(null);
@@ -60,7 +65,12 @@ const DisplayVehicleDetails = () => {
       {success && <Success success={success} setSuccess={setSuccess} />}
       <div className="container my-24">
         {qrVehicleData.map((vehicle, index) => (
-          <div className="text-sm rounded-xl my-5" key={index}>
+          <motion.div
+          variants={SlideUp((index+1)*0.3)}
+          initial="hidden"
+          whileInView={"visible"}
+          
+          className="text-sm rounded-xl my-5" key={index}>
             <div className="flex justify-center  h-[300px] text-white">
               <div className="w-1/4  p-7 flex justify-center items-center">
                 {/* <QRCodeSVG value={vehicle.qrCode} size={150} /> */}
@@ -68,7 +78,7 @@ const DisplayVehicleDetails = () => {
                   ref={qrRef}
                   style={{
                     display: "inline-block",
-                    padding: "10px 35px",
+                    padding: "5px 25px",
                     border: "1px solid #ccc",
                     // borderRadius: "10px",
                     backgroundColor: "#fff",
@@ -86,7 +96,7 @@ const DisplayVehicleDetails = () => {
                   >
                     {vehicle.license_plate_no}
                   </div>
-                  <QRCodeSVG value={vehicle.qrCode} size={160} />
+                  <QRCodeSVG value={vehicle.qrCode} size={130} />
                   <div
                     style={{
                       marginTop: "",
@@ -137,14 +147,14 @@ const DisplayVehicleDetails = () => {
                     <span>{vehicle.qrCode}</span>
                   </div>
                   <div>
-                    <button className="bg-green-600 w-full py-1" onClick={downloadQR}>
+                    <button className="bg-green-600 w-[200px] py-1" onClick={downloadQR}>
                       download
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       </div>
