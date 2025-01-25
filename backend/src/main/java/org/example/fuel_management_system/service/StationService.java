@@ -218,6 +218,18 @@ this.authenticateService=authenticateService;
         return fuelStationRepository.fetchStationFuelData();
     }
 
+    public Station updateStation(int id, Station stationDetails) {
+        Station station = fuelStationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Station not found with id: " + id));
+
+        station.setStationAddress(stationDetails.getStationAddress());
+        station.setDealerName(stationDetails.getDealerName());
+        station.setLicenseNumber(stationDetails.getLicenseNumber());
+        station.setRegistrationDate(stationDetails.getRegistrationDate());
+        // Update other fields as needed
+        return fuelStationRepository.save(station);
+    }
+
     }
 
 
