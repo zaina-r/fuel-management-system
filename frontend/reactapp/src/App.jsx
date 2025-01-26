@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import "./App.css";
 import UserLogin from "./pages/UserLogin";
@@ -9,6 +10,11 @@ import Navbar from "./components/Navbar";
 import VehicleRegistration from "./pages/VehicleRegistration";
 import StationRegistration from "./pages/StationRegistration";
 import Contact from "./pages/Contact";
+
+import AdminNavbar from "./components/AdminNavbar";
+import AdminHome from "./AdminPages/AdminHome";
+import AdminStationRegistration from "./AdminPages/AdminStationRegistration";
+
 import About from "./pages/About";
 import DisplayVehicleDetails from "./pages/DisplayVehicleDetails";
 import DisplayStationDetails from "./pages/DisplayStationDetails";
@@ -38,6 +44,7 @@ function App() {
                 path="/stationRegister"
                 element={<StationRegistration />}
               />
+              <Route path="/admin" element={<AdminHome />} />
               <Route
                 path="/StationHistory"
                 element={<DisplayStationDetails />}
@@ -46,6 +53,7 @@ function App() {
             </Routes>
           </div>
         </div>
+        <AdminNavbar />
       </BrowserRouter>
     </>
   );

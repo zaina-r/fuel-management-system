@@ -1,7 +1,6 @@
 //package org.example.fuel_management_system.service;
 //
 //import jakarta.annotation.PostConstruct;
-//import jakarta.transaction.Transactional;
 //import org.springframework.stereotype.Service;
 //
 //
@@ -13,16 +12,15 @@
 //import org.springframework.web.bind.annotation.PostMapping;
 //
 //@Service
-//@Transactional
 //public class TwillioService {
 //
-//    @Value("${twilio.account.sid}")
+//    @Value("${twilio.account-sid}")
 //    private String accountSid;
 //
-//    @Value("${twilio.auth.token}")
+//    @Value("${twilio.auth-token}")
 //    private String authToken;
 //
-//    @Value("${twilio.phone.number}")
+//    @Value("${twilio.phone-number}")
 //    private String twilioPhoneNumber;
 //
 //
@@ -32,9 +30,10 @@
 //    }
 //
 //    public String sendNotification(String toPhoneNumber, String messageBody) {
-//        initTwilio();
 //        try {
-//
+//            if (!toPhoneNumber.startsWith("+")) {
+//                toPhoneNumber = "+94" + toPhoneNumber.substring(1); // Assuming UK country code
+//            }
 //
 //            Message message = Message.creator(
 //                    new com.twilio.type.PhoneNumber(toPhoneNumber),
