@@ -46,11 +46,8 @@ public class AdminService {
     }
 
     public void updateWeeklyFuelAllocation (FuelAllocation fuelAllocation) {
-
-        Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getDealerId(), fuelAllocation.getWeeklyDieselAmount(), fuelAllocation.getWeeklyPetrolAmount());
-
+        Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getDealerId())
         if (fuel != null) {
-
             fuel.setWeeklyDieselAllocation(fuelAllocation.getWeeklyDieselAmount());
             fuel.setWeeklyPetrolAllocation(fuelAllocation.getWeeklyPetrolAmount());
             fuelRepository.save(fuel);
