@@ -24,7 +24,43 @@ public class Response {
     private List<VehiclesDto>vehiclesDtoList;
     private List<StationDto> stationDtosList;
     private List<FuelDto>fuelDtoList;
+    private StationWithStatusDTO stationWithStatusDTO;
+    private List<StationWithStatusDTO> stationWithStatusDTOList;
+    private FuelTransitionDto fuelTransitionDto;
+    private List<FuelTransitionDto>fuelTransitionDtoList;
 
+
+    public List<FuelTransitionDto> getFuelTransitionDtoList() {
+        return fuelTransitionDtoList;
+    }
+
+    public void setFuelTransitionDtoList(List<FuelTransitionDto> fuelTransitionDtoList) {
+        this.fuelTransitionDtoList = fuelTransitionDtoList;
+    }
+
+    public FuelTransitionDto getFuelTransitionDto() {
+        return fuelTransitionDto;
+    }
+
+    public void setFuelTransitionDto(FuelTransitionDto fuelTransitionDto) {
+        this.fuelTransitionDto = fuelTransitionDto;
+    }
+
+    public StationWithStatusDTO getStationWithStatusDTO() {
+        return stationWithStatusDTO;
+    }
+
+    public void setStationWithStatusDTO(StationWithStatusDTO stationWithStatusDTO) {
+        this.stationWithStatusDTO = stationWithStatusDTO;
+    }
+
+    public List<StationWithStatusDTO> getStationWithStatusDTOList() {
+        return stationWithStatusDTOList;
+    }
+
+    public void setStationWithStatusDTOList(List<StationWithStatusDTO> stationWithStatusDTOList) {
+        this.stationWithStatusDTOList = stationWithStatusDTOList;
+    }
 
     public FuelAllocationDto getFuelAllocationDto() {
         return fuelAllocationDto;

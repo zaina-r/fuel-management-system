@@ -88,4 +88,37 @@ public class MapUtils {
         fuelAllocationDto.setStation(fuelAllocation.getStation());
         return fuelAllocationDto;
     }
+
+    public static StationWithStatusDTO mapStationWithStatusEntityToStationWithStatusDTO(StationWithRegistrationStatus stationWithRegistrationStatus){
+        StationWithStatusDTO stationWithStatusDTO=new StationWithStatusDTO();
+        stationWithStatusDTO.setId(stationWithRegistrationStatus.getId());
+        stationWithStatusDTO.setStatus(stationWithStatusDTO.getStatus());
+        stationWithStatusDTO.setDealerName(stationWithStatusDTO.getDealerName());
+        stationWithStatusDTO.setDealerId(stationWithStatusDTO.getDealerId());
+        return stationWithStatusDTO;
+    }
+
+    public static List<StationWithStatusDTO> mapListStationWithStatusDTOToListStationWithStatus(List<StationWithRegistrationStatus>stationWithRegistrationStatusList){
+
+        return stationWithRegistrationStatusList.stream().map(MapUtils::mapStationWithStatusEntityToStationWithStatusDTO).collect(Collectors.toList());
+
+    }
+
+    public static FuelTransitionDto mapFuelTransitionEntityToFuelTransitionDTO(FuelTransition fuelTransition){
+        FuelTransitionDto fuelTransitionDto=new FuelTransitionDto();
+        fuelTransitionDto.setId(fuelTransition.getId());
+        fuelTransitionDto.setFuelAmount(fuelTransition.getFuelAmount());
+        fuelTransitionDto.setFuelType(fuelTransition.getFuelType());
+        fuelTransitionDto.setTransitionTime(fuelTransition.getTransitionTime());
+        fuelTransitionDto.setStationId(fuelTransitionDto.getStationId());
+        fuelTransitionDto.setVehicleVerification(fuelTransition.getVehicleVerification());
+        return fuelTransitionDto;
+    }
+
+    public static List<FuelTransitionDto> mapListFuelTransitionDtoToFuelTransition(List<FuelTransition>FuelTransition){
+
+        return FuelTransition.stream().map(MapUtils::mapFuelTransitionEntityToFuelTransitionDTO).collect(Collectors.toList());
+
+    }
+
 }
