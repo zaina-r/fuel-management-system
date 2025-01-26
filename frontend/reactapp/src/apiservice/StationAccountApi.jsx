@@ -19,4 +19,15 @@ export default class StationAccountApi {
     );
     return response.data;
   }
+
+  static async getStationDetails() {
+    const stationI = localStorage.getItem("stationId");
+
+    const response = await axios.get(
+      `${this.BASE_URL}/api/station/stations/${stationI}`,
+      {}
+    );
+
+    return response.data;
+  }
 }

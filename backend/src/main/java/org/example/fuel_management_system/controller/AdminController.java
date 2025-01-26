@@ -1,11 +1,11 @@
 package org.example.fuel_management_system.controller;
 
+import org.example.fuel_management_system.DTO.FuelAllocation;
 import org.example.fuel_management_system.DTO.Response;
-import org.example.fuel_management_system.DTO.StationFuelDto;
-import org.example.fuel_management_system.model.ExistingStations;
+import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
-import org.example.fuel_management_system.service.ExistingStationsServiceImpl;
+import org.example.fuel_management_system.service.AdminService;
 import org.example.fuel_management_system.service.FuelService;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +20,40 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
+    FuelService fuelService;
+
+    @Autowired
     StationService stationService;
 
-    @GetMapping("/stationDetails")
-    public List<StationFuelDto> getStationDetails() {
-        return stationService.getStationFuelData();
+    AdminService adminService;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Station> updateStation(@PathVariable int id, @RequestBody Station stationDetails) {
-        Station updatedStation = stationService.updateStation(id, stationDetails);
-        return ResponseEntity.ok(updatedStation);
+  /*  @GetMapping("/stationInfo")
+    public ResponseEntity<Response> getAllStations() {
+        return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/getFuelQuantities")
+    public ResponseEntity<List<Fuel>> getFuelQuantities(){
+        return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteStation(@PathVariable int id) {
-        stationService.deleteStation(id);
-        return ResponseEntity.ok("Station deleted successfully!");
+
+    @GetMapping("/get-stations-with-status")
+    public List<StationWithRegistrationStatus> getStationsWithStatus() {
+        return adminService.getStationWithStatus();
     }
 
+    @PostMapping("/update-weekly-fuel-allocation")
+    public void updateWeeklyFuelAllocation(@RequestBody FuelAllocation fuelAllocation){
+        adminService.updateWeeklyFuelAllocation(fuelAllocation);
+    }
+
+   /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
+        Station station1 = stationService.addStation(station);
+        return new ResponseEntity<>(station1, HttpStatus.OK);
+    }*/
 }

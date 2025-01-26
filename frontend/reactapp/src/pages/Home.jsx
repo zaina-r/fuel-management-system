@@ -2,13 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { Carousel } from "@material-tailwind/react";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
+import { SlideLeft, SlideRight } from "../animation/direction";
+import { SlideUp } from "../animation/direction";
 
 const Home = () => {
   const [bd, setBd] = useState(false);
 
   const handleBg = () => {
     setBd(!bd);
-  };
+  };                                                                                                                                        
   return (
     <>
       <div>
@@ -17,18 +20,26 @@ const Home = () => {
           <video
             src="../src/assets/11641333-uhd_4096_2160_24fps (1).mp4"
             autoPlay
-            loop
-            muted
+            loop                                                           
+            muted                                                                       
             className="absolute w-auto min-w-full min-h-full object-cover shadow-2xl "
           ></video>
 
           <div className="z-10 text-center text-white px-4">
-            <h1 className="text-3xl sm:text-4xl lg:text-7xl font-bold">
+            <motion.h1
+                 variants={SlideUp(0.1)}
+                 initial="hidden"
+                 whileInView={"visible"}
+            className="text-3xl sm:text-4xl lg:text-7xl font-bold">
               National Fuel Pass
-            </h1>
-            <p className="mt-4 text-base sm:text-lg lg:text-xl">
+            </motion.h1>
+            <motion.p 
+                variants={SlideUp(0.3)}
+                initial="hidden"
+                whileInView={"visible"}
+            className="mt-4 text-base sm:text-lg lg:text-xl">
               Enjoy the immersive experience
-            </p>
+            </motion.p>
           </div>
 
           <div className="absolute bottom-10 text-center text-neutral-500 px-4">
@@ -56,7 +67,12 @@ const Home = () => {
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 lg:mt-40 gap-10">
             <div className="flex flex-col items-start space-y-5">
-              <p className="text-neutral-500 text-sm sm:text-base lg:text-base text-justify">
+              <motion.p 
+                   variants={SlideUp(0.1)}
+                   initial="hidden"
+                   whileInView={"visible"}
+              
+              className="text-neutral-500 text-sm sm:text-base lg:text-base text-justify">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Obcaecati consectetur repellendus exercitationem maxime! Omnis,
                 pariatur cum laborum neque expedita earum magnam voluptas
@@ -67,32 +83,49 @@ const Home = () => {
                 amet consectetur adipisicing elit. Nostrum, cumque et culpa id
                 delectus rem iusto assumenda. Ipsa, ea ad ut id repellendus
                 aliquam iusto. Corporis magnam asperiores repellat doloremque.
-              </p>
-              <button className="text-black bg-white font-semibold px-6 sm:px-10 py-2 hover:bg-black hover:text-white transition">
+              </motion.p>
+              <motion.button
+                   variants={SlideUp(0.2)}
+                   initial="hidden"
+                   whileInView={"visible"}
+              className="text-black bg-white font-semibold px-6 sm:px-10 py-2 hover:bg-black hover:text-white transition">
                 View More
-              </button>
+              </motion.button>
             </div>
 
-            <div className="flex justify-center items-center">
+            <motion.div 
+               variants={SlideLeft(0.1)}
+               initial="hidden"
+               whileInView={"visible"}
+            className="flex justify-center items-center">
               <img
                 src="../src/assets/news4.png"
                 alt=""
                 className="rounded-2xl shadow-2xl w-full"
               />
-            </div>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 lg:mt-40 gap-10 pb-20">
-            <div className="flex justify-center items-center">
+            <motion.div
+                variants={SlideRight(0.1)}
+                initial="hidden"
+                whileInView={"visible"}
+            
+            className="flex justify-center items-center">
               <img
                 src="../src/assets/fuel5.png"
                 alt=""
                 className="rounded-2xl shadow-2xl w-full"
               />
-            </div>
+            </motion.div>
 
             <div className="flex flex-col items-start space-y-5">
-              <p className="text-neutral-500 text-sm sm:text-base lg:text-base text-justify">
+              <motion.p 
+                 variants={SlideUp(0.1)}
+                 initial="hidden"
+                 whileInView={"visible"}
+              className="text-neutral-500 text-sm sm:text-base lg:text-base text-justify">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Obcaecati consectetur repellendus exercitationem maxime! Omnis,
                 pariatur cum laborum neque expedita earum magnam voluptas
@@ -104,10 +137,14 @@ const Home = () => {
                 excepturi est voluptate ducimus quia molestiae dolorum earum
                 quos, animi asperiores accusamus laborum! Temporibus deleniti
                 quia voluptates doloribus nulla?
-              </p>
-              <button className="text-black bg-white font-semibold px-6 sm:px-10 py-2 hover:bg-black hover:text-white transition">
+              </motion.p>
+              <motion.button
+                 variants={SlideUp(0.2)}
+                 initial="hidden"
+                 whileInView={"visible"}
+              className="text-black bg-white font-semibold px-6 sm:px-10 py-2 hover:bg-black hover:text-white transition">
                 View More
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -119,13 +156,25 @@ const Home = () => {
             <div className="absolute inset-0 bg-black bg-opacity-80">
               <div className="flex flex-col md:flex-row justify-between space-x-3 mt-32 container px-4">
                 <div className="flex flex-col items-center w-full md:w-1/2 text-center">
-                  <h1 className="text-neutral-100 text-4xl sm:text-5xl md:text-7xl font-play font-semibold">
+                  <motion.h1
+                       variants={SlideUp(0.1)}
+                       initial="hidden"
+                       whileInView={"visible"}
+                  className="text-neutral-100 text-4xl sm:text-5xl md:text-7xl font-play font-semibold">
                     Ceylon Petroleum Corporation
-                  </h1>
-                  <span className="bg-neutral-600 text-orange-500 mt-5 font-semibold py-2 px-6">
+                  </motion.h1>
+                  <motion.span
+                       variants={SlideUp(0.2)}
+                       initial="hidden"
+                       whileInView={"visible"}
+                  className="bg-neutral-600 text-orange-500 mt-5 font-semibold py-2 px-6">
                     Since 1961
-                  </span>
-                  <p className="text-justify px-4 sm:px-10 text-neutral-500 mt-10">
+                  </motion.span>
+                  <motion.p
+                      variants={SlideUp(0.3)}
+                      initial="hidden"
+                      whileInView={"visible"}
+                  className="text-justify px-4 sm:px-10 text-neutral-500 mt-10">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Delectus debitis quaerat sed iure architecto minima sint
                     impedit nam voluptatibus tenetur. Lorem ipsum dolor sit amet
@@ -133,10 +182,15 @@ const Home = () => {
                     aperiam laborum tempore eaque odio veniam impedit maiores ea
                     laudantium magni, earum architecto sequi. Sit minima quam
                     molestiae?
-                  </p>
+                  </motion.p>
                 </div>
                 <div className="w-full md:w-1/2 text-neutral-500 text-justify mt-8 md:mt-0 md:mb-80">
-                  <p>
+                  <motion.p
+                       variants={SlideUp(0.3)}
+                       initial="hidden"
+                       whileInView={"visible"}
+                  
+                  >
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem necessitatibus officiis exercitationem harum
                     dolorem itaque, reiciendis nisi. Soluta est explicabo
@@ -155,10 +209,14 @@ const Home = () => {
                     libero, neque sequi facere ad nisi doloremque eligendi?
                     Impedit magnam nihil cum, officiis, dolorem, nemo eius
                     recusandae placeat aspernatur eaque reiciendis.
-                  </p>
-                  <button className="bg-neutral-600 px-6 py-2 text-orange-500 mt-5 font-semibold">
+                  </motion.p>
+                  <motion.button
+                      variants={SlideUp(0.5)}
+                      initial="hidden"
+                      whileInView={"visible"}
+                  className="bg-neutral-600 px-6 py-2 text-orange-500 mt-5 font-semibold">
                     View More
-                  </button>
+                  </motion.button>
                 </div>
               </div>
             </div>
@@ -166,7 +224,11 @@ const Home = () => {
         </div>
 
         <div className="w-full transform -translate-y-20">
-          <div className="mx-44 flex flex-col md:flex-row justify-center   bg-gradient-to-r from-slate-800 to-gray-800">
+          <motion.div
+               variants={SlideRight(0.1)}
+               initial="hidden"
+               whileInView={"visible"}
+          className="mx-44 flex flex-col md:flex-row justify-center   bg-gradient-to-r from-slate-800 to-gray-800">
             <div className="rounded-xl w-full md:w-1/2 h-full mb-8 md:mb-0">
               <Carousel>
                 <img
@@ -205,14 +267,22 @@ const Home = () => {
               </div>
               <div className="flex justify-center items-center w-full h-full p-5">
                 {bd && (
-                  <p>
+                  <motion.p
+                  variants={SlideUp(0.3)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  >
                     To be a sustainable entity in the petroleum and related
                     industries; pioneer new opportunities and deliver value to
                     our stakeholders.
-                  </p>
+                  </motion.p>
                 )}
                 {!bd && (
-                  <p>
+                  <motion.p
+                  variants={SlideUp(0.3)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  >
                     <h1>
                       <span className="text-orange-400">Competitiveness</span> :
                       Strive to be a market leader by procuring and supplying
@@ -238,11 +308,11 @@ const Home = () => {
                       <span className="text-orange-400">Public Focus</span> :
                       Aim to support the growth of the country.
                     </h1>
-                  </p>
+                  </motion.p>
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
         <Footer />
       </div>

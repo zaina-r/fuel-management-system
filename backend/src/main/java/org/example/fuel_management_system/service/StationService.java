@@ -2,7 +2,6 @@ package org.example.fuel_management_system.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.fuel_management_system.DTO.Response;
-import org.example.fuel_management_system.DTO.StationFuelDto;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.ExistingStationsRepository;
 import org.example.fuel_management_system.Repository.FuelRepository;
@@ -45,7 +44,7 @@ this.authenticateService=authenticateService;
     }
 
 
-
+/*
     public Response getFuelsByStationId(int stationId) {
         Response response = new Response();
         try {
@@ -70,7 +69,7 @@ this.authenticateService=authenticateService;
 
         }
         return response;
-    }
+    }*/
 
     public Response getAllStations() {
         Response response = new Response();
@@ -113,7 +112,7 @@ this.authenticateService=authenticateService;
         return response;
     }
 
-    public Response addFuelToStation(int stationId, List<Fuel> fuels) {
+    /*public Response addFuelToStation(int stationId, List<Fuel> fuels) {
         Response response = new Response();
 
         try {
@@ -143,7 +142,7 @@ this.authenticateService=authenticateService;
 
         }
         return response;
-    }
+    }*/
 
     public boolean doesStationIdExist(String stationName){
 
@@ -180,13 +179,14 @@ this.authenticateService=authenticateService;
                         existingStationOptional.get().getDealerId().equals(station.getStationId())
                 && !stationOptional
                 ) {
-                    Station existingStation=fuelStationRepository.save(station);
-                    existingStation.setRegistrationDate(LocalDate.now());
 
-                    String otp = GenerateOtp.generateOtp();
-                    UserAccount user = userAccountRepository.findByLicenseNumber(existingStation.getLicenseNumber());
+                    UserAccount user = userAccountRepository.findByLicenseNumber(station.getLicenseNumber());
 
-                    if (user != null) {
+
+
+                    if (user != null  ) {
+                        Station existingStation=fuelStationRepository.save(station);
+                        String otp = GenerateOtp.generateOtp();
                         VerificationCode verificationCode = verificationCodeService.generateOtpForStation(existingStation, otp, user.getUsername());
                         existingStation.setLoginCode(verificationCode.getOtp());
                         existingStation.setRegistrationDate(LocalDate.now());
@@ -197,6 +197,7 @@ this.authenticateService=authenticateService;
                     } else {
                         response.setStatusCode(404);
                         response.setMessage("User associated with license number not found.");
+
                     }
 
                 } else {
@@ -214,29 +215,22 @@ this.authenticateService=authenticateService;
             return response;
         }
 
-    public List<StationFuelDto> getStationFuelData() {
-        return fuelStationRepository.fetchStationFuelData();
+    public Response findByLoginCode(String loginCode) {
+        Optional<Station> station=fuelStationRepository.findByLoginCode(loginCode);
+        Response response=new Response();
+        if(station.isPresent()){
+            response.setStatusCode(200);
+            response.setMessage("Station found successfully");
+            response.setStationDto(MapUtils.mapStationEntityToStationDTO(station.get()));
+        }else{
+            response.setStatusCode(404);
+            response.setMessage("Station with login code "+loginCode+"not found");
+        }
+        return response;
     }
 
-    public Station updateStation(int id, Station stationDetails) {
-        Station station = fuelStationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Station not found with id: " + id));
 
-        station.setStationAddress(stationDetails.getStationAddress());
-        station.setDealerName(stationDetails.getDealerName());
-        station.setLicenseNumber(stationDetails.getLicenseNumber());
-        station.setRegistrationDate(stationDetails.getRegistrationDate());
-
-        return fuelStationRepository.save(station);
-    }
-
-    public void deleteStation(int id) {
-        Station station = fuelStationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Station not found with id: " + id));
-        fuelStationRepository.delete(station);
-    }
-
-    }
+}
 
 
 

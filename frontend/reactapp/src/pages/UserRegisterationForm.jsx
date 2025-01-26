@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import UserAccountApi from "../apiservice/UserAccountApi";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
+import { motion } from "framer-motion";
+import { SlideUp } from "../animation/direction";
+import { SlideLeft } from "../animation/direction";
 
 const UserRegisterationForm = () => {
   const [licese, setLicense] = useState(false);
@@ -41,7 +44,7 @@ const UserRegisterationForm = () => {
   };
 
   const handleChange = (e) => {
-    setError("")
+    setError("");
     const { name, value } = e.target;
 
     if (name === "role") {
@@ -90,32 +93,52 @@ const UserRegisterationForm = () => {
 
   return (
     <>
-      <div className="bg-slate-800 h-32 "></div>
-      <div className="container  text-sm mt-10 ">
+      <div className="bg-slate-800 h-screen w-full fixed">
+      <div className="container  text-sm my-44 ">
         <div className="flex justify-center w-full">
           <div className="relative w-1/2 bg-[url('..\src\Assets\fuel2.jpg')] bg-cover bg-center bg-no-repeat">
             <div className="absolute inset-0 bg-black opacity-80 p-8 text-white">
-              <h1 className="text-white text-2xl mb-5">
+              <motion.h1
+                variants={SlideUp(0.1)}
+                initial="hidden"
+                whileInView={"visible"}
+                className="text-white text-2xl mb-5"
+              >
                 Register for FuelPass
-              </h1>
+              </motion.h1>
               <div className="flex flex-col gap-3">
-                <p className="flex items-center gap-2">
+                <motion.p
+                  variants={SlideUp(0.2)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-center gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>First Name</span>
-                </p>
-                <p className="flex items-center gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.4)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-center gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
                     className="w-[15px] h-[15px] inline"
                   />
                   <span>Last Name</span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.3)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -131,8 +154,13 @@ const UserRegisterationForm = () => {
                       "123456789456V / 200023002913"
                     </span>{" "}
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.4)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -149,8 +177,13 @@ const UserRegisterationForm = () => {
                       Example:"+94123456789"
                     </span>{" "}
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.5)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -163,8 +196,13 @@ const UserRegisterationForm = () => {
                     include letters, numbers, and underscores. <br />
                     <span className="text-white">Example:name@gmail.com</span>
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.6)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -180,8 +218,13 @@ const UserRegisterationForm = () => {
                       Example:xxxxxx atlease 4 characters
                     </span>
                   </span>
-                </p>
-                <p className="flex items-start gap-2">
+                </motion.p>
+                <motion.p
+                  variants={SlideUp(0.7)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="flex items-start gap-2"
+                >
                   <img
                     src="../src/Assets/accept.png"
                     alt=""
@@ -195,33 +238,38 @@ const UserRegisterationForm = () => {
                       Example:xxxxxx secure license code for fuel station
                     </span>
                   </span>
-                </p>
+                </motion.p>
               </div>
             </div>
           </div>
 
-          <div className="w-1/2 flex flex-col  mt-3">
-            {error && <Error error={error} setError={setError}/>}
-            {success && <Success success={success} setSuccess={setSuccess}/>}
+          <motion.div
+                variants={SlideLeft(0.2)}
+                initial="hidden"
+                whileInView={"visible"}
+            className="w-1/2 flex flex-col  mt-3"
+          >
+            {error && <Error error={error} setError={setError} />}
+            {success && <Success success={success} setSuccess={setSuccess} />}
             <form onSubmit={handleSubmit} className="register-form">
-              <h1 className="text-4xl font-extrabold text-neutral-800 m-5">
+              <h1 className="text-4xl font-extrabold text-white m-5">
                 Sign up
               </h1>
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">firstname</label>
+                  <label className="block my-1 text-neutral-400">firstname</label>
                   <input
                     type="text"
                     name="firstname"
                     value={formData.firstname}
                     onChange={handleChange}
                     placeholder="firstname"
-                    className="bg-gray-200 p-1 rounded-sm text-md w-full"
+                    className="bg-gray-200 p-1 rounded-sm text-md w-full "
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">lastname</label>
+                  <label className="block my-1 text-neutral-400">lastname</label>
                   <input
                     type="text"
                     name="lastname"
@@ -235,7 +283,7 @@ const UserRegisterationForm = () => {
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">NIC</label>
+                  <label className="block my-1 text-neutral-400">NIC</label>
                   <input
                     type="text"
                     name="nic"
@@ -246,7 +294,7 @@ const UserRegisterationForm = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">Telphn No</label>
+                  <label className="block my-1 text-neutral-400">Telphn No</label>
                   <input
                     type="text"
                     name="telno"
@@ -260,7 +308,7 @@ const UserRegisterationForm = () => {
 
               <div className="grid grid-cols-2 m-5">
                 <div className="mr-3">
-                  <label className="block my-1">username</label>
+                  <label className="block my-1 text-neutral-400">username</label>
                   <input
                     type="email"
                     name="username"
@@ -271,7 +319,7 @@ const UserRegisterationForm = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="block my-1">Password</label>
+                  <label className="block my-1 text-neutral-400">Password</label>
                   <input
                     type="password"
                     name="password"
@@ -283,7 +331,7 @@ const UserRegisterationForm = () => {
                 </div>
               </div>
               <div className="m-5 flex flex-col   gap-3">
-                <label>Role</label>
+                <label className="text-neutral-400">Role</label>
                 <select
                   name="role"
                   value={formData.role}
@@ -297,7 +345,7 @@ const UserRegisterationForm = () => {
               </div>
               {licese && (
                 <div className="m-5">
-                  <label htmlFor="" className="block my-1">
+                  <label htmlFor="" className="block my-1 text-neutral-400">
                     License Number
                   </label>
                   <input
@@ -312,9 +360,9 @@ const UserRegisterationForm = () => {
               )}
               <div className="m-5">
                 <input type="checkbox" />
-                <label className="ml-2">
+                <label className="ml-2 text-neutral-400">
                   I agree to the{" "}
-                  <a href="" className="text-blue-700">
+                  <a href="" className="text-blue-600">
                     terms and conditions
                   </a>
                 </label>
@@ -327,17 +375,19 @@ const UserRegisterationForm = () => {
                 Create an account
               </button>
               <div className="ml-5 mt-3 text-xs">
-                <p className="text-neutral-600">
+                <p className="text-white">
                   Already have an account?
-                  <a href="/login" className="text-blue-800">
+                  <a href="/login" className="text-blue-600">
                     Login here
                   </a>{" "}
                 </p>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
+      </div>
+     
     </>
   );
 };

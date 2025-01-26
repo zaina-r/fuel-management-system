@@ -15,6 +15,9 @@ import AdminNavbar from "./components/AdminNavbar";
 import AdminHome from "./AdminPages/AdminHome";
 import AdminStationRegistration from "./AdminPages/AdminStationRegistration";
 
+import About from "./pages/About";
+import DisplayVehicleDetails from "./pages/DisplayVehicleDetails";
+import DisplayStationDetails from "./pages/DisplayStationDetails";
 
 function App() {
   return (
@@ -25,29 +28,33 @@ function App() {
           <div className="content">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/about" element={<About />} />
               <Route exact path="/login" element={<UserLogin />} />
               <Route path="/register" element={<UserRegisterationForm />} />
               <Route
                 path="/vehicleRegister"
                 element={<VehicleRegistration />}
               />
+              <Route
+                path="/vehicleHistory"
+                element={<DisplayVehicleDetails />}
+              />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route
                 path="/stationRegister"
                 element={<StationRegistration />}
               />
-                    <Route path="/admin" element={<AdminHome />} />
+              <Route path="/admin" element={<AdminHome />} />
+              <Route
+                path="/StationHistory"
+                element={<DisplayStationDetails />}
+              />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
         </div>
         <AdminNavbar />
-      
-  
-        
-      
       </BrowserRouter>
-      
     </>
   );
 }

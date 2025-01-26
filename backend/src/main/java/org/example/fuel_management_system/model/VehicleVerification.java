@@ -8,20 +8,21 @@ public class VehicleVerification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vehicleId;
-
     private String vehicleRegNo;
     private String license_plate_no;
-
     private String vehicle_type;
     private String fuel_type;
     private float maximumFuelCapacity;
     private float availableFuelCapacity;
     private String qrCode;
+    @ManyToOne
+    private UserAccount user;
 
-    public VehicleVerification(int vehicleId, String vehicleRegNo, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_type, String fuel_type, float maximumFuelCapacity, float availableFuelCapacity , String qrCode) {
+    public VehicleVerification(int vehicleId,UserAccount userAccount, String vehicleRegNo, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_type, String fuel_type, float maximumFuelCapacity, float availableFuelCapacity , String qrCode) {
         this.vehicleId = vehicleId;
         this.vehicleRegNo = vehicleRegNo;
         this.license_plate_no = license_plate_no;
+        this.user=userAccount;
 
         this.vehicle_type = vehicle_type;
         this.fuel_type = fuel_type;
@@ -33,6 +34,14 @@ public class VehicleVerification {
 
     public VehicleVerification() {
 
+    }
+
+    public UserAccount getUserAccount() {
+        return user;
+    }
+
+    public void setUserAccount(UserAccount user) {
+        this.user = user;
     }
 
     public int getVehicleId() {
