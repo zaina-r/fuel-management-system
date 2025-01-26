@@ -1,13 +1,7 @@
 package org.example.fuel_management_system.utilities;
 
-import org.example.fuel_management_system.DTO.FuelDto;
-import org.example.fuel_management_system.DTO.StationDto;
-import org.example.fuel_management_system.DTO.UserAccountDto;
-import org.example.fuel_management_system.DTO.VehiclesDto;
-import org.example.fuel_management_system.model.Fuel;
-import org.example.fuel_management_system.model.Station;
-import org.example.fuel_management_system.model.UserAccount;
-import org.example.fuel_management_system.model.VehicleVerification;
+import org.example.fuel_management_system.DTO.*;
+import org.example.fuel_management_system.model.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,5 +78,14 @@ public class MapUtils {
     }
     public static List<VehiclesDto> mapVehicleListEntityToVehicleDTOList(List<VehicleVerification> vehicleVerifications) {
         return vehicleVerifications.stream().map(MapUtils::mapVehicleEntityToVehicleDTO).collect(Collectors.toList());
+    }
+    public static FuelAllocationDto mapFuelAllocationEntityToFuelAllocationDTO(FuelAllocation fuelAllocation){
+        FuelAllocationDto fuelAllocationDto=new FuelAllocationDto();
+        fuelAllocationDto.setId(fuelAllocation.getId());
+        fuelAllocationDto.setStation(fuelAllocation.getStation());
+        fuelAllocationDto.setWeeklyDieselAmount(fuelAllocation.getWeeklyDieselAmount());
+        fuelAllocationDto.setWeeklyPetrolAmount(fuelAllocation.getWeeklyPetrolAmount());
+        fuelAllocationDto.setStation(fuelAllocation.getStation());
+        return fuelAllocationDto;
     }
 }

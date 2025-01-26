@@ -19,10 +19,20 @@ public class Response {
     private VehiclesDto vehiclesDto;
     private StationDto stationDto;
     private FuelDto fuelDto;
+    private FuelAllocationDto fuelAllocationDto;
     private List<UserAccountDto>userAccountDtoList;
     private List<VehiclesDto>vehiclesDtoList;
     private List<StationDto> stationDtosList;
     private List<FuelDto>fuelDtoList;
+
+
+    public FuelAllocationDto getFuelAllocationDto() {
+        return fuelAllocationDto;
+    }
+
+    public void setFuelAllocationDto(FuelAllocationDto fuelAllocationDto) {
+        this.fuelAllocationDto = fuelAllocationDto;
+    }
 
 
     public FuelDto getFuelDto() {

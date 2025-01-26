@@ -60,8 +60,19 @@ public class FuelService {
     }
 
 
-    public List<Fuel> getFuelQuantities() {
-        return fuelRepository.findAll();
+    public Response getFuelQuantities() {
+        Response response=new Response();
+        List<Fuel> fuelQuantities=fuelRepository.findAll();
+        if(fuelQuantities==null){
+            response.setStatusCode(400);
+            response.setMessage("No fuel quantities found");
+            return  response;
+        }
+        response.setStatusCode(200);
+        response.setMessage("Fuel quantities found");
+        response.setFuelDtoList(MapUtils.mapFuelListEntityToFuelListDTO(fuelQuantities));
+        return response;
+
     }
 
     public Response updateFuel(int stationId, FuelRequest request) {

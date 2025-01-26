@@ -29,6 +29,9 @@ public class Station {
     @OneToOne(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Fuel fuel ;
+    @OneToOne(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private FuelAllocation fuelAllocation;
 
 
     public Station(int id, String stationId, String stationAddress, String dealerName, String licenseNumber, LocalDate registrationDate, String loginCode, Fuel fuel) {
