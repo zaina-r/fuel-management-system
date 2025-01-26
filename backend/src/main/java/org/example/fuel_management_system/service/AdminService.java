@@ -2,7 +2,7 @@ package org.example.fuel_management_system.service;
 
 
 import org.example.fuel_management_system.DTO.Response;
-import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
+
 import org.example.fuel_management_system.Repository.ExistingStationsRepository;
 import org.example.fuel_management_system.Repository.FuelAllocationRepository;
 import org.example.fuel_management_system.Repository.FuelRepository;
@@ -11,6 +11,8 @@ import org.example.fuel_management_system.model.ExistingStations;
 import org.example.fuel_management_system.model.Fuel;
 
 import org.example.fuel_management_system.model.FuelAllocation;
+import org.example.fuel_management_system.model.StationWithRegistrationStatus;
+import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,24 +33,37 @@ public class AdminService {
         this.fuelAllocationRepository = fuelAllocationRepository;
     }
 
-    public List<StationWithRegistrationStatus> getStationWithStatus(){
+    public Response getStationWithStatus(){
+        Response response=new Response();
+        try {
+            List<ExistingStations> allStations = existingStationsRepository.findAll();
+            List<StationWithRegistrationStatus> stationList = new ArrayList<>();
 
-        List<ExistingStations> allStations = existingStationsRepository.findAll();
-        List<StationWithRegistrationStatus> stationList = new ArrayList<>();
+            for (ExistingStations station : allStations) {
+                boolean isRegistered = fuelStationRepository.existsByStationId(station.getDealerId());
+                String status = isRegistered ? "Registered" : "Not Registered";
 
-        for (ExistingStations station : allStations) {
-            boolean isRegistered = fuelStationRepository.existsByStationId(station.getDealerId());
-            String status = isRegistered ? "Registered" : "Not Registered";
+                StationWithRegistrationStatus stationWithStatus = new StationWithRegistrationStatus(
+                        station.getDealerId(),
+                        station.getDealer_name(),
+                        status
+                );
+                stationList.add(stationWithStatus);
+            }
 
-            StationWithRegistrationStatus stationWithStatus = new StationWithRegistrationStatus(
-                    station.getDealerId(),
-                    station.getDealer_name(),
-                    status
-            );
-            stationList.add(stationWithStatus);
+            response.setStatusCode(200);
+            response.setMessage("Successfuly registered");
+            response.setStationWithStatusDTOList(MapUtils.mapListStationWithStatusDTOToListStationWithStatus(stationList));
+
+            return response;
+        }
+        catch(Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Error occured");
+
+            return response;
         }
 
-        return stationList;
     }
 
     public Response updateWeeklyFuelAllocation(FuelAllocation fuelAllocation) {

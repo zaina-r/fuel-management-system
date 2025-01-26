@@ -13,7 +13,7 @@ public class WeeklyResetTask {
     @Autowired
     private VehicleVerificationRepository vehicleVerificationRepository;
 
-    @Scheduled(cron = "0 0 0 * * MON") // Every Monday at midnight
+    @Scheduled(cron = "0 0 0 * * MON")
     public void resetFuelCapacity() {
         List<VehicleVerification> vehicles = vehicleVerificationRepository.findAll();
         for (VehicleVerification vehicle : vehicles) {
