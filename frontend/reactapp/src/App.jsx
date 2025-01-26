@@ -31,24 +31,12 @@ function App() {
               <Route exact path="/about" element={<About />} />
               <Route exact path="/login" element={<UserLogin />} />
               <Route path="/register" element={<UserRegisterationForm />} />
-              <Route
-                path="/vehicleRegister"
-                element={<VehicleRegistration />}
-              />
-              <Route
-                path="/vehicleHistory"
-                element={<DisplayVehicleDetails />}
-              />
+              <Route path="/vehicleRegister" element={<VehicleRegistration />}/>
+              <Route path="/vehicleHistory" element={<DisplayVehicleDetails />}/>
               <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route
-                path="/stationRegister"
-                element={<StationRegistration />}
-              />
+              <Route path="/stationRegister" element={<StationRegistration />}/>
               <Route path="/admin" element={<AdminHome />} />
-              <Route
-                path="/StationHistory"
-                element={<DisplayStationDetails />}
-              />
+              <Route path="/StationHistory" element={<DisplayStationDetails />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
