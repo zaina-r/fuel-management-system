@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.service;
 
 
+import org.example.fuel_management_system.DTO.FuelDto;
 import org.example.fuel_management_system.DTO.Response;
 
 import org.example.fuel_management_system.DTO.StationWithStatusDTO;
@@ -100,31 +101,43 @@ public class AdminService {
 
 
 
-    public Response updateWeeklyFuelAllocation(FuelAllocation fuelAllocation) {
-        Response response = new Response();
-        try {
-            Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getStation().getId());
-            if (fuel != null) {
 
-                fuel.setWeeklyDieselAllocation(fuelAllocation.getWeeklyDieselAmount());
-                fuel.setWeeklyPetrolAllocation(fuelAllocation.getWeeklyPetrolAmount());
+        public Response updateInitialFuelAllocation(Fuel fuelAllocation) {
+            Response response = new Response();
+            try {
+                if (fuelAllocation.getStation() == null || fuelAllocation.getStation().getId() == 0) {
+                    response.setMessage("Station or Station ID cannot be null.");
+                    response.setStatusCode(400);
+                    return response;
+                }
+
+                Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getStation().getId());
+                if (fuel == null) {
+                    fuel = new Fuel();
+                    fuel.setStation(fuelAllocation.getStation());
+                }
+
+
+                fuel.setAvailableDieselQuantity(fuelAllocation.getInitialDieselAllocation());
+                fuel.setAvailablePetrolQuantity(fuelAllocation.getInitialPetrolAllocation());
+                fuel.setInitialDieselAllocation(fuelAllocation.getInitialDieselAllocation());
+                fuel.setInitialPetrolAllocation(fuelAllocation.getInitialPetrolAllocation());
+
                 fuelRepository.save(fuel);
 
-
-                response.setMessage("Weekly fuel allocation updated successfully.");
+                response.setMessage("Fuel allocation updated successfully.");
                 response.setStatusCode(200);
-            } else {
-
-                response.setMessage("Fuel entry not found for station ID: " + fuelAllocation.getStation().getStationId());
-                response.setStatusCode(404);
+                response.setFuelDto(MapUtils.mapFuelEntityToFuelDTO(fuel));
+            } catch (Exception e) {
+                response.setMessage("An error occurred while updating fuel allocation: " + e.getMessage());
+                response.setStatusCode(500);
             }
-        } catch (Exception e) {
-
-            response.setMessage("An error occurred while updating fuel allocation: " + e.getMessage());
-            response.setStatusCode(500);
+            return response;
         }
-        return response;
     }
 
 
-}
+
+
+
+

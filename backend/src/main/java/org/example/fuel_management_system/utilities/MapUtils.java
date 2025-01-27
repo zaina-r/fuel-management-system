@@ -51,7 +51,8 @@ public class MapUtils {
 
        fuelDto.setAvailablePetrolQuantity(fuel.getAvailablePetrolQuantity());
        fuelDto.setAvailableDieselQuantity(fuel.getAvailableDieselQuantity());
-
+        fuelDto.setInitialDieselAllocation(fuel.getInitialDieselAllocation());
+        fuelDto.setInitialPetrolAllocation(fuel.getInitialPetrolAllocation());
        fuelDto.setFuelId(fuel.getFuelId());
 
         return fuelDto;

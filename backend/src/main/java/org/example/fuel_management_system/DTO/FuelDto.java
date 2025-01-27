@@ -8,8 +8,25 @@ public class FuelDto {
     private int fuelId;
     private Float availableDieselQuantity;
     private Float availablePetrolQuantity;
-
+    private float initialPetrolAllocation;
+    private float initialDieselAllocation;
     private Station station;
+
+    public float getInitialPetrolAllocation() {
+        return initialPetrolAllocation;
+    }
+
+    public void setInitialPetrolAllocation(float initialPetrolAllocation) {
+        this.initialPetrolAllocation = initialPetrolAllocation;
+    }
+
+    public float getInitialDieselAllocation() {
+        return initialDieselAllocation;
+    }
+
+    public void setInitialDieselAllocation(float initialDieselAllocation) {
+        this.initialDieselAllocation = initialDieselAllocation;
+    }
 
     public int getFuelId() {
         return fuelId;
