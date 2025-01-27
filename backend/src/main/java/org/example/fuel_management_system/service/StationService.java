@@ -112,8 +112,21 @@ this.authenticateService=authenticateService;
 
     }
 
+    public Response deleteStationById(int id){
+        Response response=new Response();
+        Optional<Station> station=fuelStationRepository.findById(id);
+        if(station.isPresent()){
+            fuelRepository.deleteById(id);
+            response.setStatusCode(200);
+            response.setMessage("Station deleted successfully!");
+            return response;
+        }
+        response.setStatusCode(400);
+        response.setMessage("Station cannot identified !");
+        return response;
+    }
 
-        public Response saveOrUpdateStation(Station station) {
+    public Response saveOrUpdateStation(Station station) {
             Response response = new Response();
 
             try {
