@@ -96,8 +96,8 @@ const UserRegisterationForm = () => {
       <div className="bg-slate-800 h-screen w-full fixed">
       <div className="container  text-sm my-44 ">
         <div className="flex justify-center w-full">
-          <div className="relative w-1/2 bg-[url('..\src\Assets\fuel2.jpg')] bg-cover bg-center bg-no-repeat">
-            <div className="absolute inset-0 bg-black opacity-80 p-8 text-white">
+          <div className="relative w-1/2 ">
+            <div className=" p-8 text-white">
               <motion.h1
                 variants={SlideUp(0.1)}
                 initial="hidden"
