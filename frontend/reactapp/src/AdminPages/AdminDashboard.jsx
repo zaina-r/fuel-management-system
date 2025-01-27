@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Home, FileText, Settings, User, MapPin, Car, LogOut, ChevronDown } from "lucide-react";
+import { Home, FileText, Settings, User, MapPin, Car, LogOut, ChevronDown,Bell,Fuel } from "lucide-react";
 
 const AdminDashboard = () => {
   const [manageStationsOpen, setManageStationsOpen] = useState(false);
@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   ];
 
   const manageStationsLinks = [
-    { to: "/admin/viewStations", icon: <MapPin className="mr-2" size={16} />, text: "View All Stations" },
+    { to: "/admin/viewStations", icon: <Fuel className="mr-2" size={16} />, text: "View All Stations" },
     { to: "/admin/UpdateStationFuel", icon: <Car className="mr-2" size={16} />, text: "Update Fuel Capacity" },
     { to: "/admin/updateStation", icon: <MapPin className="mr-2" size={16} />, text: "Update Fuel Stations" },
   ];
@@ -37,16 +37,16 @@ const AdminDashboard = () => {
 
   const settingsLinks = [
     { to: "/admin/profile", icon: <Settings className="mr-2" size={16} />, text: "Profile" },
-    { to: "/admin/notification", icon: <Settings className="mr-2" size={16} />, text: "Notifications" },
+    { to: "/admin/notification", icon: <Bell className="mr-2" size={16} />, text: "Notifications" },
     { to: "/admin/logout", icon: <LogOut className="mr-2" size={16} />, text: "Log Out" },
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex  min-h-screen bg-gray-100">
       
       <div className="w-56 bg-slate-800 text-white shadow-md border-r border-neutral-500 p-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Fuel Pass</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">Fuel Pass</h2>
         </div>
 
         
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
         <nav className="mt-6 text-neutral-300 flex flex-col items-start gap-3">
           
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2">Dashboard</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">Dashboard</h1>
             {filterLinks(dashboardLinks).map((link, index) => (
               <Link key={index} to={link.to} className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm">
                 {link.icon}
@@ -74,12 +74,12 @@ const AdminDashboard = () => {
 
         
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2">Manage Stations</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">Manage Stations</h1>
             <button
               className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md w-full justify-between text-sm"
               onClick={toggleManageStations}
             >
-              <MapPin className="mr-2" size={16} />
+              <Fuel className="mr-2" size={16} />
               Manage Stations
               <ChevronDown className={`ml-2 transition-transform ${manageStationsOpen ? 'rotate-180' : ''}`} size={16} />
             </button>
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
 
         
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2">Manage Vehicle</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">Manage Vehicle</h1>
             {filterLinks(manageVehicleLinks).map((link, index) => (
               <Link key={index} to={link.to} className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm">
                 {link.icon}
@@ -108,7 +108,7 @@ const AdminDashboard = () => {
 
           
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2">Users</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">Users</h1>
             {filterLinks(userLinks).map((link, index) => (
               <Link key={index} to={link.to} className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm">
                 {link.icon}
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
 
         
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2">Settings</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">Settings</h1>
             {filterLinks(settingsLinks).map((link, index) => (
               <Link key={index} to={link.to} className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm">
                 {link.icon}
