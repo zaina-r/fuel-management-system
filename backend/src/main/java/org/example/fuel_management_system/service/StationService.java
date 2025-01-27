@@ -44,32 +44,7 @@ this.authenticateService=authenticateService;
     }
 
 
-/*
-    public Response getFuelsByStationId(int stationId) {
-        Response response = new Response();
-        try {
-            List<Fuel> fuels = fuelRepository.findByStationId(stationId);
-            if (fuels.isEmpty()) {
-                response.setStatusCode(404);
-                response.setMessage("No fuels found for the given station ID.");
 
-            }
-            else{
-                response.setStatusCode(200);
-                response.setMessage("Fuels retrieved successfully.");
-                response.setFuelDtoList(MapUtils.mapFuelListEntityToFuelListDTO(fuels));
-
-            }
-
-
-
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage("Error occurred while retrieving fuels: " + e.getMessage());
-
-        }
-        return response;
-    }*/
 
     public Response getAllStations() {
         Response response = new Response();
@@ -112,37 +87,7 @@ this.authenticateService=authenticateService;
         return response;
     }
 
-    /*public Response addFuelToStation(int stationId, List<Fuel> fuels) {
-        Response response = new Response();
 
-        try {
-            Station station = fuelStationRepository.findById(stationId)
-                    .orElseThrow(() -> new RuntimeException("Station not found"));
-
-            for (Fuel fuel : fuels) {
-                fuel.setStation(station);
-            }
-
-            station.getFuel().addAll(fuels);
-
-            Station updatedStation = fuelStationRepository.save(station);
-
-            response.setStatusCode(200);
-            response.setMessage("Fuels added to station successfully");
-            response.setStationDto(MapUtils.mapStationEntityToStationDTO(updatedStation));
-
-
-        } catch (RuntimeException e) {
-            response.setStatusCode(404);
-            response.setMessage(e.getMessage());
-
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage("Error occurred while adding fuels to station: " + e.getMessage());
-
-        }
-        return response;
-    }*/
 
     public boolean doesStationIdExist(String stationName){
 

@@ -15,15 +15,13 @@ public class StationWithRegistrationStatus {
     private String dealerName;
     private String status;
 
-    public StationWithRegistrationStatus( String dealerName, String dealerId, String status) {
-
+    public StationWithRegistrationStatus( String stationId, String dealerName, String status) {
+        this.stationId = stationId;
         this.dealerName = dealerName;
-        this.stationId = dealerId;
         this.status = status;
     }
 
     public StationWithRegistrationStatus() {
-
     }
 
     public int getId() {

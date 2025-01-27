@@ -45,10 +45,12 @@ public class AdminController {
 
 
     @GetMapping("/get-stations-with-status")
-    public ResponseEntity<Response> getStationsWithStatus() {
+    public ResponseEntity<Response> setStationsWithStatus() {
         Response response= adminService.getStationWithStatus();
      return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
 
     @PostMapping("/update-weekly-fuel-allocation")
     public ResponseEntity<Response> updateWeeklyFuelAllocation(@RequestBody FuelAllocation fuelAllocation){

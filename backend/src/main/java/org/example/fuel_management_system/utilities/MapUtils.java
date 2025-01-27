@@ -92,9 +92,9 @@ public class MapUtils {
     public static StationWithStatusDTO mapStationWithStatusEntityToStationWithStatusDTO(StationWithRegistrationStatus stationWithRegistrationStatus){
         StationWithStatusDTO stationWithStatusDTO=new StationWithStatusDTO();
         stationWithStatusDTO.setId(stationWithRegistrationStatus.getId());
-        stationWithStatusDTO.setStatus(stationWithStatusDTO.getStatus());
-        stationWithStatusDTO.setDealerName(stationWithStatusDTO.getDealerName());
-        stationWithStatusDTO.setDealerId(stationWithStatusDTO.getDealerId());
+        stationWithStatusDTO.setStatus(stationWithRegistrationStatus.getStatus());
+        stationWithStatusDTO.setDealerName(stationWithRegistrationStatus.getDealerName());
+        stationWithStatusDTO.setDealerId(stationWithRegistrationStatus.getDealerId());
         return stationWithStatusDTO;
     }
 
