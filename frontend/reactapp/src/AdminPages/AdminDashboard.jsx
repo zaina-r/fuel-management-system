@@ -42,9 +42,9 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="flex  min-h-screen bg-gray-100">
+    <div className="flex  min-h-screen bg-gray-100 ">
       
-      <div className="w-56 bg-slate-800 text-white shadow-md border-r border-neutral-500 p-3">
+      <div className="w-56 bg-slate-800 text-white shadow-md border-r border-neutral-500 p-3 fixed h-screen">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-white mb-4">Fuel Pass</h2>
         </div>
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
       </div>
 
       
-      <div className="flex-1 p-8 bg-slate-800">
+      <div className="flex-1 p-8 bg-slate-900 ml-52">
         <Outlet />
       </div>
     </div>

@@ -35,14 +35,14 @@ const ViewAdmin = () => {
       <h1 className="text-2xl font-bold mb-4 text-color">Admin Dashboard</h1>
       <div className="overflow-x-auto">
         <table className="table-auto w-full ">
-          <thead>
+          <thead className='text-left'>
             <tr className="">
-              <th className=" px-4 py-2 text-orange-800">ID</th>
-              <th className=" px-4 py-2 text-orange-800 ">NIC</th>
-              <th className=" px-4 py-2 text-orange-800">First Name</th>
-              <th className=" px-4 py-2 text-orange-800">Last Name</th>
-              <th className=" px-4 py-2 text-orange-800">Role</th>
-              <th className=" px-4 py-2 text-orange-800">Telephone Number</th>
+              <th className=" px-4 py-2 text-orange-500">ID</th>
+              <th className=" px-4 py-2 text-orange-500 ">NIC</th>
+              <th className=" px-4 py-2 text-orange-500">First Name</th>
+              <th className=" px-4 py-2 text-orange-500">Last Name</th>
+              <th className=" px-4 py-2 text-orange-500">Role</th>
+              <th className=" px-4 py-2 text-orange-500">Telephone Number</th>
             </tr>
           </thead>
           <tbody>

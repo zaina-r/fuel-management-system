@@ -46,14 +46,14 @@ function DisplayStationDetails() {
 
   return (
     <>
-      <div className="bg-slate-800 h-44 "></div>
+      <div className="bg-slate-800 h-screen fixed w-full ">
       {error && <Error error={error} setError={setError} />}
       {success && <Success success={success} setSuccess={setSuccess} />}
       <div className="container my-24">
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <div className="bg-gray-800 rounded-xl my-10">
+          <div className=" rounded-xl my-10">
             <div className="flex justify-center h-[300px] text-white">
               <div className="w-3/4 p-20">
                 <div className="grid grid-cols-2 p-2">
@@ -99,6 +99,8 @@ function DisplayStationDetails() {
           </div>
         )}
       </div>
+      </div>
+     
     </>
   );
 }
