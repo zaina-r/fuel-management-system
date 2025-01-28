@@ -129,5 +129,58 @@ return (
 );
 }
 
+const styles = StyleSheet.create({
+  cameraView: {
+    width: "90%", 
+    height: 300, 
+    alignSelf: "center", 
+    marginTop: 50, 
+    borderRadius: 15, 
+    overflow: "hidden", 
+  },
+  loadingContainer: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -100 }, { translateY: -50 }],
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    padding: 20,
+    borderRadius: 10,
+  },
+  loadingText: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  inputContainer: {
+    marginTop: 20,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  input: {
+    width: "90%",
+    height: 50,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  button: {
+    width: "90%",
+    height: 50,
+    backgroundColor: "#007BFF",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
 
 
