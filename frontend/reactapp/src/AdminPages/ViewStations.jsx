@@ -3,47 +3,90 @@ import Admin from "../apiservice/Admin";
 
 const ViewStations = () => {
   const [stationDetails, setStationDetails] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [filteredDetails, setFilteredDetails] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [error, setError] = useState(null);
 
-  // Fetch data from the API
+ 
   useEffect(() => {
     const fetchStations = async () => {
       try {
         const response = await Admin.getStations(); // Replace with your API endpoint
-        if (response.statusCode == 200) {
-          console.log(response.stationWithStatusDTOList);
+        if (response.statusCode === 200) {
           setStationDetails(response.stationWithStatusDTOList);
+          setFilteredDetails(response.stationWithStatusDTOList);
         }
       } catch (err) {
         setError(err.message);
-      } finally {
-        // setLoading(false);
       }
     };
 
     fetchStations();
   }, []);
 
+   
+  useEffect(() => {
+    let filtered = stationDetails;
+
+    if (searchTerm) {
+      filtered = filtered.filter((station) =>
+        station.dealerName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter) {
+      filtered = filtered.filter((station) => station.status === statusFilter);
+    }
+
+    setFilteredDetails(filtered);
+  }, [searchTerm, statusFilter, stationDetails]);
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4 text-white">Station Dashboard</h1>
+
+ 
+      <div className="mb-4 flex flex-wrap gap-4 ">
+        <input
+          type="text"
+          placeholder="Search by Dealer Name"
+          className="p-2 rounded-lg border border-neutral-500 w-full max-w-sm bg-slate-800"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <select
+          className="p-2 rounded-lg border border-neutral-500 w-full max-w-sm bg-slate-800 text-neutral-400"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="" className="">All Status</option>
+          <option value="Registered">Registered</option>
+          <option value="Not Registered">Not Registered</option>
+        </select>
+      </div>
+
+  
+      {error && <p className="text-red-500">Error: {error}</p>}
+
+    
       <div className="overflow-x-auto">
         <table className="table-auto w-full text-white">
           <thead className="text-left">
-            <tr className="">
+            <tr>
               <th className="text-orange-500 px-4 py-2">ID</th>
               <th className="text-orange-500 px-4 py-2">DealerId</th>
               <th className="text-orange-500 px-4 py-2">DealerName</th>
-              <th className="text-orange-500 px-4 py-2">status</th>
+              <th className="text-orange-500 px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody>
-            {stationDetails.map((station, index) => (
+            {filteredDetails.map((station, index) => (
               <tr key={index} className="border-b-2 border-neutral-500">
-                <td className=" px-4 py-9 text-neutral-400 ">{station.id}</td>
-                <td className=" px-4 py-2 text-neutral-400">{station.dealerId}</td>
-                <td className=" px-4 py-2 text-neutral-400 ">{station.dealerName}</td>
+                <td className="px-4 py-6 text-neutral-400">{station.id}</td>
+                <td className="px-4 py-2 text-neutral-400">{station.dealerId}</td>
+                <td className="px-4 py-2 text-neutral-400">{station.dealerName}</td>
                 <td>
                   <button
                     className={`px-4 py-2 w-[150px] rounded-lg ${
@@ -61,6 +104,10 @@ const ViewStations = () => {
             ))}
           </tbody>
         </table>
+
+        {filteredDetails.length === 0 && (
+          <p className="text-neutral-400 mt-4">No stations found.</p>
+        )}
       </div>
     </div>
   );
