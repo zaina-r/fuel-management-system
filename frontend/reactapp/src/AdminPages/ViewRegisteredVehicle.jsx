@@ -11,7 +11,7 @@ const ViewRegisteredVehicle = () => {
     
     const fetchVehicles = async () => {
       try {
-        const response = await Admin.getRegisterdStations()
+        const response = await Admin.getRegisterdVehicles()
         if(response.statusCode==200){
           console.log(response.vehiclesDtoList);
           setVehicles(response.vehiclesDtoList);

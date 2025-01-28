@@ -20,8 +20,12 @@ export default class Authentication {
      const response = await axios.post(`${this.BASE_URL}/api/fuel/addfuel/${stationId}`,fuel);
      return response.data;
    }
-   static async getRegisterdStations(){
+   static async getRegisterdVehicles(){
      const response = await axios.get(`${this.BASE_URL}/api/vehicle/getAllVehicles`);
+     return response.data;
+   }
+   static async getRegisterdStations(){
+     const response = await axios.get(`${this.BASE_URL}/api/admin/stationInfo`);
      return response.data;
    }
 }
