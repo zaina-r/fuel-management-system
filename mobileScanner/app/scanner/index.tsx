@@ -99,4 +99,35 @@ if (hasPermission === false) {
   return <Text>No access to camera</Text>;
 }
 
+return (
+  <SafeAreaView style={StyleSheet.absoluteFillObject}>
+    <StatusBar hidden={Platform.OS === "android"} />
+    <CameraView
+      style={styles.cameraView}
+      facing="back"
+      onBarcodeScanned={handleBarcodeScanned} 
+    />
+    {loading && (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Processing QR Code...</Text>
+      </View>
+    )}
+
+    <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Qr Code"
+        placeholderTextColor="#888"
+        value={fuelAmount}
+        onChangeText={setFuelAmount}
+      />
+      <TouchableOpacity style={styles.button} onPress={handlePumpFuel}>
+        <Text style={styles.buttonText}>Pump Fuel</Text>
+      </TouchableOpacity>
+    </View>
+  </SafeAreaView>
+);
+}
+
+
 
