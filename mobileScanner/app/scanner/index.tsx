@@ -31,3 +31,7 @@ export default function QRScanner() {
     })();
   }, []);
 
+  const handleBarcodeScanned = async ({ data }: { data: string }) => {
+    if (!qrLock.current && data) {
+      qrLock.current = true; 
+      setLoading(true); 
