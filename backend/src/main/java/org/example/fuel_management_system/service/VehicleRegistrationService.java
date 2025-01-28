@@ -220,6 +220,21 @@ public class VehicleRegistrationService {
 
         return response;
     }
+    public Response getAllVehicles() {
+        Response response = new Response();
+        try{
+            List<VehicleVerification> vehicleVerifications = vehicleVerificationRepository.findAll();
+            response.setVehiclesDtoList(MapUtils.mapVehicleListEntityToVehicleDTOList(vehicleVerifications));
+            response.setMessage("Vehicles retrieved successfully");
+            response.setStatusCode(200);
+
+
+        }catch (RuntimeException e) {
+            response.setMessage("An error occurred while retrieving vehicle details");
+            response.setStatusCode(500);
+        }
+        return response;
+    }
 
 }
 

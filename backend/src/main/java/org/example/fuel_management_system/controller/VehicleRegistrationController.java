@@ -33,6 +33,11 @@ public class VehicleRegistrationController {
       return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
+    @GetMapping("/vehicle/getAllVehicles")
+    public ResponseEntity<Response>getAllVehicles(){
+        Response response= vehicleRegistrationService.getAllVehicles();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 
     @GetMapping("/{qrCode}")
