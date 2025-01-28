@@ -53,3 +53,19 @@ export default function QRScanner() {
     }
   };
 
+  useEffect(() => {
+    const appStateSubscription = AppState.addEventListener(
+      "change",
+      (nextAppState) => {
+        if (nextAppState === "active") {
+          qrLock.current = false; 
+        }
+      }
+    );
+
+    return () => {
+      appStateSubscription.remove();
+    };
+  }, []);
+
+
