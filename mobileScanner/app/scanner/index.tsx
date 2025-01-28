@@ -23,3 +23,11 @@ export default function QRScanner() {
   const [loading, setLoading] = useState(false); 
   const [fuelAmount, setFuelAmount] = useState(""); 
   const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
