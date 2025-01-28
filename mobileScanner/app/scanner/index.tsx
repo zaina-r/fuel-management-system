@@ -68,4 +68,9 @@ export default function QRScanner() {
     };
   }, []);
 
+  const handlePumpFuel = async() => {
+    if (fuelAmount === "") {
+      Alert.alert("Error", "Please enter the QR Code");
+    } 
+
 
