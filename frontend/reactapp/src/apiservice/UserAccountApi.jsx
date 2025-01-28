@@ -28,6 +28,21 @@ export default class UserAccountApi {
     return response.data;
   }
 
+  static async getUserDetails() {
+    const userId = localStorage.getItem("userId");
+    const response = await axios.get(`${this.BASE_URL}/api/account/${userId}`);
+    return response.data;
+  }
+
+  static async updateUserDetails(details) {
+    const userId = localStorage.getItem("userId");
+    const response = await axios.put(
+      `${this.BASE_URL}/api/users/update-details/${userId}`,
+      details
+    );
+    return response.data;
+  }
+
   static async verifySigningOtp(otp, userId) {
     const response = await axios.post(
       `${this.BASE_URL}/api/two_factor/otp/${otp}`,
