@@ -4,6 +4,7 @@ import org.example.fuel_management_system.DTO.UserAccountDto;
 import org.example.fuel_management_system.OtpGenerator.GenerateOtp;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
 import org.example.fuel_management_system.Request.ResetPasswordRequest;
+import org.example.fuel_management_system.Request.UserRequest;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.exception.FuelException;
 import org.example.fuel_management_system.model.*;
@@ -88,12 +89,12 @@ public class AuthenticateService {
 
         }catch (FuelException | IllegalArgumentException e){
             response.setStatusCode(400);
-            response.setMessage("Username or Password is incorrect");
+            response.setMessage(e.getMessage());
         }
 
         catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Username or Password is incorrect");
+            response.setMessage("Please enter valid password and email address");
 
 
         }
@@ -298,6 +299,22 @@ public class AuthenticateService {
             return userAccount.get();
         }
         return null;
+    }
+
+    public Response updateUserAccount(int UserId, UserRequest userRequest){
+        Response response=new Response();
+        Optional<UserAccount> userAccount1=userAccountRepository.findById(UserId);
+        if(userAccount1.isPresent()){
+            userAccount1.get().setFirstname(userRequest.getFirstname());
+            userAccount1.get().setLastname(userRequest.getLastname());
+            userAccount1.get().setTelno(userRequest.getTelno());
+
+        }
+        UserAccount user1=userAccountRepository.save(userAccount1.get());
+        response.setStatusCode(200);
+        response.setMessage("User Account updated successfully");
+        response.setUserAccountDto(MapUtils.mapUserEntityToUserDTO(user1));
+        return response;
     }
 
 

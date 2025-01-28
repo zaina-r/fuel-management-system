@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.controller;
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Request.ResetPasswordRequest;
+import org.example.fuel_management_system.Request.UserRequest;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.service.*;
@@ -79,6 +80,12 @@ public class AuthenticationController {
     @PostMapping("/users/reset-password/send-otp")
     public ResponseEntity<Response> sendForgetPasswordOtp(@RequestParam String email) throws Exception {
         Response response = authenticateService.sendForgetPasswordOtp(email);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+
+    }
+    @PutMapping("/users/update-details/{UserId}")
+    public ResponseEntity<Response> updatePassword(@RequestBody UserRequest userRequest, @PathVariable int UserId) throws Exception {
+        Response response = authenticateService.updateUserAccount(UserId,userRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
