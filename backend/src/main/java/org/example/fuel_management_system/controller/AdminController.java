@@ -52,9 +52,9 @@ public class AdminController {
 
 
 
-    @PostMapping("/update-initial-fuel-allocation")
-    public ResponseEntity<Response> updateInitialFuelAllocation(@RequestBody Fuel fuelAllocation){
-        Response response=adminService.updateInitialFuelAllocation(fuelAllocation);
+    @PostMapping("/update-initial-fuel-allocation/{id}")
+    public ResponseEntity<Response> updateInitialFuelAllocation(@RequestBody Fuel fuelAllocation,@PathVariable int id){
+        Response response=adminService.updateInitialFuelAllocation(fuelAllocation,id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

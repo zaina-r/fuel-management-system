@@ -6,11 +6,8 @@ import org.example.fuel_management_system.DTO.Response;
 
 import org.example.fuel_management_system.DTO.StationWithStatusDTO;
 import org.example.fuel_management_system.Repository.*;
-import org.example.fuel_management_system.model.ExistingStations;
-import org.example.fuel_management_system.model.Fuel;
+import org.example.fuel_management_system.model.*;
 
-import org.example.fuel_management_system.model.FuelAllocation;
-import org.example.fuel_management_system.model.StationWithRegistrationStatus;
 import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.stereotype.Service;
 
@@ -102,19 +99,16 @@ public class AdminService {
 
 
 
-        public Response updateInitialFuelAllocation(Fuel fuelAllocation) {
+        public Response updateInitialFuelAllocation(Fuel fuelAllocation,int id) {
             Response response = new Response();
-            try {
-                if (fuelAllocation.getStation() == null || fuelAllocation.getStation().getId() == 0) {
-                    response.setMessage("Station or Station ID cannot be null.");
-                    response.setStatusCode(400);
-                    return response;
-                }
 
-                Fuel fuel = fuelRepository.findByStationId(fuelAllocation.getStation().getId());
+            try {
+
+                Station station=fuelStationRepository.findById(id).get();
+                Fuel fuel = fuelRepository.findByStationId(id);
                 if (fuel == null) {
                     fuel = new Fuel();
-                    fuel.setStation(fuelAllocation.getStation());
+                    fuel.setStation(station);
                 }
 
 
