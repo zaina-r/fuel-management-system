@@ -35,3 +35,21 @@ export default function QRScanner() {
     if (!qrLock.current && data) {
       qrLock.current = true; 
       setLoading(true); 
+
+      try {
+        const response = await axios.get(
+          `https://eb0c-2402-4000-13ca-27c8-71b7-4243-5ecf-5998.ngrok-free.app/api/${data}`
+        );
+        setRowData(response.data.vehiclesDto);
+
+        router.push(
+          `/result?license_plate_no=${response.data.vehiclesDto.license_plate_no}&vehicleType=${response.data.vehiclesDto.vehicle_type}&fuelType=${response.data.vehiclesDto.fuel_type}&availableFuelCapacity=${response.data.vehiclesDto.availableFuelCapacity}&vehicleId=${response.data.vehiclesDto.vehicleId}`
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); 
+      }
+    }
+  };
+
