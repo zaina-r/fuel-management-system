@@ -59,7 +59,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/stations/delete/{id}")
-    public ResponseEntity<Response> deleteStationById(@PathVariable int id){
+    public ResponseEntity<?> deleteStationById(@PathVariable int id){
         Response response= stationService.deleteStationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

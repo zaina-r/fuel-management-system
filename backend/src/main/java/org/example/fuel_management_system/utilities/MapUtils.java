@@ -113,6 +113,7 @@ public class MapUtils {
         fuelTransitionDto.setTransitionTime(fuelTransition.getTransitionTime());
         fuelTransitionDto.setStationId(fuelTransitionDto.getStationId());
         fuelTransitionDto.setVehicleVerification(fuelTransition.getVehicleVerification());
+        fuelTransitionDto.setUserAccount(fuelTransition.getUserAccount());
         return fuelTransitionDto;
     }
 

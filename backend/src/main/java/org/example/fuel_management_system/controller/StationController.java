@@ -2,6 +2,7 @@ package org.example.fuel_management_system.controller;
 
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
+import org.example.fuel_management_system.Request.StationRequest;
 import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.StationService;
@@ -37,7 +38,13 @@ public class StationController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Response> UpdateStationById(@RequestBody StationRequest stationRequest,@PathVariable int id)
+    {
+        Response response=stationService.updateStation(stationRequest,id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
+    }
 
 
 

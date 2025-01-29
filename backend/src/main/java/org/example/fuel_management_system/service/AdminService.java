@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -31,61 +32,57 @@ public class AdminService {
         this.stationWithRegistrationStatusRepository = stationWithRegistrationStatusRepository;
     }
 
+
+
+
     public Response getStationWithStatus() {
         Response response = new Response();
-        try {
 
+        try {
             List<ExistingStations> allStations = existingStationsRepository.findAll();
             List<StationWithRegistrationStatus> stationList = new ArrayList<>();
 
             if (!allStations.isEmpty()) {
+                stationWithRegistrationStatusRepository.deleteAll();
                 for (ExistingStations station : allStations) {
                     if (station != null) {
+                        String dealerId = station.getDealerId();
+                        String dealerName = station.getDealer_name() != null ? station.getDealer_name() : "Unknown Dealer";
+                        boolean isRegistered = fuelStationRepository.existsByStationId(dealerId);
+                        String status = isRegistered ? "Registered" : "Not Registered";
 
-                        boolean exists = stationWithRegistrationStatusRepository.existsByStationId(station.getDealerId());
-                        if (!exists) {
+                        // Check if this station already exists in the table
+                        Optional<StationWithRegistrationStatus> existingRecord =
+                                stationWithRegistrationStatusRepository.findByStationId(dealerId);
 
-                            boolean isRegistered = fuelStationRepository.existsByStationId(station.getDealerId());
-                            String status = isRegistered ? "Registered" : "Not Registered";
+                        StationWithRegistrationStatus stationWithStatus = existingRecord.orElse(new StationWithRegistrationStatus());
 
-                            String dealerName = station.getDealer_name() != null ? station.getDealer_name() : "Unknown Dealer";
-                            String dealerId = station.getDealerId() != null ? station.getDealerId() : "Unknown ID";
+                        // Update or set details
+                        stationWithStatus.setDealerId(dealerId);
+                        stationWithStatus.setDealerName(dealerName);
+                        stationWithStatus.setStatus(status);
 
-                            StationWithRegistrationStatus stationWithStatus = new StationWithRegistrationStatus();
-                            stationWithStatus.setDealerId(dealerId);
-                            stationWithStatus.setDealerName(dealerName);
-                            stationWithStatus.setStatus(status);
-
-                            stationList.add(stationWithStatus);
-                        }
+                        stationList.add(stationWithStatus);
                     }
                 }
 
-
                 if (!stationList.isEmpty()) {
+                    // Save or update all stations at once
                     stationWithRegistrationStatusRepository.saveAll(stationList);
                 }
 
-
                 List<StationWithRegistrationStatus> allStationsWithStatus = stationWithRegistrationStatusRepository.findAll();
-                System.out.println(allStationsWithStatus.get(0));
-
-
                 List<StationWithStatusDTO> dtoList = MapUtils.mapListStationWithStatusDTOToListStationWithStatus(allStationsWithStatus);
-
-
 
                 response.setStationWithStatusDTOList(dtoList);
                 response.setStatusCode(200);
-                response.setMessage("Successfully retrieved all stations with status.");
+                response.setMessage("Successfully retrieved and updated stations with status.");
             } else {
-
                 response.setStatusCode(404);
                 response.setMessage("No stations found.");
                 response.setStationWithStatusDTOList(new ArrayList<>());
             }
         } catch (Exception e) {
-
             response.setStatusCode(500);
             response.setMessage("An error occurred while retrieving stations: " + e.getMessage());
             response.setStationWithStatusDTOList(new ArrayList<>());
@@ -99,7 +96,8 @@ public class AdminService {
 
 
 
-        public Response updateInitialFuelAllocation(Fuel fuelAllocation,int id) {
+
+    public Response updateInitialFuelAllocation(Fuel fuelAllocation,int id) {
             Response response = new Response();
 
             try {

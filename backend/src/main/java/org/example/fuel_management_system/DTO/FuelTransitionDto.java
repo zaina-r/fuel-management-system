@@ -1,6 +1,7 @@
 package org.example.fuel_management_system.DTO;
 
 import jakarta.persistence.OneToOne;
+import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.model.VehicleVerification;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,15 @@ public class FuelTransitionDto {
     private Float fuelAmount;
     private LocalDateTime transitionTime;
     private VehicleVerification vehicleVerification;
+    private UserAccount userAccount;
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
 
     public int getId() {
         return id;

@@ -7,6 +7,7 @@ import org.example.fuel_management_system.Repository.ExistingStationsRepository;
 import org.example.fuel_management_system.Repository.FuelRepository;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
+import org.example.fuel_management_system.Request.StationRequest;
 import org.example.fuel_management_system.model.*;
 import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,6 +186,38 @@ this.authenticateService=authenticateService;
             response.setMessage("Station with login code "+loginCode+"not found");
         }
         return response;
+    }
+
+    public Response updateStation(StationRequest stationRequest,int stationId){
+
+        Response response=new Response();
+try {
+
+
+    Station station = fuelStationRepository.findById(stationId)
+            .orElseThrow(() -> new EntityNotFoundException("Station with id " + stationId + " not found"));
+
+    if (station!=null) {
+        station.setStationAddress(stationRequest.getStationAddress());
+        station.setDealerName(stationRequest.getDealerName());
+        fuelStationRepository.save(station);
+    }
+    response.setStatusCode(200);
+    response.setMessage("Station retrieved successfully");
+    response.setStationDto(MapUtils.mapStationEntityToStationDTO(station));
+}   catch (EntityNotFoundException e) {
+    response.setStatusCode(404);
+    response.setMessage(e.getMessage());
+
+} catch (Exception e) {
+    response.setStatusCode(500);
+    response.setMessage("Error occurred while retrieving the station: " + e.getMessage());
+
+}
+        return response;
+
+
+
     }
 
 
