@@ -120,6 +120,49 @@ export default function Home() {
     </SafeAreaView>
   );
 }
+ 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    justifyContent: "space-around",
+    paddingVertical: 80,
+  },
+  title: {
+    color: "black",
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginBottom: 30,  
+  },
+  inputBox: {
+    height: 50,
+    width: "100%", 
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    fontSize: 18,
+    paddingLeft: 10,
+    marginBottom: 20,
+  },
+  buttonStyle: {
+    color: "#0E7AFE",
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10,
+  },
+  scanButton: {
+    backgroundColor: "#0E7AFE",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+});
 
 
 
