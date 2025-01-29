@@ -62,5 +62,64 @@ export default function Home() {
           }
   }
 
+  return (
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen options={{ title: "Overview", headerShown: false }} />
+      <Text style={styles.title}>National Fuel Pass</Text>
+      <Text>{stationId}</Text>
+      <Text>{stationName}</Text>
+      <Text>{fuel_station_Id}</Text>
+
+      
+
+      <View style={{ gap: 20, width: '80%', alignItems: 'center' }}>
+      
+        <TextInput
+          style={styles.inputBox}
+          value={code}
+          onChangeText={setCode}
+          placeholder="Enter code"
+          placeholderTextColor="rgba(0, 0, 0, 0.5)" 
+          keyboardType="default"
+        />
+
+      
+        <Pressable onPress={requestPermission}>
+          <Text style={styles.buttonStyle}>Request Permissions</Text>
+        </Pressable>
+
+
+        
+      {checked &&
+      <Link href={"/scanner"} asChild>
+      <Pressable disabled={!isPermissionGranted}>
+        <Text
+          style={[
+            styles.buttonStyle,
+            { opacity: !isPermissionGranted ? 0.5 : 1 },
+          ]}
+        >
+          Scan Code
+        </Text>
+      </Pressable>
+    </Link> }  
+
+        <Pressable 
+          onPress={() => {
+            if (code.trim()) {
+              alert(`Code entered: ${code}`);
+            } else {
+              alert("Please enter a code first.");
+            }
+          }}
+          style={styles.scanButton}
+        >
+          <Text style={styles.buttonText} onPress={handleCheck}>Chech Code</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
+}
+
 
 
