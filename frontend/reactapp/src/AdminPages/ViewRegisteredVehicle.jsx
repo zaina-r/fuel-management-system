@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Admin from "../apiservice/Admin";
 
+
 const ViewRegisteredVehicle = () => {
   const [vehicles, setVehicles] = useState([]);
   
