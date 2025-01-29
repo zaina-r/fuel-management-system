@@ -51,13 +51,13 @@ const ViewStations = () => {
         <input
           type="text"
           placeholder="Search by Dealer Name"
-          className="p-2 rounded-lg border border-neutral-500 w-full max-w-sm bg-slate-800"
+          className="flex-1 px-4 py-2 border-2 border-slate-800 bg-slate-800"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <select
-          className="p-2 rounded-lg border border-neutral-500 w-full max-w-sm bg-slate-800 text-neutral-400"
+          className="flex-1 px-4 py-2 border-2 border-slate-800 bg-slate-800 text-gray-400"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
