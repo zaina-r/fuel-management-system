@@ -32,4 +32,35 @@ export default function Home() {
     }
   };    
 
+  const handleCheck=async()=>{
+    console.log(code)
+          try{
+               const response=await axios.post(`https://eb0c-2402-4000-13ca-27c8-71b7-4243-5ecf-5998.ngrok-free.app/api/station/mobile/${code}`,
+                {},
+                  {
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                  console.log(response.data)
+                  if(response.data.statusCode===200){
+                    setChekced(true);
+                    saveData(response.data.stationDto.stationId,response.data.stationDto.dealerName,response.data.stationDto.id);
+                    Alert.alert("Code Confirmed Successfully");
+                 
+                  }
+                  
+
+                
+                
+               
+          }catch(err){
+                console.log(err);
+                setChekced(false);
+          }finally{
+            setCode('')
+          }
+  }
+
+
 
