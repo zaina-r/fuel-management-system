@@ -66,7 +66,7 @@ const UpdateSelectedStationFuel = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-neutral-800 p-4 rounded shadow text-white"
+        className="border border-neutral-700 bg-slate-800 p-4 rounded shadow text-white"
       >
         <div className="mb-4">
           <label className="block text-orange-500 mb-2">Diesel Quantity</label>
@@ -74,7 +74,7 @@ const UpdateSelectedStationFuel = () => {
             type="number"
             value={dieselQuantity}
             onChange={(e) => setDieselQuantity(e.target.value)}
-            className="w-full px-4 py-2 rounded border border-neutral-500 bg-neutral-900 text-white"
+            className="w-full px-4 py-2 rounded border border-neutral-500 bg-slate-900 text-white"
             required
           />
         </div>
@@ -85,7 +85,7 @@ const UpdateSelectedStationFuel = () => {
             type="number"
             value={petrolQuantity}
             onChange={(e) => setPetrolQuantity(e.target.value)}
-            className="w-full px-4 py-2 rounded border border-neutral-500 bg-neutral-900 text-white"
+            className="w-full px-4 py-2 rounded border border-neutral-500 bg-slate-900 text-white"
             required
           />
         </div>
