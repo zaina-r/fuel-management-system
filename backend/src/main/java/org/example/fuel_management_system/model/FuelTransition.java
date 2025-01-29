@@ -18,17 +18,29 @@ public class FuelTransition {
     private LocalDateTime transitionTime;
     @OneToOne
     private VehicleVerification vehicleVerification;
+    @OneToOne
+    private UserAccount userAccount;
 
-    public FuelTransition(String stationId, String fuelType, Float fuelAmount, LocalDateTime transitionTime, VehicleVerification vehicleVerification) {
+    public FuelTransition(int id, String stationId, String fuelType, LocalDateTime transitionTime, Float fuelAmount, VehicleVerification vehicleVerification, UserAccount userAccount) {
+        this.id = id;
         this.stationId = stationId;
         this.fuelType = fuelType;
-        this.fuelAmount = fuelAmount;
         this.transitionTime = transitionTime;
+        this.fuelAmount = fuelAmount;
         this.vehicleVerification = vehicleVerification;
+        this.userAccount = userAccount;
     }
 
     public FuelTransition() {
 
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     public int getId() {
