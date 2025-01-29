@@ -31,7 +31,6 @@ const AdminDashboard = () => {
             (station) => !station.fuel || station.fuel === "N/A"
           );
           setFilteredStations(filteredStations);
-          console.log(filteredStations);
         }
       } catch (err) {
         console.error("Error fetching stations:", err);
@@ -234,7 +233,6 @@ const AdminDashboard = () => {
                     {link.text}
                   </div>
                   <div className="ml-16 text-neutral-300 bg-red-600 rounded-full w-[20px] h-[20px]]">
-                    
                     {index === 1 && filteredStations.length > 0 ? (
                       <span className="p-1">{filteredStations.length}</span>
                     ) : null}

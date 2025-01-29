@@ -11,26 +11,36 @@ export default class Authentication {
     };
   }
 
-   static async getStations(){
-      const response = await axios.get(`${this.BASE_URL}/api/admin/get-stations-with-status`);
-      return response.data;
-   }
-   static async updateStationFuel(stationId,fuel){
-     
-     const response = await axios.post(`${this.BASE_URL}/api/fuel/addfuel/${stationId}`,fuel);
-     return response.data;
-   }
-   static async getRegisterdVehicles(){
-     const response = await axios.get(`${this.BASE_URL}/api/vehicle/getAllVehicles`);
-     return response.data;
-   }
-   static async getRegisterdStations(){
-     const response = await axios.get(`${this.BASE_URL}/api/station/allstations`);
-     return response.data;
-   }
-  
-   static async updateStationFuel(fuel,id){
-    const response = await axios.post(`${this.BASE_URL}/api/admin/update-initial-fuel-allocation/${id}`,fuel,
+  static async getStations() {
+    const response = await axios.get(
+      `${this.BASE_URL}/api/admin/get-stations-with-status`
+    );
+    return response.data;
+  }
+  static async updateStationFuel(stationId, fuel) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/fuel/addfuel/${stationId}`,
+      fuel
+    );
+    return response.data;
+  }
+  static async getRegisterdVehicles() {
+    const response = await axios.get(
+      `${this.BASE_URL}/api/vehicle/getAllVehicles`
+    );
+    return response.data;
+  }
+  static async getRegisterdStations() {
+    const response = await axios.get(
+      `${this.BASE_URL}/api/station/allstations`
+    );
+    return response.data;
+  }
+
+  static async updateStationFuel(fuel, id) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/admin/update-initial-fuel-allocation/${id}`,
+      fuel,
       {
         headers: {
           "Content-Type": "application/json",
@@ -38,11 +48,13 @@ export default class Authentication {
       }
     );
     return response.data;
-    }
+  }
 
-
-
-    }
-   
-  
-    
+  static async updateStations(stationId, station) {
+    const response = await axios.put(
+      `${this.BASE_URL}/api/station/update/${stationId}`,
+      station
+    );
+    return response.data;
+  }
+}
