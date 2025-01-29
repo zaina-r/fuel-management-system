@@ -13,3 +13,23 @@ export default function Home() {
   const [stationId,setStationId]=useState("");
   const [fuel_station_Id,setFuel_Station_Id]=useState("");
   const isPermissionGranted = Boolean(permission?.granted);
+
+  const saveData = async (id: string,name:string,fuelStationId:string) => {
+    try {
+      await AsyncStorage.setItem('stationId',id);
+      await AsyncStorage.setItem('stationName',name);
+      await AsyncStorage.setItem('fuelStationId',fuelStationId.toString());
+      // setStationId(id);
+      const stId= await AsyncStorage.getItem('stationId');
+      const stName= await AsyncStorage.getItem('stationName');
+      const fsId= await AsyncStorage.getItem('fuelStationId');
+      setStationId(stId);
+      setStationName(stName);
+      setFuel_Station_Id(fsId);
+
+    } catch (error) {                                                                                        
+      console.error('Error saving data:', error);
+    }
+  };    
+
+
