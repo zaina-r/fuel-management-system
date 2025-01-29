@@ -83,7 +83,7 @@ const ViewStations = () => {
           </thead>
           <tbody>
             {filteredDetails.map((station, index) => (
-              <tr key={index} className="border-b-2 border-neutral-500">
+              <tr key={index} className="border-b border-neutral-500 text-sm">
                 <td className="px-4 py-6 text-neutral-400">{station.id}</td>
                 <td className="px-4 py-2 text-neutral-400">{station.dealerId}</td>
                 <td className="px-4 py-2 text-neutral-400">{station.dealerName}</td>

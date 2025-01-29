@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Admin  from "../apiservice/Admin";
-
+import Admin from "../apiservice/Admin";
 
 const ViewRegisteredVehicle = () => {
   const [vehicles, setVehicles] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
-    
     const fetchVehicles = async () => {
       try {
-        const response = await Admin.getRegisterdVehicles()
-        if(response.statusCode==200){
+        const response = await Admin.getRegisterdVehicles();
+        if (response.statusCode == 200) {
           console.log(response.vehiclesDtoList);
           setVehicles(response.vehiclesDtoList);
         }
-      
-        
       } catch (error) {
-        console.error('Error fetching vehicles:', error);
-       
+        console.error("Error fetching vehicles:", error);
       }
     };
     fetchVehicles();
@@ -42,12 +37,25 @@ const ViewRegisteredVehicle = () => {
         </thead>
         <tbody>
           {vehicles.map((vehicle) => (
-            <tr key={vehicle.vehicleId} className=" border-b-2 border-neutral-500">
-              <td className=" px-4 py-6 text-neutral-400">{vehicle.vehicleId}</td>
-              <td className=" px-4 py-2 text-neutral-400">{vehicle.license_plate_no}</td>
-              <td className="  px-4 py-2 text-neutral-400">{vehicle.vehicleRegNo}</td>
-              <td className=" px-4 py-2 text-neutral-400">{vehicle.vehicle_type}</td>
-              <td className="  px-4 py-2 text-neutral-400">{vehicle.fuel_type}</td>
+            <tr
+              key={vehicle.vehicleId}
+              className=" border-b-2 border-neutral-500"
+            >
+              <td className=" px-4 py-6 text-neutral-400">
+                {vehicle.vehicleId}
+              </td>
+              <td className=" px-4 py-2 text-neutral-400">
+                {vehicle.license_plate_no}
+              </td>
+              <td className="  px-4 py-2 text-neutral-400">
+                {vehicle.vehicleRegNo}
+              </td>
+              <td className=" px-4 py-2 text-neutral-400">
+                {vehicle.vehicle_type}
+              </td>
+              <td className="  px-4 py-2 text-neutral-400">
+                {vehicle.fuel_type}
+              </td>
             </tr>
           ))}
         </tbody>

@@ -24,6 +24,7 @@ import ViewStationOwners from "./AdminPages/ViewStationOwners";
 import ViewProfile from "./AdminPages/ViewProfile";
 import Notification from "./AdminPages/Notification";
 import ProfilePage from "./pages/Profile";
+import UpdateSelectedStationFuel from "./AdminPages/UpdateSelectedStationFuel";
 
 function App() {
   return (
@@ -73,6 +74,8 @@ function RoutesWrapper() {
             <Route path="stationOwners" element={<ViewStationOwners />} />
             <Route path="profile" element={<ViewProfile />} />
             <Route path="notification" element={<Notification />} />
+            <Route path="updateSelectedStationFuel" element={<UpdateSelectedStationFuel />} />
+
           </Route>
         </Routes>
       </div>

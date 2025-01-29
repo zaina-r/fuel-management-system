@@ -25,7 +25,24 @@ export default class Authentication {
      return response.data;
    }
    static async getRegisterdStations(){
-     const response = await axios.get(`${this.BASE_URL}/api/admin/stationInfo`);
+     const response = await axios.get(`${this.BASE_URL}/api/station/allstations`);
      return response.data;
    }
-}
+  
+   static async updateStationFuel(fuel,id){
+    const response = await axios.post(`${this.BASE_URL}/api/admin/update-initial-fuel-allocation/${id}`,fuel,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+    }
+
+
+
+    }
+   
+  
+    
