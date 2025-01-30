@@ -140,6 +140,7 @@ public class VehicleRegistrationService {
                 vehiclesDto.setFuel_type(vehicle.get().getFuel_type());
                 vehiclesDto.setAvailableFuelCapacity(vehicle.get().getAvailableFuelCapacity());
                 vehiclesDto.setVehicleId(vehicle.get().getVehicleId());
+                vehiclesDto.setUserAccount(vehicle.get().getUserAccount());
 
                 response.setVehiclesDto(vehiclesDto);
                 response.setMessage("Vehicle found successfully");
