@@ -35,13 +35,15 @@ const AdminHome = () => {
           (sum, station) => sum + station.fuel.availablePetrolQuantity,    
           0
         );
-        setPetrolCapacity(totalPetrolCapacity);
+        setPetrolCapacity(parseFloat(totalPetrolCapacity.toFixed(2)));
+        
        
         const totalDieselCapacity = response1.stationDtosList.reduce(
           (sum, station) => sum + station.fuel.availableDieselQuantity,
           0
         );
-        setDieselCapacity(totalDieselCapacity);
+        setDieselCapacity(parseFloat(totalDieselCapacity.toFixed(2)));
+        
         
 
         const response4=await Admin.getRegisterdVehicles();
@@ -99,7 +101,7 @@ const AdminHome = () => {
       amt:petrolCapacity
     },
     {
-      title: "Total Available petrolCapacity",
+      title: "Total Available DieselCapacity",
       description: "Access help and support resources.",
       icon: "🛢",
       bgColor: "bg-gradient-to-r from-pink-500 to-pink-700",
