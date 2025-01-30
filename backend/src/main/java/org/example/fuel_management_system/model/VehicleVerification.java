@@ -1,6 +1,9 @@
 package org.example.fuel_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class VehicleVerification {
@@ -17,19 +20,21 @@ public class VehicleVerification {
     private String qrCode;
     @ManyToOne
     private UserAccount user;
+    @OneToMany(mappedBy = "vehicleVerification",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FuelTransition> fuelTransitions;
 
-    public VehicleVerification(int vehicleId,UserAccount userAccount, String vehicleRegNo, String license_plate_no, String vehicle_make, String vehicle_model, String vehicle_type, String fuel_type, float maximumFuelCapacity, float availableFuelCapacity , String qrCode) {
+    public VehicleVerification(int vehicleId, String vehicleRegNo, String license_plate_no, String vehicle_type, String fuel_type, float maximumFuelCapacity, float availableFuelCapacity, String qrCode, UserAccount user, List<FuelTransition> fuelTransitions) {
         this.vehicleId = vehicleId;
         this.vehicleRegNo = vehicleRegNo;
         this.license_plate_no = license_plate_no;
-        this.user=userAccount;
-
         this.vehicle_type = vehicle_type;
         this.fuel_type = fuel_type;
         this.maximumFuelCapacity = maximumFuelCapacity;
         this.availableFuelCapacity = availableFuelCapacity;
         this.qrCode = qrCode;
-
+        this.user = user;
+        this.fuelTransitions = fuelTransitions;
     }
 
     public VehicleVerification() {
@@ -108,5 +113,21 @@ public class VehicleVerification {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+
+    public List<FuelTransition> getFuelTransitions() {
+        return fuelTransitions;
+    }
+
+    public void setFuelTransitions(List<FuelTransition> fuelTransitions) {
+        this.fuelTransitions = fuelTransitions;
     }
 }

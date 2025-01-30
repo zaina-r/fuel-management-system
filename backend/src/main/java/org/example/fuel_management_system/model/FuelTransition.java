@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,9 +17,11 @@ public class FuelTransition {
     private String fuelType;
     private Float fuelAmount;
     private LocalDateTime transitionTime;
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private VehicleVerification vehicleVerification;
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private UserAccount userAccount;
 
     public FuelTransition(int id, String stationId, String fuelType, LocalDateTime transitionTime, Float fuelAmount, VehicleVerification vehicleVerification, UserAccount userAccount) {

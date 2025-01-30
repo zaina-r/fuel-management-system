@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +41,12 @@ public class UserAccount implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<VehicleVerification>vehicleVerifications=new ArrayList<>();
+
+    @OneToMany(mappedBy = "userAccount",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FuelTransition>fuelTransitions=new ArrayList<>();
 
     private String licenseNumber;
 
@@ -141,5 +147,21 @@ public class UserAccount implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<VehicleVerification> getVehicleVerifications() {
+        return vehicleVerifications;
+    }
+
+    public void setVehicleVerifications(List<VehicleVerification> vehicleVerifications) {
+        this.vehicleVerifications = vehicleVerifications;
+    }
+
+    public List<FuelTransition> getFuelTransitions() {
+        return fuelTransitions;
+    }
+
+    public void setFuelTransitions(List<FuelTransition> fuelTransitions) {
+        this.fuelTransitions = fuelTransitions;
     }
 }
