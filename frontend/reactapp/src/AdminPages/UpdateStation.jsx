@@ -51,7 +51,7 @@ const UpdateStation = () => {
       );
 
       if (response.statusCode === 200) {
-        // Update the station details in the state
+        
         setStationDetails((prev) =>
           prev.map((station) =>
             station.id === editingStation
@@ -78,9 +78,9 @@ const UpdateStation = () => {
       <h1 className="text-2xl font-bold mb-4 text-white">Update Station</h1>
 
       {editingStation ? (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
-          <div className="p-4 bg-neutral-800 rounded-lg w-[90%] max-w-lg">
-            <h2 className="text-xl text-white mb-4">Edit Station</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50  flex justify-center items-center">
+          <div className="p-4 bg-slate-800 rounded-lg w-[90%] max-w-lg text-neutral-400">
+            <h2 className="text-xl text-white mb-7">Edit Station</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="text-white">Station Name</label>
@@ -104,13 +104,13 @@ const UpdateStation = () => {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="px-2 py-2 bg-blue-500 rounded-lg"
+                  className="px-2 py-2 bg-blue-700 rounded-lg text-white"
                 >
                   Submit Update
                 </button>
                 <button
                   onClick={() => setEditingStation(null)}
-                  className=" px-4 py-2 bg-red-500 rounded-lg"
+                  className=" px-4 py-2 bg-red-600 rounded-lg text-white"
                 >
                   Cancel
                 </button>
@@ -154,7 +154,7 @@ const UpdateStation = () => {
                     <td>
                       <button
                         onClick={() => handleUpdate(station)}
-                        className="px-4 py-2 w-[150px] rounded-lg bg-blue-500"
+                        className="px-4 py-2 w-[150px] rounded-lg bg-green-500"
                       >
                         UPDATE
                       </button>

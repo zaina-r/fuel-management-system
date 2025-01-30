@@ -94,7 +94,7 @@ const UserRegisterationForm = () => {
   return (
     <>
       <div className="bg-slate-800 h-screen w-full fixed">
-        <div className="container  text-sm mb-32">
+        <div className="container  text-sm my-44 ">
           <div className="flex justify-center w-full">
             <div className="relative w-1/2 ">
               <div className=" p-8 text-white">

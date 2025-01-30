@@ -1,22 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import VehicleApi from "../apiservice/VehicleApi";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
-import { useState } from "react";
 import { toPng } from "html-to-image";
 import { motion } from "framer-motion";
-import { SlideRight } from "../animation/direction";
-import { SlideUp } from "../animation/direction";
-import { SlideDown } from "../animation/direction";
+import { SlideUp, SlideDown } from "../animation/direction";
 
 const DisplayVehicleDetails = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [qrVehicleData, setQrVehicleData] = useState([]);
-  const [qrData, setQrData] = useState();
+  const qrRefs = useRef([]);
 
-  const qrRef = useRef(null);
+  // Dynamically create refs for each QR code
+  useEffect(() => {
+    qrRefs.current = qrVehicleData.map((_, i) => qrRefs.current[i] || React.createRef());
+  }, [qrVehicleData]);
 
   useEffect(() => {
     getAllQr();
@@ -25,25 +25,27 @@ const DisplayVehicleDetails = () => {
   const getAllQr = async () => {
     try {
       const response = await VehicleApi.getVehicleDetails();
-
-      setQrVehicleData(response.vehiclesDtoList);
-      console.log(response.vehiclesDtoList);
-
-      console.log(qrVehicleData);
-
-      setError("");
+      if (response?.vehiclesDtoList && Array.isArray(response.vehiclesDtoList)) {
+        setQrVehicleData(response.vehiclesDtoList);
+        setError("");
+        console.log("QR Vehicle Data:", response.vehiclesDtoList);
+      } else {
+        setError("No vehicle data found.");
+        setQrVehicleData([]);
+      }
     } catch (err) {
       setError(err.message || "An unexpected error occurred.");
-      setSuccess("");
+      setQrVehicleData([]);
     }
   };
 
-  const downloadQR = () => {
-    if (qrRef.current) {
-      toPng(qrRef.current, { cacheBust: true })
+  const downloadQR = (index) => {
+    const currentRef = qrRefs.current[index];
+    if (currentRef?.current) {
+      toPng(currentRef.current, { cacheBust: true })
         .then((dataUrl) => {
           const link = document.createElement("a");
-          link.download = "vehicle-qr-code.png";
+          link.download = `vehicle-${qrVehicleData[index].license_plate_no}-qr-code.png`;
           link.href = dataUrl;
           link.click();
         })
@@ -54,57 +56,69 @@ const DisplayVehicleDetails = () => {
   };
 
   return (
-    <>
-      <div className="bg-slate-800 h-screen w-full fixed ">
-        {error && <Error error={error} setError={setError} />}
-        {success && <Success success={success} setSuccess={setSuccess} />}
+    <div className="bg-slate-800 w-full min-h-screen fixed">
+      {error && <Error error={error} setError={setError} />}
+      {success && <Success success={success} setSuccess={setSuccess} />}
+
+      <div
+        className="h-screen overflow-y-auto"
+        style={{
+          scrollBehavior: "smooth", // Enables smooth scrolling
+        }}
+      >
         {qrVehicleData.length > 0 ? (
           <div className="container my-24">
             {qrVehicleData.map((vehicle, index) => (
               <motion.div
-                variants={SlideUp((index + 1) * 0.3)}
-                initial="hidden"
-                whileInView={"visible"}
-                className="text-sm rounded-xl my-5"
                 key={index}
+                variants={SlideUp((index + 1) * 0.1)}
+                initial="hidden"
+                whileInView="visible"
+                className="text-sm rounded-xl my-5"
               >
-                <div className="flex justify-center  h-[300px] text-white">
-                  <div className="w-1/4  p-7 flex justify-center items-center">
-                    {/* <QRCodeSVG value={vehicle.qrCode} size={150} /> */}
+                <div className="flex justify-center h-[300px] text-white">
+                  {/* QR Code Section */}
+                  <div className="w-1/4 p-7 flex justify-center items-center">
                     <div
-                      ref={qrRef}
+                      ref={qrRefs.current[index]}
                       style={{
                         display: "inline-block",
-                        padding: "5px 25px",
+                        padding: "8px 18px",
                         border: "1px solid #ccc",
-                        // borderRadius: "10px",
                         backgroundColor: "#fff",
                       }}
                     >
                       <div
                         style={{
-                          marginBottom: "",
                           fontSize: "18px",
                           fontWeight: "bold",
                           textAlign: "center",
                           color: "black",
+                          padding: "",
+                          
                         }}
                       >
                         {vehicle.license_plate_no}
                       </div>
-                      <QRCodeSVG value={vehicle.qrCode} size={130} />
+                      <QRCodeSVG value={vehicle.qrCode} size={130}  />
+                      <div className="flex items-center justify-center">
+                        <p className="text-black">Code:</p>
                       <div
                         style={{
-                          marginTop: "",
-                          fontSize: "16px",
-                          color: "#555",
+                          fontSize: "12px",
+                          color: "black",
                           textAlign: "center",
+                          
                         }}
                       >
                         {vehicle.qrCode}
                       </div>
+                      </div>
+                    
                     </div>
                   </div>
+
+                  {/* Vehicle Details Section */}
                   <div className="w-3/4 p-20">
                     <div className="grid grid-cols-2 p-2">
                       <div>
@@ -118,11 +132,11 @@ const DisplayVehicleDetails = () => {
                     </div>
                     <div className="grid grid-cols-2 p-2">
                       <div>
-                        <span className="text-orange-400">VehicleType:</span>
+                        <span className="text-orange-400">Vehicle Type:</span>
                         <span>{vehicle.vehicle_type}</span>
                       </div>
                       <div>
-                        <span className="text-orange-400">FuelType:</span>
+                        <span className="text-orange-400">Fuel Type:</span>
                         <span>{vehicle.fuel_type}</span>
                       </div>
                     </div>
@@ -140,20 +154,12 @@ const DisplayVehicleDetails = () => {
                         <span>{vehicle.availableFuelCapacity}</span>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 p-2">
-                      <div>
-                        <span className="text-orange-400">QRCode:</span>
-                        <span>{vehicle.qrCode}</span>
-                      </div>
-                      <div>
-                        <button
-                          className="bg-green-600 w-[200px] py-1"
-                          onClick={downloadQR}
-                        >
-                          download
-                        </button>
-                      </div>
-                    </div>
+                    <button
+                      className="bg-green-600 w-[200px] py-1 mt-5"
+                      onClick={() => downloadQR(index)}
+                    >
+                      Download QR
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -163,23 +169,21 @@ const DisplayVehicleDetails = () => {
           <motion.div
             variants={SlideDown(0.5)}
             initial="hidden"
-            whileInView={"visible"}
-            className="text-center w-full he-screen flex-justify-center items-center"
+            whileInView="visible"
+            className="text-center w-full h-screen flex justify-center items-center"
           >
-            <div className="">
+            <div>
               <img
                 src="..\src\Assets\nodata-Photoroom.png"
-                alt=""
+                alt="No data"
                 className="mx-auto mt-10 w-[300px]"
               />
-              <p className="text-neutral-500 text-3xl">
-                Vehicle Not Registered
-              </p>
+              <p className="text-neutral-500 text-3xl">Vehicle Not Registered</p>
             </div>
           </motion.div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

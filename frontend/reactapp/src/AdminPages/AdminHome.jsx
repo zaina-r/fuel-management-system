@@ -1,59 +1,134 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import Admin from "../apiservice/Admin";
 
-const StationTable = () => {
-  const [stationData, setStationData] = useState([]);
-  const [isError, setIsError] = useState(false);
+const AdminHome = () => {
+  const [registeredStationCount, setRegisteredStationCount] = useState();
+  const [totalStations, setTotalStations] = useState();
+  const [activeStations,setActiceStation]=useState();
+  const [inactiveStation,setInactiveStation]=useState();
+  const [petrolCapacity,setPetrolCapacity]=useState();
+  const [dieselCapacity,setDieselCapacity]=useState();
+  const [registeredVehiclesCount, setRegisteredVehiclesCount]=useState();
 
   useEffect(() => {
-    const fetchStationData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/stationDetails");
-        setStationData(response.data);
-      } catch (error) {
-        console.error("Error fetching station data:", error);
-        setIsError(true);
+        const response1 = await Admin.getRegisterdStations();
+        setRegisteredStationCount(response1.stationDtosList.length);
+
+        const response2 = await Admin.getStations();
+        setTotalStations(response2.stationWithStatusDTOList.length);
+
+        const response3 = await Admin.getRegisterdStations();
+        const filteredStations = response3.stationDtosList.filter((station) => {
+          return (
+            station.fuel.availableDieselQuantity > 0 || station.fuel.availablePetrolQuantity > 0
+          );
+        });
+        
+        
+        setActiceStation(filteredStations.length);
+        setInactiveStation(registeredStationCount - filteredStations.length);
+        console.log(inactiveStation)
+
+        const totalPetrolCapacity = response1.stationDtosList.reduce(
+          (sum, station) => sum + station.fuel.availablePetrolQuantity,    
+          0
+        );
+        setPetrolCapacity(totalPetrolCapacity);
+       
+        const totalDieselCapacity = response1.stationDtosList.reduce(
+          (sum, station) => sum + station.fuel.availableDieselQuantity,
+          0
+        );
+        setDieselCapacity(totalDieselCapacity);
+        
+
+        const response4=await Admin.getRegisterdVehicles();
+        setRegisteredVehiclesCount(response4.vehiclesDtoList.length);
+        console.log(registeredVehiclesCount)
+        
+      } catch (err) {
+        console.error("Error fetching data:", err);
       }
     };
 
-    fetchStationData();
+    fetchData();
   }, []);
-
-  if (isError) {
-    return <h2>Failed to load data. Please try again later.</h2>;
-  }
+  const cards = [
+    {
+      title: "Registered Vehicle",
+      description: "Add, edit, and view registered vehicles.",
+      icon: "🚗",
+      bgColor: "bg-gradient-to-r from-blue-500 to-blue-700",
+      amt:registeredVehiclesCount
+    },
+    {
+      title: "Registered Stations",
+      description: "Track fuel allocations and consumption.",
+      icon: "⛽",
+      bgColor: "bg-gradient-to-r from-green-500 to-green-700",
+      amt:registeredStationCount
+    },
+    {
+      title: "Total Stations",
+      description: "Manage admin and user accounts.",
+      icon: "👤",
+      bgColor: "bg-gradient-to-r from-purple-500 to-purple-700",
+      amt:totalStations
+    },
+    {
+      title: "activeStations",
+      description: "Generate and analyze system reports.",
+      icon: "📊",
+      bgColor: "bg-gradient-to-r from-yellow-500 to-yellow-700",
+      amt:activeStations
+    },
+    {
+      title: "In Active Stations",
+      description: "Send and manage alerts and notifications.",
+      icon: "🔔",
+      bgColor: "bg-gradient-to-r from-red-500 to-red-700",
+      amt:inactiveStation
+    },
+    {
+      title: "Total Available petrolCapacity",
+      description: "Configure system preferences.",
+      icon: "🛢️",
+      bgColor: "bg-gradient-to-r from-gray-500 to-gray-700",
+      amt:petrolCapacity
+    },
+    {
+      title: "Total Available petrolCapacity",
+      description: "Access help and support resources.",
+      icon: "🛢",
+      bgColor: "bg-gradient-to-r from-pink-500 to-pink-700",
+      amt:dieselCapacity
+    },
+  ];
 
   return (
-    <div>
-      <h1>Fuel Station Details</h1>
-      <table border="1" style={{ width: "100%", textAlign: "left" }}>
-        <thead>
-          <tr>
-            <th>Station ID</th>
-            <th>Station Address</th>
-            <th>Dealer Name</th>
-            <th>License Number</th>
-            <th>Registration Date</th>
-            <th>Available Diesel Quantity</th>
-            <th>Available Petrol Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stationData.map((station, index) => (
-            <tr key={index}>
-              <td>{station.stationId}</td>
-              <td>{station.stationAddress}</td>
-              <td>{station.dealerName}</td>
-              <td>{station.licenseNumber}</td>
-              <td>{station.registrationDate}</td>
-              <td>{station.availableDiselQuantity || "N/A"}</td>
-              <td>{station.availablePetrolQuantity || "N/A"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="p-6 text-white">
+      <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className={`p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ${card.bgColor}`}
+          >
+            <div className="flex justify-between items-center">
+            <div className="text-4xl mb-4">{card.icon}</div>
+             
+            <p className="text-2xl ">{card.amt}</p>
+
+            </div>
+            <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+            <p className="text-sm">{card.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default StationTable;
+export default AdminHome;

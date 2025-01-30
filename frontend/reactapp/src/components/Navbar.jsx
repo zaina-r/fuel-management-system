@@ -25,7 +25,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       getUser();
     }
-  }, [isAuthenticated, userData]);
+  }, []);
 
   const getUser = async () => {
     try {
