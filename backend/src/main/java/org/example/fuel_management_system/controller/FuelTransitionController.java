@@ -28,9 +28,9 @@ public class FuelTransitionController {
         Response response=fuelTransitionService.getAllFuelTransitions();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @PostMapping("/add")
-    public ResponseEntity<Response> addFuelTransition(@RequestBody FuelTransition fuelTransition){
-        Response response=fuelTransitionService.addTransaction(fuelTransition);
+    @PostMapping("/add/{vehicleId}/{userId}")
+    public ResponseEntity<Response> addFuelTransition(@RequestBody FuelTransition fuelTransition,@PathVariable int userId,@PathVariable int vehicleId){
+        Response response=fuelTransitionService.addTransaction(fuelTransition,userId,vehicleId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }

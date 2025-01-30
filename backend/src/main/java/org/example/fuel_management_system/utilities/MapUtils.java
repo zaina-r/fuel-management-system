@@ -111,7 +111,7 @@ public class MapUtils {
         fuelTransitionDto.setFuelAmount(fuelTransition.getFuelAmount());
         fuelTransitionDto.setFuelType(fuelTransition.getFuelType());
         fuelTransitionDto.setTransitionTime(fuelTransition.getTransitionTime());
-        fuelTransitionDto.setStationId(fuelTransitionDto.getStationId());
+        fuelTransitionDto.setStationId(fuelTransition.getStationId());
         fuelTransitionDto.setVehicleVerification(fuelTransition.getVehicleVerification());
         fuelTransitionDto.setUserAccount(fuelTransition.getUserAccount());
         return fuelTransitionDto;

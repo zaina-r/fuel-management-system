@@ -3,8 +3,12 @@ package org.example.fuel_management_system.service;
 import org.example.fuel_management_system.DTO.FuelTransitionDto;
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Repository.FuelTransitionRepository;
+import org.example.fuel_management_system.Repository.UserAccountRepository;
+import org.example.fuel_management_system.Repository.VehicleVerificationRepository;
 import org.example.fuel_management_system.model.FuelTransition;
 import org.example.fuel_management_system.model.Station;
+import org.example.fuel_management_system.model.UserAccount;
+import org.example.fuel_management_system.model.VehicleVerification;
 import org.example.fuel_management_system.utilities.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,10 @@ public class FuelTransitionService {
 
     @Autowired
     private FuelTransitionRepository fuelTransitionRepository;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
+    @Autowired
+    private VehicleVerificationRepository vehicleVerificationRepository;
 
 
 
@@ -63,16 +71,16 @@ public class FuelTransitionService {
             return response;
         }}
 
-    public Response addTransaction(FuelTransition fuelTransition) {
+    public Response addTransaction(FuelTransition fuelTransition,int userId,int vehicleId) {
         Response response = new Response();
         try {
+            UserAccount userAccount=userAccountRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
+            VehicleVerification vehicleVerification=vehicleVerificationRepository.findById(vehicleId).orElseThrow(()->new RuntimeException("Vehicle not found"));
 
             fuelTransition.setTransitionTime(LocalDateTime.now());
-
-
+            fuelTransition.setUserAccount(userAccount);
+            fuelTransition.setVehicleVerification(vehicleVerification);
             FuelTransition fuelTransitionSaved = fuelTransitionRepository.save(fuelTransition);
-
-
             response.setStatusCode(200);
             response.setMessage("Transaction added successfully");
             response.setFuelTransitionDto(MapUtils.mapFuelTransitionEntityToFuelTransitionDTO(fuelTransitionSaved));
