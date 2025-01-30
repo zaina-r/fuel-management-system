@@ -35,6 +35,10 @@ const ProfilePage = () => {
   const handleUpdateDetails = async (formData) => {
     try {
       const response = await UserAccountApi.updateUserDetails(formData);
+      if (!formData.firstname || !formData.lastname || !formData.telno) {
+        setError("All fields are required!");
+        return;
+      }
       if (response.statusCode === 200) {
         setFormData(response.userAccountDto);
 
@@ -155,7 +159,7 @@ const ProfilePage = () => {
               <p className="mt-1 text-lg">{user.username}</p>
             </div>
 
-            {user.role === "stationOwner" && (
+            {user.role === "FUELSTATION_OWNER" && (
               <>
                 <div>
                   <label className="block text-sm font-medium text-gray-200">

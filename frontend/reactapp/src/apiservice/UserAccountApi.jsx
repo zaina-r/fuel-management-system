@@ -90,4 +90,26 @@ export default class UserAccountApi {
     );
     return response.data;
   }
+
+  static async sendOtpPhoneNumber(telno) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/notifications/generate`,
+      {},
+      {
+        params: { telno },
+      }
+    );
+    return response.data;
+  }
+
+  static async verifyOtpNumber({ telno, otp }) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/notifications/verify`,
+      {},
+      {
+        params: { telno, otp },
+      }
+    );
+    return response.data;
+  }
 }
