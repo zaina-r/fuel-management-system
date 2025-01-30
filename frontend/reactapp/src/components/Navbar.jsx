@@ -107,6 +107,11 @@ const Navbar = () => {
                   <NavLink to="/StationHistory">StationHistory</NavLink>
                 </li>
               )}
+               {isAdmin && (
+                <li className="hover:text-gray-300 cursor-pointer">
+                  <NavLink to="/admin">AdminPanel</NavLink>
+                </li>
+              )}
             </ul>
           </div>
           {!isAuthenticated && (

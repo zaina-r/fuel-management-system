@@ -44,6 +44,7 @@ function UserLogin() {
       if (response.statusCode === 200) {
         const id = response.userAccountDto.userId;
         const role = response.userAccountDto.role;
+        console.log(role)
         setId(id);
         setRole(role);
         setToken(response.token);
@@ -56,8 +57,16 @@ function UserLogin() {
           navigate("/");
         } else if (role === "FUELSTATION_OWNER") {
           localStorage.setItem("userId", id);
+          // localStorage.setItem("token", token);
+          // localStorage.setItem("role", role);
           setOtpBar(true);
           setSuccess("OTP sent to your email. Please verify.");
+        }else if (role === "ADMIN"){
+          setSuccess("User has successfully logged in");
+          localStorage.setItem("userId", id);
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("role", role);
+          navigate("/admin");
         }
       }
     } catch (error) {
