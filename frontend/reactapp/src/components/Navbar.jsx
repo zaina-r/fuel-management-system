@@ -25,7 +25,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       getUser();
     }
-  }, []);
+  }, [isAuthenticated, userData]);
 
   const getUser = async () => {
     try {
@@ -107,7 +107,7 @@ const Navbar = () => {
                   <NavLink to="/StationHistory">StationHistory</NavLink>
                 </li>
               )}
-               {isAdmin && (
+              {isAdmin && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/admin">AdminPanel</NavLink>
                 </li>
