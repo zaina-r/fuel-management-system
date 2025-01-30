@@ -73,7 +73,7 @@ const Navbar = () => {
         <div className="flex flex-wrap justify-between items-center text-white font-bold px-4 py-6 md:px-10 lg:px-36">
           <div>
             <h1 className="text-xl sm:text-2xl">
-              <span className="font-play">FuelPass</span>
+              <img src="src/Assets/Monochrome Ilustration Graffiti Logo new.png" alt="" className="w-[125px]" />
             </h1>
           </div>
 

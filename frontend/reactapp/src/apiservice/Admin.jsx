@@ -57,4 +57,11 @@ export default class Authentication {
     );
     return response.data;
   }
+
+  static async getStationReports(){
+    const response = await axios.get(
+      `${this.BASE_URL}/api/fuelAllocation/alltransitions`
+    );
+    return response.data;
+  }
 }
