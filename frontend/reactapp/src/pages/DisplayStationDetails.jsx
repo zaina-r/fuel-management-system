@@ -3,7 +3,7 @@ import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 import StationAccountApi from "../apiservice/StationAccountApi";
 
-// Loading spinner component
+
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center h-[300px]">
     <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
@@ -23,12 +23,12 @@ function DisplayStationDetails() {
   const getAllData = async () => {
     try {
       console.log("Fetching data...");
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setLoading(false);
       }, 10000);
 
       const response = await StationAccountApi.getStationDetails();
-      console.log("API Response:", response); // Log the full response to inspect its structure
+      console.log("API Response:", response); 
 
       if (response) {
         setStationData(response.stationDto);
@@ -46,61 +46,104 @@ function DisplayStationDetails() {
 
   return (
     <>
-      <div className="bg-slate-800 h-screen fixed w-full ">
-      {error && <Error error={error} setError={setError} />}
-      {success && <Success success={success} setSuccess={setSuccess} />}
-      <div className="container my-24">
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className=" rounded-xl my-10">
-            <div className="flex justify-center h-[300px] text-white">
-              <div className="w-3/4 p-20">
-                <div className="grid grid-cols-2 p-2">
-                  <div>
-                    <span>Station ID:</span>
-                    <span>{stationData.stationId || "Not Found"}</span>
-                  </div>
-                  <div>
-                    <span>Station Address:</span>
-                    <span>{stationData.stationAddress || "Not Found"}</span>
+      <div className="bg-slate-800 h-screen fixed w-full">
+        {error && <Error error={error} setError={setError} />}
+        {success && <Success success={success} setSuccess={setSuccess} />}
+        
+        <div className="my-24">
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <div className="flex items-center justify-center">
+              <div className="rounded-xl w-full max-w-4xl p-6 mt-24">
+              
+                <div className=" text-black p-6 rounded-xl mb-8">
+                  <h2 className="text-2xl font-semibold mb-4 text-orange-500">Station Information</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Station ID: </span>
+                       <span className="text-white">{stationData.stationId || "Not Found"}</span> 
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Station Address: </span>
+                        <span className="text-white">
+                        {stationData.stationAddress || "Not Found"}
+
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Dealer Name: </span>
+                        <span className="text-white">
+                        {stationData.dealerName || "Not Found"}
+
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">License Number: </span>
+
+                        <span className="text-white">
+                        {stationData.licenseNumber || "Not Found"}
+
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Login Code: </span>
+                        <span className="text-white">
+                        {stationData.loginCode || "N/A"}
+
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 p-2">
-                  <div>
-                    <span>Dealer Name:</span>
-                    <span>{stationData.dealerName || "Not Found"}</span>
-                  </div>
-                  <div>
-                    <span>License Number:</span>
-                    <span>{stationData.licenseNumber || "Not Found"}</span>
+
+                
+                <div className=" text-black p-6 rounded-xl">
+                  <h2 className="text-2xl font-semibold mb-4 text-orange-500">Fuel Availability</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Available Petrol: </span>
+                        <span className="text-white">
+                        {stationData.fuel?.availablePetrolQuantity || 0} Liters
+
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span className="font-bold text-blue-500">Available Diesel: </span>
+                        <span className="text-white">
+                        {stationData.fuel?.availableDiselQuantity || 0} Liters
+
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 p-2">
-                  <div>
-                    <span>Available Petrol Capacity:</span>
-                    <span>
-                      {stationData.fuel?.availablePetrolQuantity || 0}
-                    </span>
-                  </div>
-                  <div>
-                    <span>Available Diesel Capacity:</span>
-                    <span>{stationData.fuel?.availableDiselQuantity || 0}</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 p-2">
-                  <div>
-                    <span>Login Code:</span>
-                    <span>{stationData.loginCode || "N/A"}</span>
-                  </div>
+
+                {/* Image Section */}
+                <div className="flex justify-center mt-8">
+                  {/* <img
+                    src="src/Assets/stationHistory-removebg-preview.png"
+                    alt="Station History"
+                    className="rounded-lg max-w-full w-64"
+                  /> */}
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      </div>
-     
     </>
   );
 }
