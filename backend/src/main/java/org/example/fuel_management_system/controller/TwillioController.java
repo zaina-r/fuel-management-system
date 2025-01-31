@@ -1,6 +1,6 @@
 //package org.example.fuel_management_system.controller;
-
-
+//
+//
 //import org.example.fuel_management_system.DTO.Response;
 //import org.example.fuel_management_system.service.TwillioService;
 //import org.springframework.http.HttpStatus;
@@ -30,6 +30,13 @@
 //    @PostMapping("/verify")
 //    public ResponseEntity<Response> verifyOTP(@RequestParam String telno, @RequestParam String otp) {
 //        Response response = twillioService.verifyOTP(telno, otp);
+//        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
+//    }
+//
+//
+//    @PostMapping("/generateNotifications")
+//    public ResponseEntity<Response> generateNotifications(@RequestParam String telno,@RequestParam String message) {
+//        Response response = twillioService.sendNotification(telno,message);
 //        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
 //    }
 //}
