@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
-import password_icon from "../Assets/password.png";
+// import password_icon from "../Assets/password.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
@@ -183,11 +183,11 @@ function UserLogin() {
                       className="bg-gray-200 p-1 rounded-sm text-md w-full"
                     />
                     <div className="absolute right-2 top-2">
-                      <img
+                      {/* <img
                         src={password_icon}
                         alt=""
                         className="w-3 h-3"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>

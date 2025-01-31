@@ -24,6 +24,7 @@ import Notification from "./AdminPages/Notification";
 import ProfilePage from "./pages/Profile";
 import UpdateSelectedStationFuel from "./AdminPages/UpdateSelectedStationFuel";
 import ManageUser from "./AdminPages/ManageUser";
+import FuelManage from "./AdminPages/FuelManage";
 
 function App() {
   return (
@@ -71,6 +72,8 @@ function RoutesWrapper() {
             />
             <Route path="manageuser" element={<ManageUser />} />
             <Route path="profile" element={<ViewProfile />} />
+            <Route path="fuelTypes" element={<FuelManage />} />
+
             <Route path="notification" element={<Notification />} />
             <Route path="updateSelectedStationFuel" element={<UpdateSelectedStationFuel />} />
 

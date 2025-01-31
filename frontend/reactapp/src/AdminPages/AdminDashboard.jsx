@@ -11,6 +11,7 @@ import {
   ChevronDown,
   Bell,
   Fuel,
+  Droplets,
 } from "lucide-react";
 import Admin from "../apiservice/Admin";
 
@@ -94,13 +95,17 @@ const AdminDashboard = () => {
       to: "/admin/admins",
       icon: <User className="mr-2" size={16} />,
       text: "Admin",
-    },
-    {
-      to: "/admin/stationowners",
-      icon: <User className="mr-2" size={16} />,
-      text: "Station Owners",
-    },
+    }
+   
   ];
+
+  const fuelLinks=[
+    {
+      to: "/admin/fuelTypes",
+      icon:  <Droplets  className="mr-2" size={16} />,
+      text: "Fuel Types",
+    }
+  ]
 
   const settingsLinks = [
     {
@@ -192,6 +197,20 @@ const AdminDashboard = () => {
               Manage Vehicle
             </h1>
             {filterLinks(manageVehicleLinks).map((link, index) => (
+              <Link
+                key={index}
+                to={link.to}
+                className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm"
+              >
+                {link.icon}
+                {link.text}
+              </Link>
+            ))}
+          </div>
+
+          <div className="space-y-1">
+            <h1 className="text-lg font-medium px-2 text-neutral-400">FuelManagement</h1>
+            {filterLinks(fuelLinks).map((link, index) => (
               <Link
                 key={index}
                 to={link.to}
