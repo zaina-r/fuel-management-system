@@ -19,12 +19,11 @@ import ViewStations from "./AdminPages/ViewStations";
 import UpdateStationFuel from "./AdminPages/UpdateStationFuel";
 import UpdateStation from "./AdminPages/UpdateStation";
 import ViewRegisteredVehicle from "./AdminPages/ViewRegisteredVehicle";
-import ViewAdmins from "./AdminPages/ViewAdmin";
-import ViewStationOwners from "./AdminPages/ViewStationOwners";
 import ViewProfile from "./AdminPages/ViewProfile";
 import Notification from "./AdminPages/Notification";
 import ProfilePage from "./pages/Profile";
 import UpdateSelectedStationFuel from "./AdminPages/UpdateSelectedStationFuel";
+import ManageUser from "./AdminPages/ManageUser";
 
 function App() {
   return (
@@ -70,8 +69,7 @@ function RoutesWrapper() {
               path="registeredVehicles"
               element={<ViewRegisteredVehicle />}
             />
-            <Route path="admins" element={<ViewAdmins />} />
-            <Route path="stationOwners" element={<ViewStationOwners />} />
+            <Route path="manageuser" element={<ManageUser />} />
             <Route path="profile" element={<ViewProfile />} />
             <Route path="notification" element={<Notification />} />
             <Route path="updateSelectedStationFuel" element={<UpdateSelectedStationFuel />} />

@@ -124,7 +124,7 @@ const AdminDashboard = () => {
     <div className="flex  min-h-screen bg-gray-100 ">
       <div className="w-56 bg-slate-800 text-white shadow-2xl border-r border-neutral-500 p-3 fixed h-screen ">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white mb-4">Fuel Pass</h2>
+           <img src="../src/Assets/Monochrome Ilustration Graffiti Logo new.png" alt="" className="w-[130px] p-2 mb-4" />
         </div>
 
         <div>
