@@ -135,11 +135,164 @@ const UserRegisterationForm = () => {
       setError(error.response?.data?.message || error.message);
     }
   };
-
+  
   return (
-    <div className="bg-slate-800 h-screen w-full fixed">
+    <div className="bg-slate-800 h-screen w-full fixed ">
+      <div className="container">
+      <div className="flex justify-between items-start">
+        <div className="">
+        <div className="relative  ">
+              <div className=" p-8 text-white">
+                <motion.h1
+                  variants={SlideUp(0.1)}
+                  initial="hidden"
+                  whileInView={"visible"}
+                  className="text-white text-2xl mb-5"
+                >
+                  Register for FuelPass
+                </motion.h1>
+                <div className="flex flex-col gap-3">
+                  <motion.p
+                    variants={SlideUp(0.2)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>First Name</span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.4)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Last Name</span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.3)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>NIC</span>
+
+                    <span className="text-xs text-neutral-400 ">
+                      Enter your National Identity Card number. This helps us
+                      verify your identity and ensure that your registration is
+                      valid. This is typically a government-issued
+                      numberExample:
+                      <span className="text-white">
+                        "123456789456V / 200023002913"
+                      </span>{" "}
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.4)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Tel No</span>
+
+                    <span className="text-xs text-neutral-400 ">
+                      Enter your telephone number. Please ensure that it is
+                      active and that we can reach you if necessary. Use the
+                      format +94xxxxxxxx (Sri Lanka)
+                      <span className="text-white">
+                        <br />
+                        Example:"+94123456789"
+                      </span>{" "}
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.5)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Username</span>
+                    <span className="text-xs text-neutral-400">
+                      Choose a unique username. This will be used to identify
+                      your account. It should be something you’ll remember and
+                      may include letters, numbers, and underscores. <br />
+                      <span className="text-white">Example:name@gmail.com</span>
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.6)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Password</span>
+                    <span className="text-xs text-neutral-400">
+                      Create a strong password that you can easily remember but
+                      is difficult for others to guess. We recommend using a
+                      combination of letters, numbers, and special characters..{" "}
+                      <br />
+                      <span className="text-white">
+                        Example:xxxxxx atlease 5 characters
+                      </span>
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.7)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Role</span>
+                    <span className="text-xs text-neutral-400">
+                      When you select fuel station owner you need to provide one
+                      more secure license No for you station registration <br />
+                      <span className="text-white">
+                        Example:xxxxxx secure license code for fuel station
+                      </span>
+                    </span>
+                  </motion.p>
+                </div>
+              </div>
+            </div>
+
+
+        </div>
       <div className="container text-sm mb-32">
-        <div className="flex justify-center w-full">
+        <div className=" w-full">
           <motion.div
             variants={SlideLeft(0.2)}
             initial="hidden"
@@ -148,11 +301,11 @@ const UserRegisterationForm = () => {
           >
             {error && <Error error={error} setError={setError} />}
             {success && <Success success={success} setSuccess={setSuccess} />}
-            <form onSubmit={handleSubmit} className="register-form">
+            <form onSubmit={handleSubmit} className="w-[500px]">
               <h1 className="text-4xl font-extrabold text-white m-5">
                 Sign up
               </h1>
-              <div className="m-5">
+              <div className="m-5 w-[450px]">
                 <label className="block my-1 text-neutral-400">Tel No</label>
                 <input
                   type="text"
@@ -187,18 +340,19 @@ const UserRegisterationForm = () => {
                   </button>
                 ) : (
                   <div className="mt-4">
-                    <label className="block my-1 text-neutral-400">
+                    <label className="block my-1 text-neutral-400 ">
                       Enter OTP
                     </label>
+                  
                     <input
                       type="text"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
-                      className="bg-gray-200 p-1 w-full"
+                      className="bg-gray-200 p-1 w-full inline-block"
                     />
                     <button
                       type="button"
-                      className="bg-blue-700 text-white px-6 py-1 mt-3"
+                      className="bg-blue-700 text-white px-6 py-1 mt-3 w-full"
                       onClick={handleVerifyOtp}
                       disabled={isLoading}
                     >
@@ -212,19 +366,22 @@ const UserRegisterationForm = () => {
                           secondaryColor="white"
                           strokeWidth={3}
                           strokeWidthSecondary={3}
+                          
                         />
                       ) : (
                         "Verify OTP"
                       )}
                     </button>
-                  </div>
+                    </div>
+                   
+                  
                 )}
               </div>
               {otpVerified && (
                 <>
-                  <div className="grid grid-cols-2 m-5">
+                  <div className="grid grid-cols-2 m-5 ">
                     <div className="mr-3">
-                      <label className="block my-1 text-neutral-400">
+                      <label className="block my-1  text-neutral-400">
                         First Name
                       </label>
                       <input
@@ -233,10 +390,10 @@ const UserRegisterationForm = () => {
                         value={formData.firstname}
                         onChange={handleChange}
                         placeholder="firstname"
-                        className="bg-gray-200 p-1 rounded-sm text-md w-full"
+                        className="bg-gray-200 p-1  w-full"
                       />
                     </div>
-                    <div className="form-group">
+                    <div className="mr-3">
                       <label className="block my-1 text-neutral-400">
                         Last Name
                       </label>
@@ -261,10 +418,10 @@ const UserRegisterationForm = () => {
                         value={formData.username}
                         onChange={handleChange}
                         placeholder="username"
-                        className="bg-gray-200 p-1 rounded-sm text-md w-full"
+                        className="bg-gray-200 p-1  w-full"
                       />
                     </div>
-                    <div className="form-group">
+                    <div className="">
                       <label className="block my-1 text-neutral-400">
                         Password
                       </label>
@@ -333,6 +490,11 @@ const UserRegisterationForm = () => {
           </motion.div>
         </div>
       </div>
+      
+      </div>
+      </div>
+    
+    
     </div>
   );
 };
