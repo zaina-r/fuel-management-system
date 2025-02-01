@@ -13,6 +13,7 @@ import Success from "../responseDisplay/Success";
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = Authentication.isAuthenticated();
+  console.log(isAuthenticated)
   const isFuelStationOwner = Authentication.isFuelStationOwner();
   const isVehicleOwner = Authentication.isVehicleOwner();
   const isAdmin = Authentication.isAdmin();
@@ -25,7 +26,8 @@ const Navbar = () => {
     if (isAuthenticated) {
       getUser();
     }
-  }, [isAuthenticated, userData]);
+    
+  }, [isAuthenticated]);
 
   const getUser = async () => {
     try {
