@@ -122,5 +122,19 @@ public class MapUtils {
         return FuelTransition.stream().map(MapUtils::mapFuelTransitionEntityToFuelTransitionDTO).collect(Collectors.toList());
 
     }
+    public static FuelPriceDto mapFuelPriceEntityToFuelPriceDTO(FuelPrice fuelPrice){
+        FuelPriceDto fuelPriceDto=new FuelPriceDto();
+        fuelPriceDto.setId(fuelPrice.getId());
+        fuelPriceDto.setfId(fuelPrice.getfId());
+        fuelPriceDto.setFuelName(fuelPrice.getFuelName());
+        fuelPriceDto.setPrice(fuelPrice.getPrice());
+
+        return fuelPriceDto;
+    }
+    public static List<FuelPriceDto> mapListFuelPriceEntityToFuelPriceDTO(List<FuelPrice> FuelTransition){
+
+        return FuelTransition.stream().map(MapUtils::mapFuelPriceEntityToFuelPriceDTO).collect(Collectors.toList());
+
+    }
 
 }

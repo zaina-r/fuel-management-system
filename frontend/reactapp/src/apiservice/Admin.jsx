@@ -58,9 +58,22 @@ export default class Authentication {
     return response.data;
   }
 
-  static async getStationReports(){
+  static async getStationReports() {
     const response = await axios.get(
       `${this.BASE_URL}/api/fuelAllocation/alltransitions`
+    );
+    return response.data;
+  }
+
+  static async getFuelPriceList() {
+    const response = await axios.get(`${this.BASE_URL}/api/allfuelPrices`);
+    return response.data;
+  }
+
+  static async updateFuelPrice(fuelId, fuelPrice) {
+    const response = await axios.put(
+      `${this.BASE_URL}/api/updatePrice/${fuelId}`,
+      fuelPrice
     );
     return response.data;
   }
