@@ -21,3 +21,7 @@ export default function ResultScreen() {
       vehicleId,
       userId
     } = useGlobalSearchParams();
+
+    const router = useRouter();
+    const [stationId,setStationId] = useState();
+    const [enteredFuelAmount, setEnteredFuelAmount] = useState("");
