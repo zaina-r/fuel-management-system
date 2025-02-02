@@ -78,4 +78,56 @@ export default function ResultScreen() {
               },
             }
           );
+
+
+          
+        await axios.post(
+            `https://888a-2402-4000-13cb-8706-5093-26da-1b8d-e09d.ngrok-free.app/api/${vehicleId}/update-fuel`,
+            enteredFuelAmount,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const cost = 10;
+          Alert.alert("Fuel Submitted", `Amount: ${enteredFuelAmount}L\nCost:${cost}`);
+          router.back(); 
+        } catch (error) {
+          Alert.alert("Error", "Failed to submit fuel amount.");
+        }
+      
+        try{
+          const body = {
+            fuelType: fuelType,
+            quantity: enteredFuelAmount
+          };
+           const stLicense= await AsyncStorage.getItem('fuelStationId');
+           
+           await axios.post(`https://888a-2402-4000-13cb-8706-5093-26da-1b8d-e09d.ngrok-free.app/api/fuel/updatefuel/${stLicense}`,body),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+        }catch(error){
+                
+        }
+      
+      
+      
+      
+      }
+      
+      
+      else {
+        Alert.alert("Error", "Not enough fuel capacity available.");
+      }
+    };
+  
+    const handleDotPress = () => {
+      if (!enteredFuelAmount.includes(".")) {
+        setEnteredFuelAmount((prev) => prev + ".");
+      }
+    };
       
