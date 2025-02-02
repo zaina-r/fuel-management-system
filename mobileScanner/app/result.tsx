@@ -10,3 +10,14 @@ import {
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+export default function ResultScreen() {
+    const {
+      license_plate_no,
+      vehicleType,
+      fuelType,
+      availableFuelCapacity,
+      vehicleId,
+      userId
+    } = useGlobalSearchParams();
