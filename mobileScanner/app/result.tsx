@@ -33,4 +33,10 @@ export default function ResultScreen() {
       const handleDelete = () => {
         setEnteredFuelAmount((prev) => prev.slice(0, -1));
       };
+
+      const data={
+        stationId:stationId,
+        fuelType:fuelType,
+        fuelAmount:enteredFuelAmount
+      }
       
