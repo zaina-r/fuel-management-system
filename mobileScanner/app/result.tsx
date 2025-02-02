@@ -25,3 +25,8 @@ export default function ResultScreen() {
     const router = useRouter();
     const [stationId,setStationId] = useState();
     const [enteredFuelAmount, setEnteredFuelAmount] = useState("");
+
+    const handleButtonPress = (value: string) => {
+        setEnteredFuelAmount((prev) => prev + value);
+      };
+    
