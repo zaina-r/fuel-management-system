@@ -52,4 +52,14 @@ export default function ResultScreen() {
     
         fetchStationId();
       }, []);
+
+
+       //  const calculateCost=async(amount: string) => {
+  //   const response= await axios.get(`https://888a-2402-4000-13cb-8706-5093-26da-1b8d-e09d.ngrok-free.app/allfuelPrices`);
+  //   const selectedObject = response.data.fuelPriceDtoList.find((item) => item.fuelName.toLowerCase() === fuelType.toLowerCase());
+  //   const price=selectedObject.price;
+    
+  //   return price * Number(amount);
+
+  // }
       
