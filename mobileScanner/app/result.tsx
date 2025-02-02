@@ -130,4 +130,108 @@ export default function ResultScreen() {
         setEnteredFuelAmount((prev) => prev + ".");
       }
     };
+    return (
+        <View style={styles.container}>
+          <View style={styles.containerDetails}>
+            <View style={styles.col}>
+              <Text style={styles.title}>Vehicle Details</Text>
+              <Text style={styles.textLarge}>{license_plate_no}</Text>
+            </View>
+    
+            <View style={styles.row}>
+              <View style={styles.col}>
+                <Text style={styles.lable}>Vehicle Type</Text>
+                <Text style={styles.value}>{vehicleType}</Text>
+              </View>
+    
+              <View style={styles.col}>
+                <Text style={styles.lable}>Fuel Type</Text>
+                <Text style={styles.value}>{fuelType}</Text>
+              </View>
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.title}>Available Fuel Capacity</Text>
+              <Text style={styles.textLarge}>{availableFuelCapacity}L</Text>
+              
+            </View>
+          </View>
+    
+          <TextInput
+            style={styles.inputBox}
+            value={enteredFuelAmount}
+            onChangeText={setEnteredFuelAmount}
+            keyboardType="numeric"
+            placeholder="Enter fuel amount"
+            placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          />
+    
+          <View style={styles.buttonRow}>
+            {[1, 2, 3].map((num) => (
+              <TouchableOpacity
+                key={num}
+                style={styles.button}
+                onPress={() => handleButtonPress(num.toString())}
+              >
+                <Text style={styles.buttonText}>{num}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={styles.buttonRow}>
+            {[4, 5, 6].map((num) => (
+              <TouchableOpacity
+                key={num}
+                style={styles.button}
+                onPress={() => handleButtonPress(num.toString())}
+              >
+                <Text style={styles.buttonText}>{num}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={styles.buttonRow}>
+            {[7, 8, 9].map((num) => (
+              <TouchableOpacity
+                key={num}
+                style={styles.button}
+                onPress={() => handleButtonPress(num.toString())}
+              >
+                <Text style={styles.buttonText}>{num}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleButtonPress("0")}
+            >
+              <Text style={styles.buttonText}>0</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleDotPress}>
+              <Text style={styles.buttonText}>.</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.deleteButton]}
+              onPress={handleDelete}
+            >
+              <Text style={styles.buttonText}>DEL</Text>
+            </TouchableOpacity>
+          </View>
+    
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={[styles.buttonn, styles.submitButton]}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>SUBMIT</Text>
+            </TouchableOpacity>
+    
+            <TouchableOpacity
+              style={[styles.buttonn, styles.cancelButton]}
+              onPress={() => router.back()} 
+            >
+              <Text style={styles.buttonText}>CANCEL</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
       
