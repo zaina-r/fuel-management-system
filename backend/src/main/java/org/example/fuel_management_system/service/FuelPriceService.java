@@ -52,8 +52,27 @@ public class FuelPriceService {
     }
 
 
+    public Response addFuel(FuelPrice fuelPriceRequest) {
+        Response response = new Response();
+        try {
+            FuelPrice fuel = new FuelPrice();
+            fuel.setFuelName(fuelPriceRequest.getFuelName());
+            fuel.setPrice(fuelPriceRequest.getPrice());
+            fuel.setfId(fuelPriceRequest.getfId());
+
+            FuelPrice savedFuelPrice = fuelPriceRepository.save(fuel);
 
 
+            response.setStatusCode(200);
+            response.setMessage("Fuel price added successfully.");
+            response.setFuelPriceDto(MapUtils.mapFuelPriceEntityToFuelPriceDTO(savedFuelPrice));
+        } catch (Exception e) {
 
+            response.setStatusCode(500);
+            response.setMessage("Failed to add fuel price: " + e.getMessage());
+        }
+        return response;
+    }
 
 }
+
