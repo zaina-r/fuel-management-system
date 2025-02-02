@@ -39,4 +39,17 @@ export default function ResultScreen() {
         fuelType:fuelType,
         fuelAmount:enteredFuelAmount
       }
+
+      useEffect(() => {
+        const fetchStationId = async () => {
+          try {
+            const fuelId = await AsyncStorage.getItem("stationId");
+            setStationId(fuelId);
+          } catch (error) {
+            console.error("Error fetching fuel station ID:", error);
+          }
+        };
+    
+        fetchStationId();
+      }, []);
       
