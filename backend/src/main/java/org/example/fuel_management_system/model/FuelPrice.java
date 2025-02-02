@@ -1,12 +1,16 @@
 package org.example.fuel_management_system.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class FuelPrice {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment ID
     private int id;
 
     private String fId;
