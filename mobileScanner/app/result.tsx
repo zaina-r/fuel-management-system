@@ -29,4 +29,8 @@ export default function ResultScreen() {
     const handleButtonPress = (value: string) => {
         setEnteredFuelAmount((prev) => prev + value);
       };
-    
+
+      const handleDelete = () => {
+        setEnteredFuelAmount((prev) => prev.slice(0, -1));
+      };
+      
