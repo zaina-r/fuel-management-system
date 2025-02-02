@@ -2,6 +2,7 @@ package org.example.fuel_management_system.controller;
 
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Request.FuelPriceRequest;
+import org.example.fuel_management_system.model.FuelPrice;
 import org.example.fuel_management_system.service.FuelPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,11 @@ public class FuelPriceController {
     @PutMapping("/updatePrice/{fuelPriceId}")
     public ResponseEntity<Response> UpdatePrice(@RequestBody FuelPriceRequest fuelPriceRequest,@PathVariable int fuelPriceId){
         Response response=fuelPriceService.updateFuelPrice(fuelPriceRequest,fuelPriceId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping("/addFuel")
+    public ResponseEntity<Response> addFuel(@RequestBody FuelPrice fuelPriceRequest){
+        Response response=fuelPriceService.addFuel(fuelPriceRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
