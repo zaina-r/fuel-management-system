@@ -67,4 +67,15 @@ export default function ResultScreen() {
       Alert.alert("Error", "Please enter the amount of fuel.");
       return;
     }
+
+    if(Number(enteredFuelAmount) <= Number(availableFuelCapacity)) {
+        try {
+          const response= await axios.post(`https://888a-2402-4000-13cb-8706-5093-26da-1b8d-e09d.ngrok-free.app/api/fuelAllocation/add/${vehicleId}/${userId}`,
+            data,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
       
