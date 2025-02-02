@@ -234,4 +234,92 @@ export default function ResultScreen() {
         </View>
       );
     }
+
+    const styles = StyleSheet.create({
+        container: {
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f5f5f5",
+        },
+        containerDetails: {},
+        col: {
+          flexDirection: "column",
+          alignItems: "center",
+        },
+        textLarge: {
+          fontSize: 30,
+          fontWeight: "bold",
+          color: "black",
+        },
+        title: {
+          fontSize: 20,
+          fontWeight: "bold",
+          marginBottom: 20,
+        },
+        inputBox: {
+          height: 50,
+          width: "80%",
+          borderColor: "#ccc",
+          borderWidth: 1,
+          borderRadius: 8,
+          fontSize: 18,
+          paddingLeft: 10,
+          marginVertical: 20,
+        },
+        buttonRow: {
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginBottom: 10,
+        },
+        button: {
+          width: 60,
+          height: 60,
+          justifyContent: "center",
+          alignItems: "center",
+          margin: 5,
+          backgroundColor: "#0E7AFE",
+          borderRadius: 8,
+        },
+        buttonn: {
+          width: 100,
+          height: 60,
+          margin: 5,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 8,
+        },
+        deleteButton: {
+          backgroundColor: "red",
+        },
+        submitButton: {
+          backgroundColor: "green",
+        },
+        cancelButton: {
+          backgroundColor: "orange",
+        },
+        buttonText: {
+          fontSize: 24,
+          color: "#fff",
+        },
+        row: {
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: 40,
+          marginTop: 30,
+          gap: 50,
+        },
+        lable: {
+          fontSize: 18,
+          fontWeight: "bold",
+          marginBottom: 10,
+        },
+        value: {
+          fontSize: 16,
+          fontWeight: "600",
+        },
+      });
+      
       
