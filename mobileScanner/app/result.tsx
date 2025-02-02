@@ -62,4 +62,9 @@ export default function ResultScreen() {
   //   return price * Number(amount);
 
   // }
+  const handleSubmit = async () => {
+    if (enteredFuelAmount === "") {
+      Alert.alert("Error", "Please enter the amount of fuel.");
+      return;
+    }
       
