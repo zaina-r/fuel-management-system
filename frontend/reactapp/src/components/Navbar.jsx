@@ -13,7 +13,7 @@ import Success from "../responseDisplay/Success";
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = Authentication.isAuthenticated();
-  console.log(isAuthenticated)
+  console.log(isAuthenticated);
   const isFuelStationOwner = Authentication.isFuelStationOwner();
   const isVehicleOwner = Authentication.isVehicleOwner();
   const isAdmin = Authentication.isAdmin();
@@ -26,7 +26,6 @@ const Navbar = () => {
     if (isAuthenticated) {
       getUser();
     }
-    
   }, [isAuthenticated]);
 
   const getUser = async () => {
@@ -75,7 +74,11 @@ const Navbar = () => {
         <div className="flex flex-wrap justify-between items-center text-white font-bold px-4 py-6 md:px-10 lg:px-36">
           <div>
             <h1 className="text-xl sm:text-2xl">
-              <img src="src/Assets/Monochrome Ilustration Graffiti Logo new.png" alt="" className="w-[125px]" />
+              <img
+                src="src/Assets/Monochrome Ilustration Graffiti Logo new.png"
+                alt=""
+                className="w-[125px]"
+              />
             </h1>
           </div>
 
@@ -137,23 +140,29 @@ const Navbar = () => {
                 onClick={toggleDropdown}
               >
                 <img
-                  src="https://via.placeholder.com/150"
+                  src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${
+                    userData?.firstname || "defaultUser"
+                  }`}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full mr-2"
                 />
+
                 <span>{formatUsername()}</span>
               </div>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-blue-900 text-white rounded-md shadow-lg "
+                  onClick={() => setIsDropdownOpen(false)}
+                >
                   <NavLink
                     to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
                   >
                     Profile
                   </NavLink>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block w-full text-left px-4 py-2 text-sm  hover:bg-white hover:text-black"
                   >
                     Sign out
                   </button>
