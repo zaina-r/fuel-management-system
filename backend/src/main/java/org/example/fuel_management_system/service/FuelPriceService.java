@@ -16,5 +16,6 @@ public interface FuelPriceService {
 
 Response addFuel(FuelPrice fuelPriceRequest);
 
+    Response findFuel(String fuelId);
 }
 
