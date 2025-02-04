@@ -7,13 +7,13 @@ import org.example.fuel_management_system.Repository.ExistingStationsRepository;
 import org.example.fuel_management_system.Repository.FuelRepository;
 import org.example.fuel_management_system.Repository.FuelStationRepository;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
+import org.example.fuel_management_system.service.MailService;
 import org.example.fuel_management_system.Request.StationRequest;
 import org.example.fuel_management_system.model.ExistingStations;
 import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.model.VerificationCode;
 import org.example.fuel_management_system.utilities.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,27 +24,23 @@ import java.util.Optional;
 public class StationHandler implements StationService{
     private final FuelStationRepository fuelStationRepository;
     private final FuelRepository fuelRepository;
-    private final MailService mailService;
+        private final MailService mailService;
     private final AuthenticateService authenticateService;
     private final JwtService jwtService;
     private final ExistingStationsRepository existingStationsRepository;
     private final VerificationCodeService verificationCodeService;
-    @Autowired
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
-
-    public StationHandler(FuelStationRepository fuelStationRepository, FuelRepository fuelRepository, MailService mailService, JwtService jwtService, VerificationCodeService verificationCodeGenerator1, AuthenticateService authenticateService, ExistingStationsRepository existingStationsRepository) {
+    public StationHandler(FuelStationRepository fuelStationRepository, FuelRepository fuelRepository, MailService mailService, AuthenticateService authenticateService, JwtService jwtService, ExistingStationsRepository existingStationsRepository, VerificationCodeService verificationCodeService, UserAccountRepository userAccountRepository) {
         this.fuelStationRepository = fuelStationRepository;
         this.fuelRepository = fuelRepository;
         this.mailService = mailService;
-        this.authenticateService=authenticateService;
-        this.verificationCodeService = verificationCodeGenerator1;
-        this.jwtService=jwtService;
+        this.authenticateService = authenticateService;
+        this.jwtService = jwtService;
         this.existingStationsRepository = existingStationsRepository;
+        this.verificationCodeService = verificationCodeService;
+        this.userAccountRepository = userAccountRepository;
     }
-
-
-
 
     public Response getAllStations() {
         Response response = new Response();
