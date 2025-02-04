@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class TwoFactorOtpServiceImpl  {
+public class TwoFactorOtpHandler implements TwoFactorOtpService{
 
     @Autowired
     private TwoFactorOtpRepository twoFactorOtpRepository;
@@ -57,6 +57,4 @@ public class TwoFactorOtpServiceImpl  {
         return twoFactorOtpRepository.findByOtp(otp);
 
     }
-
-
 }
