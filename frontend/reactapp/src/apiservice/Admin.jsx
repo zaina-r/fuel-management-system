@@ -77,4 +77,9 @@ export default class Authentication {
     );
     return response.data;
   }
+
+  static async getFuelByName(name) {
+    const response = await axios.get(`${this.BASE_URL}/api/findfuel/${name}`);
+    return response.data;
+  }
 }
