@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Admin from "../apiservice/Admin";
+import { motion } from "framer-motion";
+import { SlideUp } from "../animation/direction";
 
 const AdminHome = () => {
   const [registeredStationCount, setRegisteredStationCount] = useState();
@@ -110,28 +112,28 @@ const AdminHome = () => {
       description: "Configure system preferences.",
       icon: "🛢️",
       bgColor: "bg-gradient-to-r from-gray-500 to-gray-700",
-      amt:petrolCapacity
-    },
+      amt:`${petrolCapacity}L`
+      },
     {
       title: "Total Available DieselCapacity",
       description: "Access help and support resources.",
       icon: "🛢",
       bgColor: "bg-gradient-to-r from-pink-500 to-pink-700",
-      amt:dieselCapacity
+      amt:`${dieselCapacity}L`
     },
     {
       title: "Current Petrol Price",
       description: "Access help and support resources.",
-      icon: "🛢",
+      icon: "💵",
       bgColor: "bg-gradient-to-r from-orange-500 to-orange-700",
-      amt:petrolPrice
+      amt:`${petrolPrice}.00/L Rs`
     },
     {
       title: "Current Diesel Price",
       description: "Access help and support resources.",
-      icon: "🛢", 
+      icon: "💴", 
       bgColor: "bg-gradient-to-r from-violet-500 to-pink-700",
-      amt:dieselPrice
+      amt:`${dieselPrice}.00/L Rs`
     },
   ];
 
@@ -140,7 +142,10 @@ const AdminHome = () => {
       <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map((card, index) => (
-          <div
+          <motion.div
+              variants={SlideUp(0.1*index)}
+                            initial="hidden"
+                            whileInView={"visible"}
             key={index}
             className={`p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ${card.bgColor}`}
           >
@@ -152,7 +157,7 @@ const AdminHome = () => {
             </div>
             <h2 className="text-xl font-bold mb-2">{card.title}</h2>
             <p className="text-sm">{card.description}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
