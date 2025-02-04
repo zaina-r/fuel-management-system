@@ -9,6 +9,8 @@ const AdminHome = () => {
   const [petrolCapacity,setPetrolCapacity]=useState();
   const [dieselCapacity,setDieselCapacity]=useState();
   const [registeredVehiclesCount, setRegisteredVehiclesCount]=useState();
+  const [petrolPrice,setPetrolPrice]=useState();
+  const [dieselPrice,setDieselPrice]=useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +50,17 @@ const AdminHome = () => {
 
         const response4=await Admin.getRegisterdVehicles();
         setRegisteredVehiclesCount(response4.vehiclesDtoList.length);
-        console.log(registeredVehiclesCount)
+        console.log(registeredVehiclesCount);
+        
+        const getPetrolDetails=await Admin.getFuelByName("petrol");
+        console.log(getPetrolDetails.fuelPriceDtoList);
+        
+        setPetrolPrice(getPetrolDetails.fuelPriceDtoList[0].price);
+
+        const getDieselDetails=await Admin.getFuelByName("diesel");
+        console.log(getDieselDetails.fuelPriceDtoList);
+        
+        setDieselPrice(getDieselDetails.fuelPriceDtoList[0].price);
         
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -106,6 +118,20 @@ const AdminHome = () => {
       icon: "🛢",
       bgColor: "bg-gradient-to-r from-pink-500 to-pink-700",
       amt:dieselCapacity
+    },
+    {
+      title: "Current Petrol Price",
+      description: "Access help and support resources.",
+      icon: "🛢",
+      bgColor: "bg-gradient-to-r from-orange-500 to-orange-700",
+      amt:petrolPrice
+    },
+    {
+      title: "Current Diesel Price",
+      description: "Access help and support resources.",
+      icon: "🛢", 
+      bgColor: "bg-gradient-to-r from-violet-500 to-pink-700",
+      amt:dieselPrice
     },
   ];
 
