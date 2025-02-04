@@ -33,6 +33,11 @@ public class FuelPriceController {
         Response response=fuelPriceService.addFuel(fuelPriceRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/findfuel/{fuelId}")
+    public ResponseEntity<Response> findFuel(@PathVariable String fuelId){
+        Response response=fuelPriceService.findFuel(fuelId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 
 
