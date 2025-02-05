@@ -10,6 +10,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -84,6 +85,11 @@ const ForgotPassword = () => {
   const handleResetPassword = async () => {
     try {
       setLoading(true);
+      if (newPassword != confirmPassword) {
+        setMessage("Please correctly enter a confirm password.");
+        setLoading(false);
+        return;
+      }
       if (newPassword.trim() === "") {
         setMessage("Please enter a new password.");
         setLoading(false);
@@ -118,19 +124,20 @@ const ForgotPassword = () => {
       <div className="bg-slate-900 h-screen w-full fixed ">
         <div className="grid grid-cols-2  items-center px-7 my-44 ">
           <div className="ml-20">
-          
-            <motion.img 
-                variants={SlideRight(0.1)}
-                initial="hidden"
-                whileInView={"visible"}
-            
-            src="src/Assets/ps.png" alt="" />
-          </div>
-          <motion.div
-              variants={SlideLeft(0.1)}
+            <motion.img
+              variants={SlideRight(0.1)}
               initial="hidden"
               whileInView={"visible"}
-          className="flex items-center justify-center mr-14">
+              src="src/Assets/ps.png"
+              alt=""
+            />
+          </div>
+          <motion.div
+            variants={SlideLeft(0.1)}
+            initial="hidden"
+            whileInView={"visible"}
+            className="flex items-center justify-center mr-14"
+          >
             {step === 1 && (
               <div className="p-6 w-full">
                 <h2 className="text-5xl font-bold mb-20 text-white">
@@ -223,6 +230,13 @@ const ForgotPassword = () => {
                   className="w-full p-2 border-b-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Enter confirm password"
+                  className="w-full p-2 border-b-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <button
                   onClick={handleResetPassword}
