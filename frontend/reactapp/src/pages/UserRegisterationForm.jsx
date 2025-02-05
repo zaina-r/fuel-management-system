@@ -15,12 +15,18 @@ const UserRegisterationForm = () => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setAcceptedTerms(e.target.checked);
+  };
 
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     username: "",
     password: "",
+    confirmpassword: "",
     nic: "",
     telno: "",
     role: "",
@@ -33,15 +39,43 @@ const UserRegisterationForm = () => {
       lastname,
       username,
       password,
+      confirmpassword,
       nic,
       telno,
       role,
       licenseNumber,
     } = formData;
-    if (firstname && lastname && username && password && nic && telno && role) {
+    if (
+      firstname &&
+      lastname &&
+      username &&
+      password &&
+      nic &&
+      telno &&
+      role &&
+      confirmpassword
+    ) {
       if (role === "FUELSTATION_OWNER") {
         return !!licenseNumber;
       }
+      return true;
+    }
+    return false;
+  };
+
+  const passwordChecker = () => {
+    const {
+      firstname,
+      lastname,
+      username,
+      password,
+      confirmpassword,
+      nic,
+      telno,
+      role,
+      licenseNumber,
+    } = formData;
+    if (password == confirmpassword) {
       return true;
     }
     return false;
@@ -106,6 +140,10 @@ const UserRegisterationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!passwordChecker()) {
+      setError("Please fill in same password in confirm password fields.");
+      return;
+    }
 
     if (!validateForm()) {
       setError("Please fill in all the required fields.");
@@ -121,6 +159,7 @@ const UserRegisterationForm = () => {
           lastname: "",
           username: "",
           password: "",
+          confirmpassword: "",
           nic: "",
           telno: "",
           role: "",
@@ -135,13 +174,13 @@ const UserRegisterationForm = () => {
       setError(error.response?.data?.message || error.message);
     }
   };
-  
+
   return (
     <div className="bg-slate-800 h-screen w-full fixed ">
       <div className="container">
-      <div className="flex justify-between items-start">
-        <div className="">
-        <div className="relative  ">
+        <div className="flex justify-between items-start">
+          <div className="">
+            <div className="relative  ">
               <div className=" p-8 text-white">
                 <motion.h1
                   variants={SlideUp(0.1)}
@@ -288,213 +327,243 @@ const UserRegisterationForm = () => {
                 </div>
               </div>
             </div>
-
-
-        </div>
-      <div className="container text-sm mb-32">
-        <div className=" w-full">
-          <motion.div
-            variants={SlideLeft(0.2)}
-            initial="hidden"
-            whileInView="visible"
-            className="w-1/2 flex flex-col mt-3"
-          >
-            {error && <Error error={error} setError={setError} />}
-            {success && <Success success={success} setSuccess={setSuccess} />}
-            <form onSubmit={handleSubmit} className="w-[500px]">
-              <h1 className="text-4xl font-extrabold text-white m-5">
-                Sign up
-              </h1>
-              <div className="m-5 w-[450px]">
-                <label className="block my-1 text-neutral-400">Tel No</label>
-                <input
-                  type="text"
-                  name="telno"
-                  value={formData.telno}
-                  onChange={handleChange}
-                  placeholder="+94xxxxxxxx"
-                  className="bg-gray-200 p-1 w-full"
-                  disabled={otpSent}
-                />
-                {!otpSent ? (
-                  <button
-                    type="button"
-                    className="bg-blue-700 text-white px-6 py-1 mt-3"
-                    onClick={handleSendOtp}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <Oval
-                        height={24}
-                        width={24}
-                        color="white"
-                        visible={true}
-                        ariaLabel="oval-loading"
-                        secondaryColor="white"
-                        strokeWidth={3}
-                        strokeWidthSecondary={3}
-                      />
-                    ) : (
-                      "Send OTP"
-                    )}
-                  </button>
-                ) : (
-                  <div className="mt-4">
-                    <label className="block my-1 text-neutral-400 ">
-                      Enter OTP
-                    </label>
-                  
-                    <input
-                      type="text"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                      className="bg-gray-200 p-1 w-full inline-block"
-                    />
-                    <button
-                      type="button"
-                      className="bg-blue-700 text-white px-6 py-1 mt-3 w-full"
-                      onClick={handleVerifyOtp}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? (
-                        <Oval
-                          height={24}
-                          width={24}
-                          color="white"
-                          visible={true}
-                          ariaLabel="oval-loading"
-                          secondaryColor="white"
-                          strokeWidth={3}
-                          strokeWidthSecondary={3}
-                          
-                        />
-                      ) : (
-                        "Verify OTP"
-                      )}
-                    </button>
-                    </div>
-                   
-                  
+          </div>
+          <div className="container text-sm mb-32">
+            <div className=" w-full">
+              <motion.div
+                variants={SlideLeft(0.2)}
+                initial="hidden"
+                whileInView="visible"
+                className="w-1/2 flex flex-col mt-3"
+              >
+                {error && <Error error={error} setError={setError} />}
+                {success && (
+                  <Success success={success} setSuccess={setSuccess} />
                 )}
-              </div>
-              {otpVerified && (
-                <>
-                  <div className="grid grid-cols-2 m-5 ">
-                    <div className="mr-3">
-                      <label className="block my-1  text-neutral-400">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        name="firstname"
-                        value={formData.firstname}
-                        onChange={handleChange}
-                        placeholder="firstname"
-                        className="bg-gray-200 p-1  w-full"
-                      />
-                    </div>
-                    <div className="mr-3">
-                      <label className="block my-1 text-neutral-400">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        name="lastname"
-                        value={formData.lastname}
-                        onChange={handleChange}
-                        placeholder="lastname"
-                        className="bg-gray-200 p-1 w-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 m-5">
-                    <div className="mr-3">
-                      <label className="block my-1 text-neutral-400">
-                        Username
-                      </label>
-                      <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        placeholder="username"
-                        className="bg-gray-200 p-1  w-full"
-                      />
-                    </div>
-                    <div className="">
-                      <label className="block my-1 text-neutral-400">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="password"
-                        className="bg-gray-200 p-1 w-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="m-5">
-                    <label className="block my-1 text-neutral-400">NIC</label>
+                <form onSubmit={handleSubmit} className="w-[500px]">
+                  <h1 className="text-4xl font-extrabold text-white m-5">
+                    Sign up
+                  </h1>
+                  <div className="m-5 w-[450px]">
+                    <label className="block my-1 text-neutral-400">
+                      Tel No
+                    </label>
                     <input
                       type="text"
-                      name="nic"
-                      value={formData.nic}
+                      name="telno"
+                      value={formData.telno}
                       onChange={handleChange}
-                      placeholder="NIC number"
+                      placeholder="+94xxxxxxxx"
                       className="bg-gray-200 p-1 w-full"
+                      disabled={otpSent}
                     />
+                    {!otpSent ? (
+                      <button
+                        type="button"
+                        className="bg-blue-700 text-white px-6 py-1 mt-3"
+                        onClick={handleSendOtp}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <Oval
+                            height={24}
+                            width={24}
+                            color="white"
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="white"
+                            strokeWidth={3}
+                            strokeWidthSecondary={3}
+                          />
+                        ) : (
+                          "Send OTP"
+                        )}
+                      </button>
+                    ) : (
+                      <div className="mt-4">
+                        <label className="block my-1 text-neutral-400 ">
+                          Enter OTP
+                        </label>
+
+                        <input
+                          type="text"
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value)}
+                          className="bg-gray-200 p-1 w-full inline-block"
+                        />
+                        <button
+                          type="button"
+                          className="bg-blue-700 text-white px-6 py-1 mt-3 w-full"
+                          onClick={handleVerifyOtp}
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <Oval
+                              height={24}
+                              width={24}
+                              color="white"
+                              visible={true}
+                              ariaLabel="oval-loading"
+                              secondaryColor="white"
+                              strokeWidth={3}
+                              strokeWidthSecondary={3}
+                            />
+                          ) : (
+                            "Verify OTP"
+                          )}
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <div className="m-5">
-                    <label className="block my-1 text-neutral-400">Role</label>
-                    <select
-                      name="role"
-                      value={formData.role}
-                      onChange={handleChange}
-                      className="bg-gray-200 p-1 w-full"
-                    >
-                      <option value="">Select Role</option>
-                      <option value="FUELSTATION_OWNER">
-                        Fuel Station Owner
-                      </option>
-                      <option value="VEHICLE_OWNER">Vehicle Owner</option>
-                    </select>
-                  </div>
-                  {formData.role === "FUELSTATION_OWNER" && (
-                    <div className="m-5">
-                      <label className="block my-1 text-neutral-400">
-                        License Number
-                      </label>
-                      <input
-                        type="text"
-                        name="licenseNumber"
-                        value={formData.licenseNumber}
-                        onChange={handleChange}
-                        placeholder="License number"
-                        className="bg-gray-200 p-1 w-full"
-                      />
-                    </div>
+                  {otpVerified && (
+                    <>
+                      <div className="grid grid-cols-2 m-5 ">
+                        <div className="mr-3">
+                          <label className="block my-1  text-neutral-400">
+                            First Name
+                          </label>
+                          <input
+                            type="text"
+                            name="firstname"
+                            value={formData.firstname}
+                            onChange={handleChange}
+                            placeholder="firstname"
+                            className="bg-gray-200 p-1  w-full"
+                          />
+                        </div>
+                        <div className="mr-3">
+                          <label className="block my-1 text-neutral-400">
+                            Last Name
+                          </label>
+                          <input
+                            type="text"
+                            name="lastname"
+                            value={formData.lastname}
+                            onChange={handleChange}
+                            placeholder="lastname"
+                            className="bg-gray-200 p-1 w-full"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 m-5">
+                        <div className="mr-3">
+                          <label className="block my-1 text-neutral-400">
+                            Username
+                          </label>
+                          <input
+                            type="text"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            placeholder="username"
+                            className="bg-gray-200 p-1  w-full"
+                          />
+                        </div>
+                        <div className="">
+                          <label className="block my-1 text-neutral-400">
+                            Password
+                          </label>
+                          <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="password"
+                            className="bg-gray-200 p-1 w-full"
+                          />
+                        </div>
+                      </div>
+                      <div className="m-5">
+                        <label className="block my-1 text-neutral-400">
+                          confirmed Password
+                        </label>
+                        <input
+                          type="password"
+                          name="confirmpassword"
+                          value={formData.confirmpassword}
+                          onChange={handleChange}
+                          placeholder="password"
+                          className="bg-gray-200 p-1 w-full"
+                        />
+                      </div>
+
+                      <div className="m-5">
+                        <label className="block my-1 text-neutral-400">
+                          NIC
+                        </label>
+                        <input
+                          type="text"
+                          name="nic"
+                          value={formData.nic}
+                          onChange={handleChange}
+                          placeholder="NIC number"
+                          className="bg-gray-200 p-1 w-full"
+                        />
+                      </div>
+                      <div className="m-5">
+                        <label className="block my-1 text-neutral-400">
+                          Role
+                        </label>
+                        <select
+                          name="role"
+                          value={formData.role}
+                          onChange={handleChange}
+                          className="bg-gray-200 p-1 w-full"
+                        >
+                          <option value="">Select Role</option>
+                          <option value="FUELSTATION_OWNER">
+                            Fuel Station Owner
+                          </option>
+                          <option value="VEHICLE_OWNER">Vehicle Owner</option>
+                        </select>
+                      </div>
+                      {formData.role === "FUELSTATION_OWNER" && (
+                        <div className="m-5">
+                          <label className="block my-1 text-neutral-400">
+                            License Number
+                          </label>
+                          <input
+                            type="text"
+                            name="licenseNumber"
+                            value={formData.licenseNumber}
+                            onChange={handleChange}
+                            placeholder="License number"
+                            className="bg-gray-200 p-1 w-full"
+                          />
+                        </div>
+                      )}
+                      <div className="m-5">
+                        <label className="flex items-center gap-2 text-neutral-400">
+                          <input
+                            type="checkbox"
+                            onChange={handleCheckboxChange}
+                            className="h-4 w-4"
+                          />
+                          I accept the terms and conditions.
+                        </label>
+                      </div>
+
+                      <div className="m-5">
+                        <button
+                          type="submit"
+                          className={`bg-blue-700 text-white px-6 py-1 w-full ${
+                            !acceptedTerms
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
+                          }`}
+                          disabled={!acceptedTerms}
+                        >
+                          Create an account
+                        </button>
+                      </div>
+                    </>
                   )}
-                  <div className="m-5">
-                    <button
-                      type="submit"
-                      className="bg-blue-700 text-white px-6 py-1 w-full"
-                    >
-                      Create an account
-                    </button>
-                  </div>
-                </>
-              )}
-            </form>
-          </motion.div>
+                </form>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
-      
-      </div>
-      </div>
-    
-    
     </div>
   );
 };
