@@ -90,7 +90,7 @@ const Navbar = () => {
               <li className="hover:text-gray-300 cursor-pointer">
                 <NavLink to="/about">About</NavLink>
               </li>
-              <li className="hover:text-gray-300 cursor-pointer">Service</li>
+              <li className="hover:text-gray-300 cursor-pointer"><NavLink to='/service'>Service</NavLink></li>
               <li className="hover:text-gray-300 cursor-pointer">Contact</li>
               {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
