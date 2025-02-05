@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Admin from "../apiservice/Admin";
 import { motion } from "framer-motion";
 import { SlideUp } from "../animation/direction";
+// import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
 
 const AdminHome = () => {
   const [registeredStationCount, setRegisteredStationCount] = useState();
@@ -136,17 +138,82 @@ const AdminHome = () => {
       amt:`${dieselPrice}.00/L Rs`
     },
   ];
+  
 
+  const [chartData, setChartData] = useState({
+    series: [
+      {
+        name: "Petrol Capacity",
+        data: [500, 700, 600, 800, 750, 900, 850],
+      },
+      {
+        name: "Diesel Capacity",
+        data: [400, 650, 580, 720, 690, 850, 800],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "area",
+        foreColor: "#ffffff"
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+        foreColor: "black"
+        
+
+
+        
+      },
+      xaxis: {
+        type: "category",
+        categories: [
+          "Station DE001",
+          "Station DE002",
+          "Station DE003",
+          "Station DE004",
+          "Station DE005",
+          "Station DE006",
+          "Station DE007",
+        ],
+        title: {
+          text: "Fuel Station ID",
+          style: { color: "#ffffff" }
+        },
+        labels: {
+          style: { colors: "#ffffff" }
+        }
+      },
+      yaxis: {
+        title: {
+          text: "Liters",
+          style: { color: "#ffffff" }
+        },
+        labels: {
+          style: { colors: "#ffffff" }
+        }
+      },
+      tooltip: {
+        x: {
+          format: "Station ID: ",
+          
+        },
+      },
+      grid: {
+        borderColor: "#ffffff"
+      }
+    },
+  });
   return (
     <div className="p-6 text-white">
       <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map((card, index) => (
-          <motion.div
-              variants={SlideUp(0.1*index)}
-                            initial="hidden"
-                            whileInView={"visible"}
-            key={index}
+          <div
+              
             className={`p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ${card.bgColor}`}
           >
             <div className="flex justify-between items-center">
@@ -157,9 +224,20 @@ const AdminHome = () => {
             </div>
             <h2 className="text-xl font-bold mb-2">{card.title}</h2>
             <p className="text-sm">{card.description}</p>
-          </motion.div>
+          </div>
         ))}
       </div>
+      <div className="p-6 text-white">
+      <div id="chart" className="my-32">
+        <ReactApexChart
+          options={chartData.options}
+          series={chartData.series}
+          type="area"
+          height={400}
+          
+        />
+      </div>
+    </div>
     </div>
   );
 };
