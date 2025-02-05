@@ -1,4 +1,5 @@
 import {
+  Image,
   View,
   Text,
   StyleSheet,
@@ -17,7 +18,7 @@ import React from "react";
 export default function Home() {
   const [permission, requestPermission] = useCameraPermissions();
   const [code, setCode] = useState("");
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [stationName, setStationName] = useState("");
   const [stationId, setStationId] = useState("");
   const [fuelStationId, setFuelStationId] = useState("");
@@ -44,7 +45,7 @@ export default function Home() {
   const handleCheck = async () => {
     try {
       const response = await axios.post(
-        `https://888a-2402-4000-13cb-8706-5093-26da-1b8d-e09d.ngrok-free.app/api/station/mobile/${code}`,
+        `https://3e32-192-248-24-51.ngrok-free.app/api/station/mobile/${code}`,
         {},
         {
           headers: {
@@ -73,14 +74,16 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Stack.Screen options={{ title: "Overview", headerShown: false }} />
       <View>
-        <Text style={styles.title}>National Fuel Pass</Text>
-        <View>
+        
+        <Image source={require("./images/Monochrome Ilustration Graffiti Logo new.png")} style={styles.headerImage} />
+        {/* <Text style={styles.title}>National Fuel Pass</Text> */}
+        <View style={{marginTop:300}}>
           {stationId ? (
             <Text style={styles.stationDetail}>
               {stationId}: {stationName}
             </Text>
           ) : (
-            <Text style={styles.station}>No station information available.</Text>
+            <Text style={styles.station}></Text>
           )}
         </View>
       </View>
@@ -91,9 +94,9 @@ export default function Home() {
             <TextInput
               style={styles.inputBox}
               value={code}
-              onChangeText={setCode}
-              placeholder="Enter code"
-              placeholderTextColor="rgba(0, 0, 0, 0.5)"
+              onChangeText={setCode}  
+              placeholder="Enter login code"
+              placeholderTextColor="gray"
               keyboardType="default"
             />
 
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#0F172A",
     justifyContent: "space-around",
     paddingVertical: 80,
   },
@@ -151,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 10,
     marginBottom: 20,
+    color:"white"
   },
   buttonStyle: {
     color: "#0E7AFE",
@@ -178,6 +182,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: "bold",
     fontSize: 20,
-    color: "green",
+    color: "white",
   },
+  headerImage:{
+    width:250,
+    height: 200,
+    resizeMode: "contain",
+    marginBottom: 30,
+    marginLeft: 40,
+    
+  }
 });
