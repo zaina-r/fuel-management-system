@@ -136,5 +136,17 @@ public class MapUtils {
         return FuelTransition.stream().map(MapUtils::mapFuelPriceEntityToFuelPriceDTO).collect(Collectors.toList());
 
     }
+    public static VehicleDto mapVehicleEntityToVehicleDto(Vehicle vehicle){
+        VehicleDto vehicleDto=new VehicleDto();
+        vehicleDto.setId(vehicle.getId());
+        vehicleDto.setVehicleType(vehicle.getVehicleType());
+        vehicleDto.setFuelCapacity(vehicle.getFuelCapacity());
+
+        return vehicleDto;
+    }
+    public static List<VehicleDto> mapListVehicleEntityToVehicleDto(List<Vehicle> vehicles){
+        return vehicles.stream().map(MapUtils::mapVehicleEntityToVehicleDto).collect(Collectors.toList());
+    }
+
 
 }

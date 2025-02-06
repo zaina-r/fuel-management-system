@@ -21,6 +21,8 @@ public class Response {
     private FuelDto fuelDto;
     private FuelAllocationDto fuelAllocationDto;
     private FuelPriceDto fuelPriceDto;
+    private VehicleDto vehicleDto;
+    private List<VehicleDto> vehicleDtoList;
     private List<UserAccountDto>userAccountDtoList;
     private List<VehiclesDto>vehiclesDtoList;
     private List<StationDto> stationDtosList;
@@ -30,6 +32,23 @@ public class Response {
     private FuelTransitionDto fuelTransitionDto;
     private List<FuelTransitionDto>fuelTransitionDtoList;
     private List<FuelPriceDto> fuelPriceDtoList;
+
+
+    public VehicleDto getVehicleDto() {
+        return vehicleDto;
+    }
+
+    public void setVehicleDto(VehicleDto vehicleDto) {
+        this.vehicleDto = vehicleDto;
+    }
+
+    public List<VehicleDto> getVehicleDtoList() {
+        return vehicleDtoList;
+    }
+
+    public void setVehicleDtoList(List<VehicleDto> vehicleDtoList) {
+        this.vehicleDtoList = vehicleDtoList;
+    }
 
     public FuelPriceDto getFuelPriceDto() {
         return fuelPriceDto;
