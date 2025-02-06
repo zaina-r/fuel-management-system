@@ -91,4 +91,20 @@ public class VehicleHandler implements VehicleService{
         return response;
 
     }
+    public Response findVehicle(String vehicleType) {
+        Response response=new Response();
+        try{
+            List<Vehicle>vehicle= vehicleRepository.findByVehicleType(vehicleType);
+            response.setStatusCode(200);
+            response.setMessage("Vehicle Fuel Type found");
+            response.setVehicleDtoList(MapUtils.mapListVehicleEntityToVehicleDto(vehicle));
+
+
+        }catch(Exception e){
+            response.setStatusCode(500);
+            response.setMessage("Vehicle Fuel Type not found");
+
+        }
+        return response;
+    }
 }
