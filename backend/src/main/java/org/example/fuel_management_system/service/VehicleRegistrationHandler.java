@@ -32,36 +32,39 @@ public class VehicleRegistrationHandler implements VehicleRegistrationService{
         this.userAccountRepository = userAccountRepository;
     }
 
-    public Response verifyAndAddVehicle(VehicleVerification inputVehicle, int userId) {
+    public Response verifyAndAddVehicle(VehicleVerification inputVehicle, int userId,float fuelAmount) {
         Response response = new Response();
+
 
         try {
             requireNonNull(inputVehicle, "Input vehicle cannot be null");
 
-            switch (inputVehicle.getVehicle_type()) {
-                case "Car":
-                    inputVehicle.setMaximumFuelCapacity(5L);
-                    inputVehicle.setAvailableFuelCapacity(5L);
-                    break;
-                case "Motorcycle":
-                    inputVehicle.setMaximumFuelCapacity(3L);
-                    inputVehicle.setAvailableFuelCapacity(3L);
-                    break;
-                case "Van":
-                    inputVehicle.setMaximumFuelCapacity(6L);
-                    inputVehicle.setAvailableFuelCapacity(6L);
-                    break;
-                case "Truck":
-                    inputVehicle.setMaximumFuelCapacity(8L);
-                    inputVehicle.setAvailableFuelCapacity(8L);
-                    break;
-                default:
-                    response.setMessage("Invalid vehicle type");
-                    response.setStatusCode(400);
-                    return response;
-            }
+//            switch (inputVehicle.getVehicle_type()) {
+//                case "Car":
+//                    inputVehicle.setMaximumFuelCapacity(5L);
+//                    inputVehicle.setAvailableFuelCapacity(5L);
+//                    break;
+//                case "Motorcycle":
+//                    inputVehicle.setMaximumFuelCapacity(3L);
+//                    inputVehicle.setAvailableFuelCapacity(3L);
+//                    break;
+//                case "Van":
+//                    inputVehicle.setMaximumFuelCapacity(6L);
+//                    inputVehicle.setAvailableFuelCapacity(6L);
+//                    break;
+//                case "Truck":
+//                    inputVehicle.setMaximumFuelCapacity(8L);
+//                    inputVehicle.setAvailableFuelCapacity(8L);
+//                    break;
+//                default:
+//                    response.setMessage("Invalid vehicle type");
+//                    response.setStatusCode(400);
+//                    return response;
+//            }
 
             inputVehicle.setQrCode(qrcode.generateQrCode());
+            inputVehicle.setMaximumFuelCapacity(fuelAmount);
+            inputVehicle.setAvailableFuelCapacity(fuelAmount);
 
             Optional<VehicleVerification> verifyVehicle = vehicleVerificationRepository.findByVehicleRegNo(inputVehicle.getVehicleRegNo());
             if (verifyVehicle.isPresent()) {
