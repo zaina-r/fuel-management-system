@@ -12,6 +12,5 @@ public interface VehicleService {
     Response getAllVehicles();
 
 
-
-
+    Response findVehicle(String vehicleType);
 }

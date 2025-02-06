@@ -45,4 +45,10 @@ public class VehicleTypeController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
+    @GetMapping("/vehicle/{fuelType}")
+    public ResponseEntity<Response> getFuelType(@PathVariable String fuelType) {
+        Response response=vehicleService.findVehicle(fuelType);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

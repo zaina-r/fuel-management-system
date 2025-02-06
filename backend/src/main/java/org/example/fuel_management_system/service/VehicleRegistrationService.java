@@ -23,7 +23,7 @@ import static java.util.Objects.requireNonNull;
 @Service
 public interface VehicleRegistrationService {
 
- Response verifyAndAddVehicle(VehicleVerification inputVehicle,int userId) ;
+ Response verifyAndAddVehicle(VehicleVerification inputVehicle,int userId,float fuelAmount) ;
 
      Response getVehicleByQrCode(String qrCode);
 
