@@ -14,6 +14,8 @@ const VehicleRegistration = () => {
   const [instruction, setInstruction] = useState(true);
   const [qrData, setQrData] = useState();
   const [loading, setLoading] = useState(false);
+  const [vehicleType, setVehicleTypes] = useState([]);
+  const [fuelAmount, setFuelAmount] = useState();
 
   const qrRef = useRef(null);
 
@@ -64,7 +66,13 @@ const VehicleRegistration = () => {
     }
     setLoading(true);
     try {
-      const response = await VehicleApi.registerVehicle(formData);
+      const response2 = await VehicleApi.findVehicle(formData.vehicle_type);
+      if (response2.statusCode === 200) {
+        const fuelCapacity = response2.vehicleDtoList[0].fuelCapacity;
+
+        setFuelAmount(fuelCapacity);
+      }
+      const response = await VehicleApi.registerVehicle(formData, fuelAmount);
       if (response.statusCode === 200) {
         setSuccess("Vehicle registration successful");
         setInstruction(false);
@@ -94,6 +102,23 @@ const VehicleRegistration = () => {
 
     return () => clearTimeout(timer);
   }, [error, success]);
+
+  useEffect(() => {
+    const getVehicleTypes = async () => {
+      try {
+        const response = await VehicleApi.getVehicleTypes();
+        if (response.statusCode === 200) {
+          setVehicleTypes(response.vehicleDtoList);
+          console.log(response.vehicleDtoList);
+        } else {
+          setError(response.message);
+        }
+      } catch (error) {
+        setError(response?.message || "An unexpected error occurred");
+      }
+    };
+    getVehicleTypes();
+  }, []);
 
   return (
     <>
@@ -153,11 +178,16 @@ const VehicleRegistration = () => {
                     className="bg-gray-600 p-1 rounded-sm text-md w-[386px]"
                     required
                   >
-                    <option value="">Select vehicle type</option>
+                    {/* <option value="">Select vehicle type</option>
                     <option value="Car">Car</option>
                     <option value="Motorcycle">Motorcycle</option>
                     <option value="Truck">Truck</option>
-                    <option value="Van">Van</option>
+                    <option value="Van">Van</option> */}
+                    {vehicleType.map((type, index) => (
+                      <option key={type.vehicleTypeId} value={type.vehicleType}>
+                        {type.vehicleType}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
