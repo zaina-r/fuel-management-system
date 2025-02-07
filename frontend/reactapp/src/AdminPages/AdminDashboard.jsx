@@ -88,6 +88,11 @@ const AdminDashboard = () => {
       icon: <Car className="mr-2" size={16} />,
       text: "Registered Vehicles",
     },
+    {
+      to: "/admin/availableVehicles",
+      icon: <Car className="mr-2" size={16} />,
+      text: "AvailableVehicles",
+    },
   ];
 
   const userLinks = [
