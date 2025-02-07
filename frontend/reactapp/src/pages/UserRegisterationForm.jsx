@@ -177,19 +177,23 @@ const UserRegisterationForm = () => {
 
   return (
     <div className="bg-slate-800 h-screen w-full fixed ">
-      <div className="container">
+      <div className="container my-20">
         <div className="flex justify-between items-start">
           <div className="">
+          <h1 className="text-3xl font-extrabold px-8 mt-14 text-white">
+                  Sign Up
+                </h1>
             <div className="relative  ">
               <div className=" p-8 text-white">
-                <motion.h1
+              
+                {/* <motion.h1
                   variants={SlideUp(0.1)}
                   initial="hidden"
                   whileInView={"visible"}
                   className="text-white text-2xl mb-5"
                 >
                   Register for FuelPass
-                </motion.h1>
+                </motion.h1> */}
                 <div className="flex flex-col gap-3">
                   <motion.p
                     variants={SlideUp(0.2)}
@@ -328,8 +332,8 @@ const UserRegisterationForm = () => {
               </div>
             </div>
           </div>
-          <div className="container text-sm mb-32">
-            <div className=" w-full">
+          <div className="container text-sm mb-32 ">
+            <div className=" w-[450px]">
               <motion.div
                 variants={SlideLeft(0.2)}
                 initial="hidden"
@@ -341,10 +345,8 @@ const UserRegisterationForm = () => {
                   <Success success={success} setSuccess={setSuccess} />
                 )}
                 <form onSubmit={handleSubmit} className="w-[500px]">
-                  <h1 className="text-4xl font-extrabold text-white m-5">
-                    Sign up
-                  </h1>
-                  <div className="m-5 w-[450px]">
+                 
+                  <div className="m-5 w-[460px]">
                     <label className="block my-1 text-neutral-400">
                       Tel No
                     </label>
@@ -384,16 +386,16 @@ const UserRegisterationForm = () => {
                         <label className="block my-1 text-neutral-400 ">
                           Enter OTP
                         </label>
-
+                        <div className="flex  items-center w-full ">
                         <input
                           type="text"
                           value={otp}
                           onChange={(e) => setOtp(e.target.value)}
-                          className="bg-gray-200 p-1 w-full inline-block"
+                          className="bg-gray-200 p-1 w-[50%] "
                         />
                         <button
                           type="button"
-                          className="bg-blue-700 text-white px-6 py-1 mt-3 w-full"
+                          className="bg-blue-700 text-white px-6 py-1 w-[50%] "
                           onClick={handleVerifyOtp}
                           disabled={isLoading}
                         >
@@ -412,6 +414,8 @@ const UserRegisterationForm = () => {
                             "Verify OTP"
                           )}
                         </button>
+                        </div>
+                       
                       </div>
                     )}
                   </div>
@@ -419,7 +423,7 @@ const UserRegisterationForm = () => {
                     <>
                       <div className="grid grid-cols-2 m-5 ">
                         <div className="mr-3">
-                          <label className="block my-1  text-neutral-400">
+                          <label className="block   text-neutral-400">
                             First Name
                           </label>
                           <input
@@ -432,7 +436,7 @@ const UserRegisterationForm = () => {
                           />
                         </div>
                         <div className="mr-3">
-                          <label className="block my-1 text-neutral-400">
+                          <label className="block  text-neutral-400">
                             Last Name
                           </label>
                           <input
@@ -441,13 +445,13 @@ const UserRegisterationForm = () => {
                             value={formData.lastname}
                             onChange={handleChange}
                             placeholder="lastname"
-                            className="bg-gray-200 p-1 w-full"
+                            className="bg-gray-200 p-1 w-[230px]"
                           />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 m-5">
                         <div className="mr-3">
-                          <label className="block my-1 text-neutral-400">
+                          <label className="block  text-neutral-400">
                             Username
                           </label>
                           <input
@@ -460,7 +464,7 @@ const UserRegisterationForm = () => {
                           />
                         </div>
                         <div className="">
-                          <label className="block my-1 text-neutral-400">
+                          <label className="block  text-neutral-400">
                             Password
                           </label>
                           <input
@@ -474,7 +478,7 @@ const UserRegisterationForm = () => {
                         </div>
                       </div>
                       <div className="m-5">
-                        <label className="block my-1 text-neutral-400">
+                        <label className="block  text-neutral-400">
                           confirmed Password
                         </label>
                         <input
@@ -487,7 +491,7 @@ const UserRegisterationForm = () => {
                         />
                       </div>
 
-                      <div className="m-5">
+                   <div className="m-5">
                         <label className="block my-1 text-neutral-400">
                           NIC
                         </label>
@@ -498,10 +502,10 @@ const UserRegisterationForm = () => {
                           onChange={handleChange}
                           placeholder="NIC number"
                           className="bg-gray-200 p-1 w-full"
-                        />
+                        />   
                       </div>
                       <div className="m-5">
-                        <label className="block my-1 text-neutral-400">
+                        <label className="block text-neutral-400">
                           Role
                         </label>
                         <select
@@ -519,7 +523,7 @@ const UserRegisterationForm = () => {
                       </div>
                       {formData.role === "FUELSTATION_OWNER" && (
                         <div className="m-5">
-                          <label className="block my-1 text-neutral-400">
+                          <label className="block  text-neutral-400">
                             License Number
                           </label>
                           <input
