@@ -11,7 +11,7 @@ export default class VehicleApi {
     };
   }
 
-  static async registerVehicle(vehicleDetails,fuelAmount) {
+  static async registerVehicle(vehicleDetails, fuelAmount) {
     const userId = localStorage.getItem("userId");
     const response = await axios.post(
       `${this.BASE_URL}/api/verifyAndAddVehicle/${userId}/${fuelAmount}`,
@@ -28,12 +28,44 @@ export default class VehicleApi {
     return response.data;
   }
 
-  static async getVehicleTypes(){
+  static async getVehicleTypes() {
     const response = await axios.get(`${this.BASE_URL}/api/vehicleTypes`);
     return response.data;
   }
-  static async findVehicle(vehicleType){
-    const response = await axios.get(`${this.BASE_URL}/api/vehicle/${vehicleType}`);
+  static async findVehicle(vehicleType) {
+    const response = await axios.get(
+      `${this.BASE_URL}/api/vehicle/${vehicleType}`
+    );
+    return response.data;
+  }
+
+  static async getAvailableVehicles() {
+    const response = await axios.get(`${this.BASE_URL}/api/vehicleTypes`);
+    return response.data;
+  }
+  static async deleteAvailableVehicle(id) {
+    const response = await axios.delete(
+      `${this.BASE_URL}/api/vehicleType/delete/${id}`
+    );
+    return response.data;
+  }
+  static async updateAvailableVehicle(id,formData) {
+    const response = await axios.put(
+      `${this.BASE_URL}/api/vehicleTypes/update/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  
+}
+  static async addAvailableVehicle(vehicle) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/vehicleTypes/add`,vehicle
+    );
     return response.data;
   }
 }

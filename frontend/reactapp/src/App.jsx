@@ -26,6 +26,7 @@ import UpdateSelectedStationFuel from "./AdminPages/UpdateSelectedStationFuel";
 import ManageUser from "./AdminPages/ManageUser";
 import FuelManage from "./AdminPages/FuelManage";
 import Service from "./pages/Service";
+import AvailableVehicles from "./AdminPages/AvailableVehicles";
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function RoutesWrapper() {
             <Route
               path="registeredVehicles"
               element={<ViewRegisteredVehicle />}
+            />
+             <Route
+              path="AvailableVehicles"
+              element={<AvailableVehicles />}
             />
             <Route path="manageuser" element={<ManageUser />} />
             <Route path="profile" element={<ViewProfile />} />
