@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 import VehicleApi from "../apiservice/VehicleApi";
 
 const AvailableVehicles = () => {
@@ -76,14 +77,12 @@ const AvailableVehicles = () => {
       }
     };
     getVehicleDetails();
-  }, [vehicleList]);
+  }, []);
 
   return (
     <div className="p-4 relative">
       <div className={`${editingVehicle || addingVehicle ? "blur-sm" : ""}`}>
-        <h1 className="text-2xl font-bold mb-4 text-white">
-          Available Vehicles
-        </h1>
+        <h1 className="text-2xl font-bold mb-4 text-white">Available Vehicles</h1>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-lg mb-4 hover:bg-green-600"
           onClick={() => setAddingVehicle(true)}
@@ -91,35 +90,35 @@ const AvailableVehicles = () => {
           Add Vehicle
         </button>
 
-        <table className="min-w-full text-neutral-400">
+        <table className="min-w-full text-neutral-400 border-separate border-spacing-y-2">
           <thead>
             <tr className="text-left">
-              <th className="py-2">ID</th>
-              <th className="py-2">Vehicle Type</th>
-              <th className="py-2">Max Fuel Capacity</th>
-              <th className="py-2">Actions</th>
+              <th className="py-2 text-orange-500">ID</th>
+              <th className="py-2 text-orange-500">Vehicle Type</th>
+              <th className="py-2 text-orange-500">Max Fuel Capacity</th>
+              <th className="py-2 text-orange-500">Actions</th>
             </tr>
           </thead>
           <tbody>
             {vehicleList && vehicleList.length > 0 ? (
               vehicleList.map((vehicle) =>
                 vehicle && vehicle.id ? (
-                  <tr key={vehicle.id}>
-                    <td className="py-2">{vehicle.id}</td>
-                    <td className="py-2">{vehicle.vehicleType}</td>
-                    <td className="py-2">{vehicle.fuelCapacity}L</td>
-                    <td className="py-2">
+                  <tr key={vehicle.id} className="">
+                    <td className="py-2 px-4">{vehicle.id}</td>
+                    <td className="py-2 px-4">{vehicle.vehicleType}</td>
+                    <td className="py-2 px-4">{vehicle.fuelCapacity}L</td>
+                    <td className="py-2 px-4 flex space-x-4">
                       <button
-                        className="bg-blue-500 text-white px-3 py-1 rounded-lg mr-2 hover:bg-blue-600"
+                        className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
                         onClick={() => handleEdit(vehicle)}
                       >
-                        Edit
+                        <Pencil size={18} />
                       </button>
                       <button
-                        className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+                        className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-600"
                         onClick={() => handleDelete(vehicle.id)}
                       >
-                        Delete
+                        <Trash2 size={18} />
                       </button>
                     </td>
                   </tr>
@@ -145,9 +144,7 @@ const AvailableVehicles = () => {
                 : "Add New Vehicle"}
             </h2>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Vehicle Type:
-              </label>
+              <label className="block text-sm font-medium mb-1">Vehicle Type:</label>
               <input
                 type="text"
                 name="vehicleType"
@@ -157,9 +154,7 @@ const AvailableVehicles = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Max Fuel Capacity (L):
-              </label>
+              <label className="block text-sm font-medium mb-1">Max Fuel Capacity (L):</label>
               <input
                 type="number"
                 name="fuelCapacity"
