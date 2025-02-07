@@ -130,7 +130,7 @@ export default function ResultScreen() {
           params: {
             telno: "+94781875382", 
 
-            message: `${enteredFuelAmount}L ${fuelType} pumped to ${license_plate_no} in ${stLicense} at ${formattedDateTime}`,
+            message: `${enteredFuelAmount}L ${fuelType} pumped to ${license_plate_no} in station ${stLicense} at ${formattedDateTime}`,
           },
         }
       );
