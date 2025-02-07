@@ -8,6 +8,7 @@ import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class StationController {
 
 
     @GetMapping("/allstations")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> allStations(){
         Response response=stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/stations/{id}")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> findStationById(@PathVariable int id)
     {
         Response response=stationService.findStationById(id);
@@ -39,6 +42,7 @@ public class StationController {
 
     }
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> UpdateStationById(@RequestBody StationRequest stationRequest,@PathVariable int id)
     {
         Response response=stationService.updateStation(stationRequest,id);
@@ -49,12 +53,14 @@ public class StationController {
 
 
     @PostMapping("/registration")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
   Response response=stationService.saveOrUpdateStation(station);
   return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
     @PostMapping("/mobile/{loginCode}")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response>getStationUsingMobile( @PathVariable String loginCode){
         Response response=stationService.findByLoginCode(loginCode);
         return ResponseEntity.status(HttpStatus.OK).body(response);
