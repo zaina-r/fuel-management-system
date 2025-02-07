@@ -19,10 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AuthenticateServiceManager implements AuthenticateService{
@@ -200,26 +197,31 @@ public class AuthenticateServiceManager implements AuthenticateService{
     }
 
     public Response getUsersByRole(Role role) {
-        Response response=new Response();
+        Response response = new Response();
         try {
             List<UserAccount> userAccounts = userAccountRepository.findByRole(role);
-            if (userAccounts == null || userAccounts.isEmpty()) {
-                response.setStatusCode(404);
-                response.setMessage("No users found for the given role");
+            if (userAccounts == null) {
+                response.setStatusCode(500);
+                response.setMessage("An error occurred while fetching users");
+                return response;
             }
-            else {
+
+            if (userAccounts.isEmpty()) {
+                response.setStatusCode(200);
+                response.setMessage("No users found for the given role");
+                response.setUserAccountDtoList(Collections.emptyList());
+            }else{
                 response.setStatusCode(200);
                 response.setMessage("Users retrieved successfully");
                 response.setUserAccountDtoList(MapUtils.mapUserListEntityToUserListDTO(userAccounts));
             }
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("An Role of getting users is not found");
-
+            response.setMessage("An error occurred while getting users by role: " + e.getMessage());
         }
         return response;
-
     }
+
 
     public Response verifySigningOtp(String otp,int userId){
         Response response = new Response();
@@ -398,12 +400,17 @@ public class AuthenticateServiceManager implements AuthenticateService{
         return response;
     }
 
+    @Override
+    public Response deleteAccount(int userId) {
+        Response response=new Response();
+      userAccountRepository.deleteById(userId);
+      response.setStatusCode(200);
+      response.setMessage("Account deleted successfully");
+
+        return response;
 
 
-
-
-
-
+    }
 
 
 }

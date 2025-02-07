@@ -7,6 +7,7 @@ import org.example.fuel_management_system.model.UserAccount;
 import org.example.fuel_management_system.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -58,6 +59,7 @@ public class AuthenticationController {
 
 
     @GetMapping("/by-role")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getUsersByRole(@RequestParam Role role) {
         Response response = authenticateService.getUsersByRole(role);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
@@ -84,9 +86,18 @@ public class AuthenticationController {
 
     }
     @PutMapping("/users/update-details/{UserId}")
+
     public ResponseEntity<Response> updatePassword(@RequestBody UserRequest userRequest, @PathVariable int UserId) throws Exception {
         Response response = authenticateService.updateUserAccount(UserId,userRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
+
+    }
+    @DeleteMapping("/admin/delete/{UserId}")
+   // @PreAuthorize("hasAnyAuthority( 'ADMIN','VEHICLE_OWNER')")
+    public ResponseEntity<Response> deleteUser(@PathVariable int UserId) throws Exception {
+
+           Response response=authenticateService.deleteAccount(UserId);
+           return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
 

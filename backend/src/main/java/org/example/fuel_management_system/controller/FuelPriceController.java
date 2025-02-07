@@ -7,6 +7,7 @@ import org.example.fuel_management_system.service.FuelPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,22 +19,26 @@ public class FuelPriceController {
 
 
     @GetMapping("/allfuelPrices")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> getAllFuelPrices(){
         Response response=fuelPriceService.getAllFuelDetails();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/updatePrice/{fuelPriceId}")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> UpdatePrice(@RequestBody FuelPriceRequest fuelPriceRequest,@PathVariable int fuelPriceId){
         Response response=fuelPriceService.updateFuelPrice(fuelPriceRequest,fuelPriceId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/addFuel")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> addFuel(@RequestBody FuelPrice fuelPriceRequest){
         Response response=fuelPriceService.addFuel(fuelPriceRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @GetMapping("/findfuel/{fuelId}")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> findFuel(@PathVariable String fuelId){
         Response response=fuelPriceService.findFuel(fuelId);
         return ResponseEntity.status(HttpStatus.OK).body(response);

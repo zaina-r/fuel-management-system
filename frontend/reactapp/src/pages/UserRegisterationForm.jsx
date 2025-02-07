@@ -180,20 +180,11 @@ const UserRegisterationForm = () => {
       <div className="container my-20">
         <div className="flex justify-between items-start">
           <div className="">
-          <h1 className="text-3xl font-extrabold px-8 mt-14 text-white">
-                  Sign Up
-                </h1>
+            <h1 className="text-3xl font-extrabold px-8 mt-14 text-white">
+              Sign Up
+            </h1>
             <div className="relative  ">
               <div className=" p-8 text-white">
-              
-                {/* <motion.h1
-                  variants={SlideUp(0.1)}
-                  initial="hidden"
-                  whileInView={"visible"}
-                  className="text-white text-2xl mb-5"
-                >
-                  Register for FuelPass
-                </motion.h1> */}
                 <div className="flex flex-col gap-3">
                   <motion.p
                     variants={SlideUp(0.2)}
@@ -345,7 +336,6 @@ const UserRegisterationForm = () => {
                   <Success success={success} setSuccess={setSuccess} />
                 )}
                 <form onSubmit={handleSubmit} className="w-[500px]">
-                 
                   <div className="m-5 w-[460px]">
                     <label className="block my-1 text-neutral-400">
                       Tel No
@@ -387,35 +377,34 @@ const UserRegisterationForm = () => {
                           Enter OTP
                         </label>
                         <div className="flex  items-center w-full ">
-                        <input
-                          type="text"
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
-                          className="bg-gray-200 p-1 w-[50%] "
-                        />
-                        <button
-                          type="button"
-                          className="bg-blue-700 text-white px-6 py-1 w-[50%] "
-                          onClick={handleVerifyOtp}
-                          disabled={isLoading}
-                        >
-                          {isLoading ? (
-                            <Oval
-                              height={24}
-                              width={24}
-                              color="white"
-                              visible={true}
-                              ariaLabel="oval-loading"
-                              secondaryColor="white"
-                              strokeWidth={3}
-                              strokeWidthSecondary={3}
-                            />
-                          ) : (
-                            "Verify OTP"
-                          )}
-                        </button>
+                          <input
+                            type="text"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                            className="bg-gray-200 p-1 w-[50%] "
+                          />
+                          <button
+                            type="button"
+                            className="bg-blue-700 text-white px-6 py-1 w-[50%] "
+                            onClick={handleVerifyOtp}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? (
+                              <Oval
+                                height={24}
+                                width={24}
+                                color="white"
+                                visible={true}
+                                ariaLabel="oval-loading"
+                                secondaryColor="white"
+                                strokeWidth={3}
+                                strokeWidthSecondary={3}
+                              />
+                            ) : (
+                              "Verify OTP"
+                            )}
+                          </button>
                         </div>
-                       
                       </div>
                     )}
                   </div>
@@ -491,7 +480,7 @@ const UserRegisterationForm = () => {
                         />
                       </div>
 
-                   <div className="m-5">
+                      <div className="m-5">
                         <label className="block my-1 text-neutral-400">
                           NIC
                         </label>
@@ -502,12 +491,10 @@ const UserRegisterationForm = () => {
                           onChange={handleChange}
                           placeholder="NIC number"
                           className="bg-gray-200 p-1 w-full"
-                        />   
+                        />
                       </div>
                       <div className="m-5">
-                        <label className="block text-neutral-400">
-                          Role
-                        </label>
+                        <label className="block text-neutral-400">Role</label>
                         <select
                           name="role"
                           value={formData.role}
