@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ResultScreen() {
   const {
@@ -19,12 +18,13 @@ export default function ResultScreen() {
     fuelType,
     availableFuelCapacity,
     vehicleId,
-    userId
+    userId,
   } = useGlobalSearchParams();
 
   const router = useRouter();
-  const [stationId,setStationId] = useState();
+  const [stationId, setStationId] = useState();
   const [enteredFuelAmount, setEnteredFuelAmount] = useState("");
+  const [telNo, setTelNo] = useState(0);
 
   const handleButtonPress = (value: string) => {
     setEnteredFuelAmount((prev) => prev + value);
@@ -33,12 +33,12 @@ export default function ResultScreen() {
   const handleDelete = () => {
     setEnteredFuelAmount((prev) => prev.slice(0, -1));
   };
-  
-  const data={
-    stationId:stationId,
-    fuelType:fuelType,
-    fuelAmount:enteredFuelAmount
-  }
+
+  const data = {
+    stationId: stationId,
+    fuelType: fuelType,
+    fuelAmount: enteredFuelAmount,
+  };
 
   useEffect(() => {
     const fetchStationId = async () => {
@@ -52,18 +52,17 @@ export default function ResultScreen() {
 
     fetchStationId();
   }, []);
-  
 
-   
   const handleSubmit = async () => {
     if (enteredFuelAmount === "") {
       Alert.alert("Error", "Please enter the amount of fuel.");
       return;
     }
 
-    if(Number(enteredFuelAmount) <= Number(availableFuelCapacity)) {
+    if (Number(enteredFuelAmount) <= Number(availableFuelCapacity)) {
       try {
-        const response= await axios.post(`https://3e32-192-248-24-51.ngrok-free.app/api/fuelAllocation/add/${vehicleId}/${userId}`,
+        const response = await axios.post(
+          `https://17d7-175-157-245-166.ngrok-free.app/api/fuelAllocation/add/${vehicleId}/${userId}`,
           data,
           {
             headers: {
@@ -71,10 +70,10 @@ export default function ResultScreen() {
             },
           }
         );
-
+ 
 
         await axios.post(
-          `https://3e32-192-248-24-51.ngrok-free.app/api/${vehicleId}/update-fuel`,
+          `https://17d7-175-157-245-166.ngrok-free.app/api/${vehicleId}/update-fuel`,
           enteredFuelAmount,
           {
             headers: {
@@ -82,42 +81,70 @@ export default function ResultScreen() {
             },
           }
         );
-        
-        const response4= await axios.get(`https://3e32-192-248-24-51.ngrok-free.app/api/findfuel/${fuelType}`);
-        const price=response4.data.fuelPriceDtoList[0].price;
-        console.log(price);
-        const Total=(Number(price) * Number(enteredFuelAmount)).toFixed(2);
-        Alert.alert("Fuel Submitted", `Amount: ${enteredFuelAmount}L\nCost:${Total}Rs`,);
-        router.back(); 
+
+        const response4 = await axios.get(
+          `https://17d7-175-157-245-166.ngrok-free.app/api/findfuel/${fuelType}`
+        );
+        const price = response4.data.fuelPriceDtoList[0].price;
+
+        const Total = (Number(price) * Number(enteredFuelAmount)).toFixed(2);
+        Alert.alert(
+          "Fuel Submitted",
+          `Amount: ${enteredFuelAmount}L\nCost:${Total}Rs`
+        );
+        router.back();
       } catch (error) {
         Alert.alert("Error", "Failed to submit fuel amount.");
       }
-    
-      try{
+
+      try {
         const body = {
           fuelType: fuelType,
-          quantity: enteredFuelAmount
+          quantity: enteredFuelAmount,
         };
-         const stLicense= await AsyncStorage.getItem('fuelStationId');
-         
-         await axios.post(`https://3e32-192-248-24-51.ngrok-free.app/api/fuel/updatefuel/${stLicense}`,body),
+        const stLicense = await AsyncStorage.getItem("fuelStationId");
+
+        await axios.post(
+          `https://17d7-175-157-245-166.ngrok-free.app/api/fuel/updatefuel/${stLicense}`,
+          body
+        ),
           {
             headers: {
               "Content-Type": "application/json",
             },
-          }
-      }catch(error){
-              
-      }
-    
-    
-    
-    
-    }
-    
-    
-    else {
+          };
+      } catch (error) {}
+    } else {
       Alert.alert("Error", "Not enough fuel capacity available.");
+    }
+
+    try {
+      const stLicense = await AsyncStorage.getItem("stationId");
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString();
+
+      const response = await axios.post(
+        "https://17d7-175-157-245-166.ngrok-free.app/api/notifications/generateNotifications",
+        {},
+        {
+          params: {
+            telno: "+94781875382", 
+
+            message: `${enteredFuelAmount}L ${fuelType} pumped to ${license_plate_no} in ${stLicense} at ${formattedDateTime}`,
+          },
+        }
+      );
+
+      if (response.data.statusCode === 200) {
+        console.log("Notification sent successfully:", response.data);
+        Alert.alert("Success", "Notification sent successfully!");
+      } else {
+        console.log("Failed to send notification:", response.data);
+        Alert.alert("Error", "Failed to send notification.");
+      }
+    } catch (error) {
+      console.error("Error sending notification:", error);
+      Alert.alert("Error", "An error occurred while sending the notification.");
     }
   };
 
@@ -126,6 +153,26 @@ export default function ResultScreen() {
       setEnteredFuelAmount((prev) => prev + ".");
     }
   };
+
+  useEffect(() => {
+    const fetchMobileNumber = async () => {
+      try {
+        const response = await axios.get(
+          `https://17d7-175-157-245-166.ngrok-free.app/api/account/${userId}`
+        );
+        setTelNo(response.data.userAccountDto.telno);
+      } catch (error) {
+        Alert.alert("Error", "Failed to fetch mobile number.");
+      }
+    };
+    fetchMobileNumber();
+  }, [userId]); // Ensure it re-runs if userId changes
+
+  useEffect(() => {
+    if (telNo) {
+      console.log("Updated telNo:", telNo);
+    }
+  }, [telNo]);
 
   return (
     <View style={styles.container}>
@@ -149,7 +196,6 @@ export default function ResultScreen() {
         <View style={styles.col}>
           <Text style={styles.title}>Available Fuel Capacity</Text>
           <Text style={styles.textLarge}>{availableFuelCapacity}L</Text>
-          
         </View>
       </View>
 
@@ -223,7 +269,7 @@ export default function ResultScreen() {
 
         <TouchableOpacity
           style={[styles.buttonn, styles.cancelButton]}
-          onPress={() => router.back()} 
+          onPress={() => router.back()}
         >
           <Text style={styles.buttonText}>CANCEL</Text>
         </TouchableOpacity>
