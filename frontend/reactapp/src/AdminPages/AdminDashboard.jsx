@@ -97,20 +97,19 @@ const AdminDashboard = () => {
 
   const userLinks = [
     {
-      to: "/admin/admins",
+      to: "/admin/manageuser",
       icon: <User className="mr-2" size={16} />,
       text: "Admin",
-    }
-   
+    },
   ];
 
-  const fuelLinks=[
+  const fuelLinks = [
     {
       to: "/admin/fuelTypes",
-      icon:  <Droplets  className="mr-2" size={16} />,
+      icon: <Droplets className="mr-2" size={16} />,
       text: "Fuel Types",
-    }
-  ]
+    },
+  ];
 
   const settingsLinks = [
     {
@@ -134,7 +133,11 @@ const AdminDashboard = () => {
     <div className="flex  min-h-screen bg-gray-100 ">
       <div className="w-56 bg-slate-800 text-white shadow-2xl border-r border-neutral-500 p-3 fixed h-screen ">
         <div className="flex items-center justify-between">
-           <img src="../src/Assets/Monochrome Ilustration Graffiti Logo new.png" alt="" className="w-[130px] p-2 mb-4" />
+          <img
+            src="../src/Assets/Monochrome Ilustration Graffiti Logo new.png"
+            alt=""
+            className="w-[130px] p-2 mb-4"
+          />
         </div>
 
         <div>
@@ -214,7 +217,9 @@ const AdminDashboard = () => {
           </div>
 
           <div className="space-y-1">
-            <h1 className="text-lg font-medium px-2 text-neutral-400">FuelManagement</h1>
+            <h1 className="text-lg font-medium px-2 text-neutral-400">
+              FuelManagement
+            </h1>
             {filterLinks(fuelLinks).map((link, index) => (
               <Link
                 key={index}

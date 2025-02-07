@@ -82,4 +82,20 @@ export default class Authentication {
     const response = await axios.get(`${this.BASE_URL}/api/findfuel/${name}`);
     return response.data;
   }
+  static async getRoleAdminMemebers() {
+    const response = await axios.get(
+      `${this.BASE_URL}/api/by-role`,
+
+      {
+        params: { role: "ADMIN" },
+      }
+    );
+    return response.data;
+  }
+  static async deleteAdmin(userId) {
+    const response = await axios.delete(
+      `${this.BASE_URL}/api/admin/delete/${userId}`
+    );
+    return response.data;
+  }
 }
