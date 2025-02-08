@@ -28,35 +28,35 @@ public class AdminController {
     }
 
     @GetMapping("/stationInfo")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Response> getAllStations() {
         Response response = stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/getFuelQuantities")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> getFuelQuantities() {
         Response response = fuelService.getFuelQuantities();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/get-stations-with-status")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> setStationsWithStatus() {
         Response response = adminService.getStationWithStatus();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/update-initial-fuel-allocation/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateInitialFuelAllocation(@RequestBody Fuel fuelAllocation, @PathVariable int id) {
         Response response = adminService.updateInitialFuelAllocation(fuelAllocation, id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/stations/delete/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteStationById(@PathVariable int id) {
         Response response = stationService.deleteStationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);

@@ -27,14 +27,14 @@ public class StationController {
 
 
     @GetMapping("/allstations")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> allStations(){
         Response response=stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/stations/{id}")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> findStationById(@PathVariable int id)
     {
         Response response=stationService.findStationById(id);
@@ -42,7 +42,7 @@ public class StationController {
 
     }
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> UpdateStationById(@RequestBody StationRequest stationRequest,@PathVariable int id)
     {
         Response response=stationService.updateStation(stationRequest,id);
@@ -53,7 +53,7 @@ public class StationController {
 
 
     @PostMapping("/registration")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER')")
     public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
   Response response=stationService.saveOrUpdateStation(station);
   return ResponseEntity.status(HttpStatus.CREATED).body(response);

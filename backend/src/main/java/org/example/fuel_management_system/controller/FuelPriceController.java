@@ -19,26 +19,26 @@ public class FuelPriceController {
 
 
     @GetMapping("/allfuelPrices")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> getAllFuelPrices(){
         Response response=fuelPriceService.getAllFuelDetails();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/updatePrice/{fuelPriceId}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> UpdatePrice(@RequestBody FuelPriceRequest fuelPriceRequest,@PathVariable int fuelPriceId){
         Response response=fuelPriceService.updateFuelPrice(fuelPriceRequest,fuelPriceId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/addFuel")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> addFuel(@RequestBody FuelPrice fuelPriceRequest){
         Response response=fuelPriceService.addFuel(fuelPriceRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @GetMapping("/findfuel/{fuelId}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> findFuel(@PathVariable String fuelId){
         Response response=fuelPriceService.findFuel(fuelId);
         return ResponseEntity.status(HttpStatus.OK).body(response);

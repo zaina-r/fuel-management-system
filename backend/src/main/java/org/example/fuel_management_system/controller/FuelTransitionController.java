@@ -19,20 +19,20 @@ public class FuelTransitionController {
     private FuelTransitionService fuelTransitionService;
 
     @GetMapping("/{stationId}/transitions")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> getFuelTransitionsByStationId(@PathVariable String stationId){
         Response response=fuelTransitionService.getAllFuelTransitionsByStationId(stationId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/alltransitions")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> getFuelTransitions(){
         Response response=fuelTransitionService.getAllFuelTransitions();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/add/{vehicleId}/{userId}")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response> addFuelTransition(@RequestBody FuelTransition fuelTransition,@PathVariable int userId,@PathVariable int vehicleId){
         Response response=fuelTransitionService.addTransaction(fuelTransition,userId,vehicleId);
         return ResponseEntity.status(response.getStatusCode()).body(response);

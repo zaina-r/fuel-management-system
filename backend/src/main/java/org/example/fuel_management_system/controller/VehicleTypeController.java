@@ -17,42 +17,42 @@ public class VehicleTypeController {
     private VehicleService vehicleService;
 
     @GetMapping("/vehicleType/{id}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getVehicleType(@PathVariable int id) {
         Response response=vehicleService.getVehicle(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
     @GetMapping("/vehicleTypes")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getVehicleTypes() {
         Response response=vehicleService.getAllVehicles();
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
     @PostMapping("/vehicleTypes/add")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> addVehicleType(@RequestBody Vehicle vehicle) {
         Response response=vehicleService.addVehicle(vehicle);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
     @PutMapping("/vehicleTypes/update/{id}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> updateVehicleFuel(@RequestBody Vehicle vehicle,@PathVariable int id) {
         Response response=vehicleService.updateVehicle(vehicle,id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
     @DeleteMapping("/vehicleType/delete/{id}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> deleteVehicleType(@PathVariable int id) {
         Response response=vehicleService.deleteVehicle(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
     @GetMapping("/vehicle/{fuelType}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getFuelType(@PathVariable String fuelType) {
         Response response=vehicleService.findVehicle(fuelType);
         return ResponseEntity.status(HttpStatus.OK).body(response);

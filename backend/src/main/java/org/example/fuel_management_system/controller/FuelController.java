@@ -19,7 +19,7 @@ public class FuelController {
  private FuelService fuelService;
 
     @PostMapping("/addfuel/{stationId}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> addFuel(@PathVariable int stationId, @RequestBody Fuel fuel){
         Response response=fuelService.addFuel(stationId,fuel.getAvailablePetrolQuantity(),fuel.getAvailableDieselQuantity());
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -27,14 +27,14 @@ public class FuelController {
 
 
     @PostMapping("/updatefuel/{stationId}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> updateFuel(@PathVariable int stationId, @RequestBody FuelRequest request){
             Response response=fuelService.updateFuel(stationId,request);
             return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/allFuels/{stationId}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> allStations(@PathVariable int stationId){
         Response response=fuelService.fuelDetails(stationId);
         return ResponseEntity.status(HttpStatus.OK).body(response);

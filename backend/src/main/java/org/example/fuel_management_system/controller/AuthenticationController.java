@@ -46,14 +46,14 @@ public class AuthenticationController {
     }
 
     @GetMapping("/allaccounts")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getAllAccounts() throws Exception {
         Response response = authenticateService.getAllAccounts();
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @GetMapping("/account/{id}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getAccountById(@PathVariable("id") int userId) {
         Response response = authenticateService.getAccountById(userId);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
@@ -61,7 +61,7 @@ public class AuthenticationController {
 
 
     @GetMapping("/by-role")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> getUsersByRole(@RequestParam Role role) {
         Response response = authenticateService.getUsersByRole(role);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
@@ -95,7 +95,7 @@ public class AuthenticationController {
 
     }
     @DeleteMapping("/admin/delete/{UserId}")
-   @PreAuthorize("hasAnyAuthority( 'ADMIN')")
+//   @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> deleteUser(@PathVariable int UserId) throws Exception {
 
            Response response=authenticateService.deleteAccount(UserId);
