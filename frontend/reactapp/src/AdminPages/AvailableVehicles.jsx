@@ -103,8 +103,8 @@ const AvailableVehicles = () => {
             {vehicleList && vehicleList.length > 0 ? (
               vehicleList.map((vehicle) =>
                 vehicle && vehicle.id ? (
-                  <tr key={vehicle.id} className="">
-                    <td className="py-2 px-4">{vehicle.id}</td>
+                  <tr key={vehicle.id} className="border-b border-neutral-400">
+                    <td className="py-6 px-4">{vehicle.id}</td>
                     <td className="py-2 px-4">{vehicle.vehicleType}</td>
                     <td className="py-2 px-4">{vehicle.fuelCapacity}L</td>
                     <td className="py-2 px-4 flex space-x-4">
