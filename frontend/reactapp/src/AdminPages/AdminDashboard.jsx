@@ -136,7 +136,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <div className="w-56 bg-slate-800 text-white shadow-2xl border-r border-neutral-500 p-3 fixed h-screen">
+      <div className="w-56 bg-slate-800 text-white shadow-2xl border-r border-neutral-500 p-1 fixed h-screen">
         <div className="flex items-center justify-between">
           <img
             src="../src/Assets/Monochrome Ilustration Graffiti Logo new.png"
