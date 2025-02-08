@@ -11,7 +11,8 @@ const FuelAllocationTable = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [stationId, setStationId] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -47,11 +48,18 @@ const FuelAllocationTable = () => {
         item.stationId.toString().toLowerCase().includes(stationId.trim().toLowerCase())
       );
     }
-    
-    if (selectedDate) {
-      const selectedTimestamp = new Date(selectedDate).getTime();
+
+    if (startDate) {
+      const startTimestamp = new Date(startDate).getTime();
       filtered = filtered.filter(
-        (item) => new Date(item.transitionTime).getTime() <= selectedTimestamp
+        (item) => new Date(item.transitionTime).getTime() >= startTimestamp
+      );
+    }
+
+    if (endDate) {
+      const endTimestamp = new Date(endDate).getTime();
+      filtered = filtered.filter(
+        (item) => new Date(item.transitionTime).getTime() <= endTimestamp
       );
     }
 
@@ -60,7 +68,7 @@ const FuelAllocationTable = () => {
 
   useEffect(() => {
     filterData();
-  }, [stationId, selectedDate]);
+  }, [stationId, startDate, endDate]);
 
   return (
     <div className="container mx-auto p-5 text-white">
@@ -76,8 +84,14 @@ const FuelAllocationTable = () => {
         />
         <input
           type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="p-2 border border-gray-500 bg-gray-800 text-white rounded"
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
           className="p-2 border border-gray-500 bg-gray-800 text-white rounded"
         />
       </div>
