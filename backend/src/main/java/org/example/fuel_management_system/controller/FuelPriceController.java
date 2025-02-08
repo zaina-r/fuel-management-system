@@ -38,7 +38,7 @@ public class FuelPriceController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @GetMapping("/findfuel/{fuelId}")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> findFuel(@PathVariable String fuelId){
         Response response=fuelPriceService.findFuel(fuelId);
         return ResponseEntity.status(HttpStatus.OK).body(response);

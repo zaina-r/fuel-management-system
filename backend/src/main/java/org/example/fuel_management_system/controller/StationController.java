@@ -27,7 +27,7 @@ public class StationController {
 
 
     @GetMapping("/allstations")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> allStations(){
         Response response=stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -53,14 +53,13 @@ public class StationController {
 
 
     @PostMapping("/registration")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER')")
     public ResponseEntity<Response> registerStation(@RequestBody Station station) throws Exception {
   Response response=stationService.saveOrUpdateStation(station);
   return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
     @PostMapping("/mobile/{loginCode}")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
     public ResponseEntity<Response>getStationUsingMobile( @PathVariable String loginCode){
         Response response=stationService.findByLoginCode(loginCode);
         return ResponseEntity.status(HttpStatus.OK).body(response);

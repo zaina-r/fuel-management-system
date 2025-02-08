@@ -23,7 +23,7 @@ public class VehicleRegistrationController {
     }
 
     @PostMapping("/verifyAndAddVehicle/{userId}/{fuelAmount}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN','VEHICLE_OWNER')")
+    @PreAuthorize("hasAnyAuthority( VEHICLE_OWNER')")
     public ResponseEntity<Response> verifyAndAddVehicle(@RequestBody VehicleVerification inputVehicle,@PathVariable int userId,@PathVariable float fuelAmount) {
         Response response= vehicleRegistrationService.verifyAndAddVehicle(inputVehicle,userId,fuelAmount);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -37,7 +37,7 @@ public class VehicleRegistrationController {
 
     }
     @GetMapping("/vehicle/getAllVehicles")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN','VEHICLE_OWNER')")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response>getAllVehicles(){
         Response response= vehicleRegistrationService.getAllVehicles();
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -45,14 +45,14 @@ public class VehicleRegistrationController {
 
 
     @GetMapping("/{qrCode}")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN','VEHICLE_OWNER')")
+    @PreAuthorize("hasAnyAuthority( 'VEHICLE_OWNER')")
     public ResponseEntity<Response> getVehicleDetails(@PathVariable String qrCode) {
         Response response= vehicleRegistrationService.getVehicleByQrCode(qrCode);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/{id}/update-fuel")
-    @PreAuthorize("hasAnyAuthority( 'ADMIN','VEHICLE_OWNER')")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN',)")
     public ResponseEntity<Response> updateFuelCapacity(@PathVariable Integer id, @RequestBody float request) {
         Response response= vehicleRegistrationService.updateFuelCapacity(id,request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

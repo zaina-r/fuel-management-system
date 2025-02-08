@@ -34,7 +34,7 @@ public class FuelController {
     }
 
     @GetMapping("/allFuels/{stationId}")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> allStations(@PathVariable int stationId){
         Response response=fuelService.fuelDetails(stationId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
