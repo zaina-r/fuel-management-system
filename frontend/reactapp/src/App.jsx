@@ -27,6 +27,7 @@ import ManageUser from "./AdminPages/ManageUser";
 import FuelManage from "./AdminPages/FuelManage";
 import Service from "./pages/Service";
 import AvailableVehicles from "./AdminPages/AvailableVehicles";
+import Authentication from "./apiservice/Authentication";
 
 function App() {
   return (
@@ -51,41 +52,65 @@ function RoutesWrapper() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<UserRegisterationForm />} />
-          <Route path="/vehicleRegister" element={<VehicleRegistration />} />
-          <Route path="/vehicleHistory" element={<DisplayVehicleDetails />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/stationRegister" element={<StationRegistration />} />
-          <Route path="/StationHistory" element={<DisplayStationDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/service" element={<Service />} />
 
-          <Route path="/profile" element={<ProfilePage />} />
+          {Authentication.isVehicleOwner && (
+            <Route>
+              <Route
+                path="/vehicleRegister"
+                element={<VehicleRegistration />}
+              />
+              <Route
+                path="/vehicleHistory"
+                element={<DisplayVehicleDetails />}
+              />
+            </Route>
+          )}
+          {Authentication.isFuelStationOwner && (
+            <Route>
+              <Route
+                path="/stationRegister"
+                element={<StationRegistration />}
+              />
+              <Route
+                path="/StationHistory"
+                element={<DisplayStationDetails />}
+              />
+            </Route>
+          )}
+          {Authentication.isAdmin ||
+            Authentication.isFuelStationOwner ||
+            (Authentication.isVehicleOwner && (
+              <Route path="/profile" element={<ProfilePage />} />
+            ))}
 
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminDashboard />}>
-            <Route index element={<AdminHome />} />
+          {Authentication.isAdmin && (
+            <Route path="/admin" element={<AdminDashboard />}>
+              <Route index element={<AdminHome />} />
 
-            <Route path="reports" element={<ManageReports />} />
-            <Route path="viewStations" element={<ViewStations />} />
-            <Route path="updateStationFuel" element={<UpdateStationFuel />} />
-            <Route path="updateStationFuel" element={<UpdateStationFuel />} />
-            <Route path="updateStation" element={<UpdateStation />} />
-            <Route
-              path="registeredVehicles"
-              element={<ViewRegisteredVehicle />}
-            />
-             <Route
-              path="AvailableVehicles"
-              element={<AvailableVehicles />}
-            />
-            <Route path="manageuser" element={<ManageUser />} />
-            <Route path="profile" element={<ViewProfile />} />
-            <Route path="fuelTypes" element={<FuelManage />} />
-
-            <Route path="notification" element={<Notification />} />
-            <Route path="updateSelectedStationFuel" element={<UpdateSelectedStationFuel />} />
-
-          </Route>
+              <Route path="reports" element={<ManageReports />} />
+              <Route path="viewStations" element={<ViewStations />} />
+              <Route path="updateStationFuel" element={<UpdateStationFuel />} />
+              <Route path="updateStationFuel" element={<UpdateStationFuel />} />
+              <Route path="updateStation" element={<UpdateStation />} />
+              <Route
+                path="registeredVehicles"
+                element={<ViewRegisteredVehicle />}
+              />
+              <Route path="AvailableVehicles" element={<AvailableVehicles />} />
+              <Route path="manageuser" element={<ManageUser />} />
+              <Route path="profile" element={<ViewProfile />} />
+              <Route path="fuelTypes" element={<FuelManage />} />
+              <Route path="notification" element={<Notification />} />
+              <Route
+                path="updateSelectedStationFuel"
+                element={<UpdateSelectedStationFuel />}
+              />
+            </Route>
+          )}
         </Routes>
       </div>
 

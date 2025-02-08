@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @GetMapping("/stationInfo")
-    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Response> getAllStations() {
         Response response = stationService.getAllStations();
         return ResponseEntity.status(HttpStatus.OK).body(response);
