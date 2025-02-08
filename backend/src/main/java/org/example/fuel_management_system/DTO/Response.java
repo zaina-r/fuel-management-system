@@ -19,10 +19,92 @@ public class Response {
     private VehiclesDto vehiclesDto;
     private StationDto stationDto;
     private FuelDto fuelDto;
+    private FuelAllocationDto fuelAllocationDto;
+    private FuelPriceDto fuelPriceDto;
+    private VehicleDto vehicleDto;
+    private List<VehicleDto> vehicleDtoList;
     private List<UserAccountDto>userAccountDtoList;
     private List<VehiclesDto>vehiclesDtoList;
     private List<StationDto> stationDtosList;
     private List<FuelDto>fuelDtoList;
+    private StationWithStatusDTO stationWithStatusDTO;
+    private List<StationWithStatusDTO> stationWithStatusDTOList;
+    private FuelTransitionDto fuelTransitionDto;
+    private List<FuelTransitionDto>fuelTransitionDtoList;
+    private List<FuelPriceDto> fuelPriceDtoList;
+
+
+    public VehicleDto getVehicleDto() {
+        return vehicleDto;
+    }
+
+    public void setVehicleDto(VehicleDto vehicleDto) {
+        this.vehicleDto = vehicleDto;
+    }
+
+    public List<VehicleDto> getVehicleDtoList() {
+        return vehicleDtoList;
+    }
+
+    public void setVehicleDtoList(List<VehicleDto> vehicleDtoList) {
+        this.vehicleDtoList = vehicleDtoList;
+    }
+
+    public FuelPriceDto getFuelPriceDto() {
+        return fuelPriceDto;
+    }
+
+    public void setFuelPriceDto(FuelPriceDto fuelPriceDto) {
+        this.fuelPriceDto = fuelPriceDto;
+    }
+
+    public List<FuelPriceDto> getFuelPriceDtoList() {
+        return fuelPriceDtoList;
+    }
+
+    public void setFuelPriceDtoList(List<FuelPriceDto> fuelPriceDtoList) {
+        this.fuelPriceDtoList = fuelPriceDtoList;
+    }
+
+    public List<FuelTransitionDto> getFuelTransitionDtoList() {
+        return fuelTransitionDtoList;
+    }
+
+    public void setFuelTransitionDtoList(List<FuelTransitionDto> fuelTransitionDtoList) {
+        this.fuelTransitionDtoList = fuelTransitionDtoList;
+    }
+
+    public FuelTransitionDto getFuelTransitionDto() {
+        return fuelTransitionDto;
+    }
+
+    public void setFuelTransitionDto(FuelTransitionDto fuelTransitionDto) {
+        this.fuelTransitionDto = fuelTransitionDto;
+    }
+
+    public StationWithStatusDTO getStationWithStatusDTO() {
+        return stationWithStatusDTO;
+    }
+
+    public void setStationWithStatusDTO(StationWithStatusDTO stationWithStatusDTO) {
+        this.stationWithStatusDTO = stationWithStatusDTO;
+    }
+
+    public List<StationWithStatusDTO> getStationWithStatusDTOList() {
+        return stationWithStatusDTOList;
+    }
+
+    public void setStationWithStatusDTOList(List<StationWithStatusDTO> stationWithStatusDTOList) {
+        this.stationWithStatusDTOList = stationWithStatusDTOList;
+    }
+
+    public FuelAllocationDto getFuelAllocationDto() {
+        return fuelAllocationDto;
+    }
+
+    public void setFuelAllocationDto(FuelAllocationDto fuelAllocationDto) {
+        this.fuelAllocationDto = fuelAllocationDto;
+    }
 
 
     public FuelDto getFuelDto() {

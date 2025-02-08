@@ -1,19 +1,15 @@
 package org.example.fuel_management_system.controller;
-
-import org.example.fuel_management_system.DTO.FuelAllocation;
 import org.example.fuel_management_system.DTO.Response;
-import org.example.fuel_management_system.DTO.StationWithRegistrationStatus;
 import org.example.fuel_management_system.model.Fuel;
-import org.example.fuel_management_system.model.Station;
 import org.example.fuel_management_system.service.AdminService;
 import org.example.fuel_management_system.service.FuelService;
 import org.example.fuel_management_system.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -31,29 +27,40 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-  /*  @GetMapping("/stationInfo")
+    @GetMapping("/stationInfo")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Response> getAllStations() {
-        return new ResponseEntity<>(stationService.getAllStations(), HttpStatus.OK);
-    }*/
+        Response response = stationService.getAllStations();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @GetMapping("/getFuelQuantities")
-    public ResponseEntity<List<Fuel>> getFuelQuantities(){
-        return new ResponseEntity<>(fuelService.getFuelQuantities(), HttpStatus.OK);
+    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
+    public ResponseEntity<Response> getFuelQuantities() {
+        Response response = fuelService.getFuelQuantities();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 
     @GetMapping("/get-stations-with-status")
-    public List<StationWithRegistrationStatus> getStationsWithStatus() {
-        return adminService.getStationWithStatus();
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Response> setStationsWithStatus() {
+        Response response = adminService.getStationWithStatus();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("/update-weekly-fuel-allocation")
-    public void updateWeeklyFuelAllocation(@RequestBody FuelAllocation fuelAllocation){
-        adminService.updateWeeklyFuelAllocation(fuelAllocation);
+    @PostMapping("/update-initial-fuel-allocation/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Response> updateInitialFuelAllocation(@RequestBody Fuel fuelAllocation, @PathVariable int id) {
+        Response response = adminService.updateInitialFuelAllocation(fuelAllocation, id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-   /* public ResponseEntity<Station> addProduct(@RequestBody Station station){
-        Station station1 = stationService.addStation(station);
-        return new ResponseEntity<>(station1, HttpStatus.OK);
-    }*/
+    @DeleteMapping("/stations/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> deleteStationById(@PathVariable int id) {
+        Response response = stationService.deleteStationById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 }

@@ -15,7 +15,10 @@ export default class UserAccountApi {
   static async registerUser(registration) {
     const response = await axios.post(
       `${this.BASE_URL}/api/register`,
-      registration
+      registration,
+      {
+        headers: this.getHeader(),
+      }
     );
     return response.data;
   }
@@ -23,7 +26,30 @@ export default class UserAccountApi {
   static async loginUser(registration) {
     const response = await axios.post(
       `${this.BASE_URL}/api/login`,
-      registration
+      registration,
+      {
+        headers: this.getHeader(),
+      }
+    );
+    return response.data;
+  }
+
+  static async getUserDetails() {
+    const userId = localStorage.getItem("userId");
+    const response = await axios.get(`${this.BASE_URL}/api/account/${userId}`, {
+      headers: this.getHeader(),
+    });
+    return response.data;
+  }
+
+  static async updateUserDetails(details) {
+    const userId = localStorage.getItem("userId");
+    const response = await axios.put(
+      `${this.BASE_URL}/api/users/update-details/${userId}`,
+      details,
+      {
+        headers: this.getHeader(),
+      }
     );
     return response.data;
   }
@@ -34,6 +60,9 @@ export default class UserAccountApi {
       {},
       {
         params: { userId },
+      },
+      {
+        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -45,6 +74,9 @@ export default class UserAccountApi {
       {},
       {
         params: { email },
+      },
+      {
+        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -56,6 +88,9 @@ export default class UserAccountApi {
       {},
       {
         params: { email },
+      },
+      {
+        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -71,6 +106,37 @@ export default class UserAccountApi {
       },
       {
         params: { email },
+      },
+      {
+        headers: this.getHeader(),
+      }
+    );
+    return response.data;
+  }
+
+  static async sendOtpPhoneNumber(telno) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/notifications/generate`,
+      {},
+      {
+        params: { telno },
+      },
+      {
+        headers: this.getHeader(),
+      }
+    );
+    return response.data;
+  }
+
+  static async verifyOtpNumber({ telno, otp }) {
+    const response = await axios.post(
+      `${this.BASE_URL}/api/notifications/verify`,
+      {},
+      {
+        params: { telno, otp },
+      },
+      {
+        headers: this.getHeader(),
       }
     );
     return response.data;

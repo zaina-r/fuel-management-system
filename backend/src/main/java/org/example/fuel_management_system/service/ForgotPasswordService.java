@@ -10,38 +10,14 @@ import java.util.Optional;
 
 
 @Service
-public class ForgotPasswordService{
-
-    @Autowired
-    private ForgotPasswordRepository forgotPasswordRepository;
+public interface ForgotPasswordService{
 
 
-    public ForgotPasswordToken createToken(UserAccount user, String id, String otp, String sendTo) {
 
-        ForgotPasswordToken forgotPasswordToken=new ForgotPasswordToken();
-        forgotPasswordToken.setUserAccount(user);
-        forgotPasswordToken.setOtp(otp);
-        forgotPasswordToken.setId(id);
-        forgotPasswordToken.setEmail(sendTo);
-        return forgotPasswordRepository.save(forgotPasswordToken);
-
-    }
+ ForgotPasswordToken createToken(UserAccount user, String id, String otp, String sendTo);
 
 
-    public ForgotPasswordToken findById(String id) {
-        Optional<ForgotPasswordToken> token=forgotPasswordRepository.findById(id);
-        return token.orElse(null);
-
-    }
-
-
-    public ForgotPasswordToken findByUser(int userId) {
-        return forgotPasswordRepository.findByUserAccount_UserId(userId);
-    }
-
-
-    public void deleteToken(ForgotPasswordToken token) {
-        forgotPasswordRepository.delete(token);
-
-    }
+ ForgotPasswordToken findById(String id);
+ ForgotPasswordToken findByUser(int userId) ;
+ void deleteToken(ForgotPasswordToken token);
 }

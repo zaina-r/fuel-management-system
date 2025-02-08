@@ -15,7 +15,7 @@ public interface FuelStationRepository extends JpaRepository<Station, Integer> {
     Optional<Station> findByDealerName(String stationName);
     boolean existsByStationId(String stationId);
 
-    @Query("SELECT new org.example.fuel_management_system.DTO.StationFuelDto(s.stationId, s.stationAddress, s.dealerName, s.licenseNumber, s.registrationDate, f.availableDiselQuantity, f.availablePetrolQuantity) " +
-            "FROM Station s LEFT JOIN s.fuel f")
-    List<StationFuelDto> fetchStationFuelData();
+
+
+    Optional<Station> findByLoginCode(String loginCode);
 }

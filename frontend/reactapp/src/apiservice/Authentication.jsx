@@ -24,6 +24,11 @@ export default class Authentication {
     const role = localStorage.getItem("role");
     return role === "VEHICLE_OWNER";
   }
+  static isAdmin() {
+    const role = localStorage.getItem("role");
+    return role === "ADMIN";
+  }
+
   static logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");

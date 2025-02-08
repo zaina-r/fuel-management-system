@@ -12,29 +12,29 @@ public class Fuel {
     private int fuelId;
 
     private Float availableDieselQuantity;
-    private float weeklyDieselAllocation;
+    private float initialDieselAllocation;
 
     private Float availablePetrolQuantity;
-    private float weeklyPetrolAllocation;
+    private float initialPetrolAllocation;
 
     @OneToOne
     @JoinColumn(name = "station_id")
     private Station station;
 
-    public float getWeeklyDieselAllocation() {
-        return weeklyDieselAllocation;
+    public float getInitialDieselAllocation() {
+        return initialDieselAllocation;
     }
 
-    public void setWeeklyDieselAllocation(float weeklyDieselAllocation) {
-        this.weeklyDieselAllocation = weeklyDieselAllocation;
+    public void setInitialDieselAllocation(float initialDieselAllocation) {
+        this.initialDieselAllocation = initialDieselAllocation;
     }
 
-    public float getWeeklyPetrolAllocation() {
-        return weeklyPetrolAllocation;
+    public float getInitialPetrolAllocation() {
+        return initialPetrolAllocation;
     }
 
-    public void setWeeklyPetrolAllocation(float weeklyPetrolAllocation) {
-        this.weeklyPetrolAllocation = weeklyPetrolAllocation;
+    public void setInitialPetrolAllocation(float initialPetrolAllocation) {
+        this.initialPetrolAllocation = initialPetrolAllocation;
     }
 
     public int getFuelId() {

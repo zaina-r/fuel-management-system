@@ -45,10 +45,10 @@ public class Registeredvehicles {
     @Column(name = "resitration_expiry_date")
     private String registrationExpiryDate;
 
-
+    @Column(name = "Vehicle_colour")
     private String vehicleColor;
 
-    @Column(name = "vehicle_year")
+    @Column(name = "Vehicle_year")
     private String vehicleYear;
 
     public Registeredvehicles(int id, String vehicleRegNo, String fuelType, String licencePlateNo, String vehicleMake, String vehicleModel, String vehicleType, String registeredProvince, String registrationStatus, String registrationExpiryDate, String vehicleColor, String vehicleYear) {

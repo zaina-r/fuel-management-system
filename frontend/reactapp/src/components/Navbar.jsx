@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Authentication from "../apiservice/Authentication";
 import { SlideDown } from "../animation/direction";
 import { motion } from "framer-motion";
+import UserAccountApi from "../apiservice/UserAccountApi";
+import Error from "../responseDisplay/Error";
+import Success from "../responseDisplay/Success";
 
 // import { motion } from "motion/react";
 // import { useNavigate } from "react-router-dom";
@@ -10,13 +13,56 @@ import { motion } from "framer-motion";
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = Authentication.isAuthenticated();
+  console.log(isAuthenticated);
   const isFuelStationOwner = Authentication.isFuelStationOwner();
   const isVehicleOwner = Authentication.isVehicleOwner();
+  const isAdmin = Authentication.isAdmin();
+  const [userData, setUserData] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getUser();
+    }
+  }, [isAuthenticated]);
+
+  const getUser = async () => {
+    try {
+      const response = await UserAccountApi.getUserDetails();
+
+      setUserData(response.userAccountDto);
+      console.log(response.userAccountDto);
+
+      console.log(userData);
+
+      setError("");
+    } catch (err) {
+      setError(err.message || "An unexpected error occurred.");
+      setSuccess("");
+    }
+  };
 
   const handleLogout = () => {
     Authentication.logout();
     navigate("/");
   };
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const formatUsername = () => {
+    if (isAdmin) {
+      return "Admin";
+    } else if (isVehicleOwner && userData) {
+      return `${userData.firstname.charAt(0)}${userData.lastname}`;
+    } else if (isFuelStationOwner && userData) {
+      return userData.licenseNumber;
+    }
+    return "";
+  };
+
   return (
     <>
       <motion.div
@@ -28,7 +74,11 @@ const Navbar = () => {
         <div className="flex flex-wrap justify-between items-center text-white font-bold px-4 py-6 md:px-10 lg:px-36">
           <div>
             <h1 className="text-xl sm:text-2xl">
-              <span className="font-play">FuelPass</span>
+              <img
+                src="src/Assets/Monochrome Ilustration Graffiti Logo new.png"
+                alt=""
+                className="w-[125px]"
+              />
             </h1>
           </div>
 
@@ -40,8 +90,8 @@ const Navbar = () => {
               <li className="hover:text-gray-300 cursor-pointer">
                 <NavLink to="/about">About</NavLink>
               </li>
-              <li className="hover:text-gray-300 cursor-pointer">Service</li>
-              <li className="hover:text-gray-300 cursor-pointer">Contact</li>
+              <li className="hover:text-gray-300 cursor-pointer"><NavLink to='/service'>Service</NavLink></li>
+              <li className="hover:text-gray-300 cursor-pointer"><NavLink to="/contact">Contact</NavLink></li>
               {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/vehicleRegister">VehicleRegister</NavLink>
@@ -62,6 +112,11 @@ const Navbar = () => {
                   <NavLink to="/StationHistory">StationHistory</NavLink>
                 </li>
               )}
+              {isAdmin && (
+                <li className="hover:text-gray-300 cursor-pointer">
+                  <NavLink to="/admin">AdminPanel</NavLink>
+                </li>
+              )}
             </ul>
           </div>
           {!isAuthenticated && (
@@ -78,11 +133,41 @@ const Navbar = () => {
               </div>
             </div>
           )}
-          {isAuthenticated && (
-            <div>
-              <button className="primary-btn" onClick={handleLogout}>
-                Sign out
-              </button>
+          {isAuthenticated && userData && (
+            <div className="relative">
+              <div
+                className="flex items-center cursor-pointer"
+                onClick={toggleDropdown}
+              >
+                <img
+                  src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${
+                    userData?.firstname || "defaultUser"
+                  }`}
+                  alt="User Avatar"
+                  className="w-8 h-8 rounded-full mr-2"
+                />
+
+                <span>{formatUsername()}</span>
+              </div>
+              {isDropdownOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-blue-900 text-white rounded-md shadow-lg "
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  <NavLink
+                    to="/profile"
+                    className="block px-4 py-2 text-sm hover:bg-white hover:text-black"
+                  >
+                    Profile
+                  </NavLink>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm  hover:bg-white hover:text-black"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
