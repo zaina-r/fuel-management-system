@@ -27,7 +27,7 @@ const ManageUser = () => {
       }
     };
     fetchAdmins();
-  }, [adminList]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -75,20 +75,20 @@ const ManageUser = () => {
         Add Admin
       </button>
 
-      <table className="min-w-full text-neutral-600 border-separate border-spacing-y-2">
+      <table className="min-w-full text-neutral-600 border-separate border-spacing-y-2 table-fixed">
         <thead>
           <tr className="text-left">
-            <th className="py-2">ID</th>
-            <th className="py-2">First Name</th>
-            <th className="py-2">Last Name</th>
-            <th className="py-2">Username</th>
-            <th className="py-2">Actions</th>
+            <th className="py-2 px-4 text-orange-500 w-1/5">ID</th>
+            <th className="py-2 px-4 text-orange-500 w-1/5">First Name</th>
+            <th className="py-2 px-4 text-orange-500 w-1/5">Last Name</th>
+            <th className="py-2 px-4 text-orange-500 w-1/5">Username</th>
+            <th className="py-2 px-4 text-orange-500 w-1/5">Actions</th>
           </tr>
         </thead>
         <tbody>
           {adminList.length > 0 ? (
             adminList.map((admin) => (
-              <tr key={admin.userId}>
+              <tr key={admin.userId} className="text-neutral-400">
                 <td className="py-2 px-4">{admin.userId}</td>
                 <td className="py-2 px-4">{admin.firstname}</td>
                 <td className="py-2 px-4">{admin.lastname}</td>
@@ -112,56 +112,49 @@ const ManageUser = () => {
           )}
         </tbody>
       </table>
+
       {addingAdmin && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-gray-100 p-6 rounded-xl shadow-xl w-full max-w-md">
+          <div className="bg-slate-900 p-6 rounded-xl shadow-xl w-full max-w-md text-white">
             <h2 className="text-xl font-bold mb-4">Add New Admin</h2>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                First Name:
-              </label>
+              <label className="block text-sm font-medium mb-1">First Name:</label>
               <input
                 type="text"
                 name="firstname"
                 value={formData.firstname}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg bg-neutral-500"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Last Name:
-              </label>
+              <label className="block text-sm font-medium mb-1">Last Name:</label>
               <input
                 type="text"
                 name="lastname"
                 value={formData.lastname}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg bg-neutral-500"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Username:
-              </label>
+              <label className="block text-sm font-medium mb-1">Username:</label>
               <input
                 type="text"
                 name="username"
                 value={formData.username}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg bg-neutral-500"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Password:
-              </label>
+              <label className="block text-sm font-medium mb-1">Password:</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg bg-neutral-500"
               />
             </div>
             <div className="flex justify-between mt-6">
@@ -185,4 +178,4 @@ const ManageUser = () => {
   );
 };
 
-export default ManageUser;
+export default ManageUser; 
