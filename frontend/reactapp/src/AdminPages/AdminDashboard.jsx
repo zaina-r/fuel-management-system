@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Admin from "../apiservice/Admin";
 import Authentication from "../apiservice/Authentication";
+import { div } from "framer-motion/client";
 
 
 const AdminDashboard = () => {
@@ -254,7 +255,30 @@ const AdminDashboard = () => {
                   {link.text}
                 </button>
               ) : (
-                <Link
+                index==0?
+               ( 
+               <div className="flex justify-between items-center"> 
+               <Link
+               key={index}
+               to={link.to}
+               className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm"
+             >
+               {link.icon}
+               {link.text}
+             </Link>
+             {filteredStations.length > 0 && (
+  <div className="bg-red-600 w-[25px] rounded-full h-[25px] ml-5 flex items-center justify-center">
+    <span className="text-white text-sm">
+      {filteredStations.length}
+    </span>
+  </div>
+)}
+
+             
+             </div>
+               
+              ):(
+                  <Link
                   key={index}
                   to={link.to}
                   className="flex items-center py-1.5 px-3 hover:bg-slate-700 rounded-md text-sm"
@@ -262,6 +286,7 @@ const AdminDashboard = () => {
                   {link.icon}
                   {link.text}
                 </Link>
+                )
               )
             ))}
           </div>

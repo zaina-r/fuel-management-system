@@ -16,9 +16,7 @@ export default class StationAccountApi {
     const response = await axios.post(
       `${this.BASE_URL}/api/station/registration`,
       registration,
-      {
-        headers: this.getHeader(),
-      }
+       
     );
     return response.data;
   }
@@ -29,9 +27,7 @@ export default class StationAccountApi {
     const response = await axios.get(
       `${this.BASE_URL}/api/station/stations/${stationI}`,
       {},
-      {
-        headers: this.getHeader(),
-      }
+      
     );
 
     return response.data;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Admin from "../apiservice/Admin";
+import { SiAppian } from "react-icons/si";
 
 const Notification = () => {
   const [stationDetails, setStationDetails] = useState([]);
@@ -35,9 +36,16 @@ const Notification = () => {
       <ul className="mt-4 text-white">
         {filteredStations.length > 0 ? (
           filteredStations.map((station) => (
-            <li key={station.id} className="mb-2">
-              Station ID: {station.id}
+            <>
+    
+            <li key={station.id} className="mb-2 my-6">
+              <span className="text-orange-500">Station ID:</span> {station.stationId}
+              <br />
+              <span className="text-orange-500">Station Address:</span>{station.stationAddress}
+              <br />
+              <span className="text-orange-500">Station Dealer:</span>{station.dealerName}
             </li>
+            </>
           ))
         ) : (
           <li>No stations found without fuel.</li>

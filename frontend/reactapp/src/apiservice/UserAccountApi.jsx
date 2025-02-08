@@ -31,7 +31,6 @@ export default class UserAccountApi {
   static async getUserDetails() {
     const userId = localStorage.getItem("userId");
     const response = await axios.get(`${this.BASE_URL}/api/account/${userId}`, {
-      headers: this.getHeader(),
     });
     return response.data;
   }
@@ -41,9 +40,7 @@ export default class UserAccountApi {
     const response = await axios.put(
       `${this.BASE_URL}/api/users/update-details/${userId}`,
       details,
-      {
-        headers: this.getHeader(),
-      }
+     
     );
     return response.data;
   }
