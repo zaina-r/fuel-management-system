@@ -530,7 +530,7 @@ const UserRegisterationForm = () => {
                             onChange={handleCheckboxChange}
                             className="h-4 w-4"
                           />
-                          I accept the terms and conditions.
+                          <a href="/termsAndConditions">I accept the terms and conditions.</a>
                         </label>
                       </div>
 
