@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { SlideUp } from "../animation/direction";
 // import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
-
+  
+                                        
 const AdminHome = () => {
   const [registeredStationCount, setRegisteredStationCount] = useState();
   const [totalStations, setTotalStations] = useState();
@@ -15,6 +16,9 @@ const AdminHome = () => {
   const [registeredVehiclesCount, setRegisteredVehiclesCount]=useState();
   const [petrolPrice,setPetrolPrice]=useState();
   const [dieselPrice,setDieselPrice]=useState();
+  
+const [stationDetails, setStationDetails] = useState([]);
+const [filteredStations, setFilteredStations] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,6 +143,28 @@ const AdminHome = () => {
     },
   ];
   
+
+
+      useEffect(() => {
+        const fetchStations = async () => {
+          try {
+            const response = await Admin.getRegisterdStations();
+            if (response.statusCode === 200) {
+              console.log(response.stationDtosList);
+              setStationDetails(response.stationDtosList);
+              filteredStations=stationDetails.map((vehicle,index)=>{
+                vehicle.fuel.availableDieselQuantity;
+              })
+              console.log(filteredStations);
+            }
+          } catch (err) {
+            setError(err.message);
+          }
+        };
+    
+        fetchStations();
+      }, []);
+
 
   const [chartData, setChartData] = useState({
     series: [
