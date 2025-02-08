@@ -15,10 +15,7 @@ export default class UserAccountApi {
   static async registerUser(registration) {
     const response = await axios.post(
       `${this.BASE_URL}/api/register`,
-      registration,
-      {
-        headers: this.getHeader(),
-      }
+      registration
     );
     return response.data;
   }
@@ -26,10 +23,7 @@ export default class UserAccountApi {
   static async loginUser(registration) {
     const response = await axios.post(
       `${this.BASE_URL}/api/login`,
-      registration,
-      {
-        headers: this.getHeader(),
-      }
+      registration
     );
     return response.data;
   }
@@ -60,9 +54,6 @@ export default class UserAccountApi {
       {},
       {
         params: { userId },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -74,9 +65,6 @@ export default class UserAccountApi {
       {},
       {
         params: { email },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -88,9 +76,6 @@ export default class UserAccountApi {
       {},
       {
         params: { email },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -106,9 +91,6 @@ export default class UserAccountApi {
       },
       {
         params: { email },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -120,9 +102,6 @@ export default class UserAccountApi {
       {},
       {
         params: { telno },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;
@@ -134,9 +113,6 @@ export default class UserAccountApi {
       {},
       {
         params: { telno, otp },
-      },
-      {
-        headers: this.getHeader(),
       }
     );
     return response.data;

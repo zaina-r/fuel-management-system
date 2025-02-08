@@ -7,9 +7,6 @@ import UserAccountApi from "../apiservice/UserAccountApi";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
 
-// import { motion } from "motion/react";
-// import { useNavigate } from "react-router-dom";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = Authentication.isAuthenticated();
@@ -90,8 +87,12 @@ const Navbar = () => {
               <li className="hover:text-gray-300 cursor-pointer">
                 <NavLink to="/about">About</NavLink>
               </li>
-              <li className="hover:text-gray-300 cursor-pointer"><NavLink to='/service'>Service</NavLink></li>
-              <li className="hover:text-gray-300 cursor-pointer"><NavLink to="/contact">Contact</NavLink></li>
+              <li className="hover:text-gray-300 cursor-pointer">
+                <NavLink to="/service">Service</NavLink>
+              </li>
+              <li className="hover:text-gray-300 cursor-pointer">
+                <NavLink to="/contact">Contact</NavLink>
+              </li>
               {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/vehicleRegister">VehicleRegister</NavLink>

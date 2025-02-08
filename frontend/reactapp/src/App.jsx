@@ -28,6 +28,7 @@ import FuelManage from "./AdminPages/FuelManage";
 import Service from "./pages/Service";
 import AvailableVehicles from "./AdminPages/AvailableVehicles";
 import Authentication from "./apiservice/Authentication";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function RoutesWrapper() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/service" element={<Service />} />
+          <Route path="/termsAndConditions" element={<TermsAndConditions />} />
 
           {Authentication.isVehicleOwner && (
             <Route>

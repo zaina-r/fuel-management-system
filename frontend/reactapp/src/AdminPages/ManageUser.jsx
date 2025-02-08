@@ -13,14 +13,12 @@ const ManageUser = () => {
     role: "ADMIN", // Default role for admins
   });
 
-  // Fetch the list of admins
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
         const response = await Admin.getRoleAdminMemebers();
-        console.log(response);
         if (response.statusCode === 200) {
-          setAdminList(response.userAccountDtoList);
+          setAdminList(response.userAccountDtoList || []);
         }
       } catch (error) {
         console.error("Error fetching admin list:", error);
@@ -29,11 +27,18 @@ const ManageUser = () => {
     fetchAdmins();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleDelete = async (id) => {
     try {
       const response = await Admin.deleteAdmin(id);
       if (response.statusCode === 200) {
-        setAdminList(adminList.filter((admin) => admin.id !== id));
+        setAdminList((prevList) =>
+          prevList.filter((admin) => admin.userId !== id)
+        );
         console.log("Admin deleted successfully");
       }
     } catch (error) {
@@ -41,16 +46,11 @@ const ManageUser = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleAddAdmin = async () => {
     try {
       const newAdmin = await UserAccountApi.registerUser(formData);
       if (newAdmin.statusCode === 200) {
-        setAdminList([...adminList, newAdmin.userAccountDto]);
+        setAdminList((prevList) => [...prevList, newAdmin.userAccountDto]);
         setAddingAdmin(false);
         setFormData({
           firstname: "",
@@ -86,23 +86,25 @@ const ManageUser = () => {
           </tr>
         </thead>
         <tbody>
-          {adminList.length > 0 ? (
-            adminList.map((admin) => (
-              <tr key={admin.userId} className="text-neutral-400">
-                <td className="py-2 px-4">{admin.userId}</td>
-                <td className="py-2 px-4">{admin.firstname}</td>
-                <td className="py-2 px-4">{admin.lastname}</td>
-                <td className="py-2 px-4">{admin.username}</td>
-                <td className="py-2 px-4">
-                  <button
-                    className="bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700"
-                    onClick={() => handleDelete(admin.userId)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
+          {adminList && adminList.length > 0 ? (
+            adminList.map((admin) =>
+              admin && admin.userId ? (
+                <tr key={admin.userId} className="text-neutral-400">
+                  <td className="py-2 px-4">{admin.userId}</td>
+                  <td className="py-2 px-4">{admin.firstname}</td>
+                  <td className="py-2 px-4">{admin.lastname}</td>
+                  <td className="py-2 px-4">{admin.username}</td>
+                  <td className="py-2 px-4">
+                    <button
+                      className="bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700"
+                      onClick={() => handleDelete(admin.userId)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ) : null
+            )
           ) : (
             <tr>
               <td colSpan="5" className="text-center py-4">
@@ -118,7 +120,9 @@ const ManageUser = () => {
           <div className="bg-slate-900 p-6 rounded-xl shadow-xl w-full max-w-md text-white">
             <h2 className="text-xl font-bold mb-4">Add New Admin</h2>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">First Name:</label>
+              <label className="block text-sm font-medium mb-1">
+                First Name:
+              </label>
               <input
                 type="text"
                 name="firstname"
@@ -128,7 +132,9 @@ const ManageUser = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Last Name:</label>
+              <label className="block text-sm font-medium mb-1">
+                Last Name:
+              </label>
               <input
                 type="text"
                 name="lastname"
@@ -138,7 +144,9 @@ const ManageUser = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Username:</label>
+              <label className="block text-sm font-medium mb-1">
+                Username:
+              </label>
               <input
                 type="text"
                 name="username"
@@ -148,7 +156,9 @@ const ManageUser = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Password:</label>
+              <label className="block text-sm font-medium mb-1">
+                Password:
+              </label>
               <input
                 type="password"
                 name="password"
@@ -178,4 +188,4 @@ const ManageUser = () => {
   );
 };
 
-export default ManageUser; 
+export default ManageUser;
