@@ -113,11 +113,6 @@ const AdminDashboard = () => {
 
   const settingsLinks = [
     {
-      to: "/admin/profile",
-      icon: <Settings className="mr-2" size={16} />,
-      text: "Profile",
-    },
-    {
       to: "/admin/notification",
       icon: <Bell className="mr-2" size={16} />,
       text: "Notifications",
