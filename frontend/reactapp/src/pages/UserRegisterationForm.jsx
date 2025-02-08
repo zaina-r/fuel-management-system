@@ -12,7 +12,7 @@ const UserRegisterationForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(true);
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -108,7 +108,7 @@ const UserRegisterationForm = () => {
         setSuccess("OTP sent successfully.");
       }
     } catch (error) {
-      setError(error.response?.message || error.message);
+      setError("The phone number not verified" || error.message);
     } finally {
       setIsLoading(false);
     }
@@ -349,7 +349,7 @@ const UserRegisterationForm = () => {
                       className="bg-gray-200 p-1 w-full"
                       disabled={otpSent}
                     />
-                    {!otpSent ? (
+                {/*    {!otpSent ? (
                       <button
                         type="button"
                         className="bg-blue-700 text-white px-6 py-1 mt-3"
@@ -406,7 +406,7 @@ const UserRegisterationForm = () => {
                           </button>
                         </div>
                       </div>
-                    )}
+                    )}*/ }
                   </div>
                   {otpVerified && (
                     <>
