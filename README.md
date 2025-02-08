@@ -34,12 +34,16 @@ This project is a fuel management system that was developed to simplify and enha
 
 ## ⚙ Technologies Used
 
-### Front-end
+### Front-end 
+![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)  ![React Native](https://img.shields.io/badge/Mobile-React%20Native-61DAFB?logo=react)  ![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-38B2AC?logo=tailwindcss) 
 - **React (v18.x.x)**: For building the responsive and interactive web application, providing a seamless user experience.
 - **React Native (v0.72.x)**: For developing the cross-platform mobile application, ensuring compatibility with both Android and iOS devices.
 - **Tailwind CSS (v3.x.x)**: For efficient and scalable styling, enabling rapid UI development with a utility-first approach.
   
 ### Back-end
+
+![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot-orange?logo=spring)  ![Hibernate](https://img.shields.io/badge/ORM-Hibernate-red)  ![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql)  ![JWT](https://img.shields.io/badge/Auth-JWT-yellow)  ![Twilio](https://img.shields.io/badge/SMS-Twilio-ff0000)  
+
 - **Spring Boot (v3.x.x)**: Provides a robust framework for building the backend RESTful APIs, ensuring high performance and scalability.
 - **Hibernate (v6.x.x)**: ORM tool for managing database interactions, simplifying data manipulation and retrieval.
 - **MySQL Workbench (v8.x.x)**: For database design, development, and administration, supporting complex queries and data relationships.
@@ -48,6 +52,9 @@ This project is a fuel management system that was developed to simplify and enha
   
   
 ### Tools
+
+![Postman](https://img.shields.io/badge/API-Postman-orange)    ![MySQL Workbench](https://img.shields.io/badge/DB%20Tool-MySQL%20Workbench-4479A1?logo=mysql)
+
 - **Postman**: For API testing and debugging, ensuring the reliability and functionality of the backend services.
 - **MySQL Workbench**: For managing the database schema and queries, supporting efficient data management.
 
