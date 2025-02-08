@@ -58,11 +58,17 @@ export default function ResultScreen() {
       Alert.alert("Error", "Please enter the amount of fuel.");
       return;
     }
-
+    if (Number(enteredFuelAmount) <=Number(availableFuelCapacity)){
+    
+    }else{
+      Alert.alert("Error", "Not enough fuel capacity");
+      return;
+    }
     if (Number(enteredFuelAmount) <= Number(availableFuelCapacity)) {
+        
       try {
         const response = await axios.post(
-          `https://17d7-175-157-245-166.ngrok-free.app/api/fuelAllocation/add/${vehicleId}/${userId}`,
+          `https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/fuelAllocation/add/${vehicleId}/${userId}`,
           data,
           {
             headers: {
@@ -73,7 +79,7 @@ export default function ResultScreen() {
  
 
         await axios.post(
-          `https://17d7-175-157-245-166.ngrok-free.app/api/${vehicleId}/update-fuel`,
+          `https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/${vehicleId}/update-fuel`,
           enteredFuelAmount,
           {
             headers: {
@@ -83,7 +89,7 @@ export default function ResultScreen() {
         );
 
         const response4 = await axios.get(
-          `https://17d7-175-157-245-166.ngrok-free.app/api/findfuel/${fuelType}`
+          `https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/findfuel/${fuelType}`
         );
         const price = response4.data.fuelPriceDtoList[0].price;
 
@@ -105,7 +111,7 @@ export default function ResultScreen() {
         const stLicense = await AsyncStorage.getItem("fuelStationId");
 
         await axios.post(
-          `https://17d7-175-157-245-166.ngrok-free.app/api/fuel/updatefuel/${stLicense}`,
+          `https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/fuel/updatefuel/${stLicense}`,
           body
         ),
           {
@@ -124,11 +130,11 @@ export default function ResultScreen() {
       const formattedDateTime = now.toLocaleString();
 
       const response = await axios.post(
-        "https://17d7-175-157-245-166.ngrok-free.app/api/notifications/generateNotifications",
+        "https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/notifications/generateNotifications",
         {},
         {
           params: {
-            telno: "+94781875382", 
+            telno: "+94743159018", 
 
             message: `${enteredFuelAmount}L ${fuelType} pumped to ${license_plate_no} in station ${stLicense} at ${formattedDateTime}`,
           },
@@ -136,14 +142,14 @@ export default function ResultScreen() {
       );
 
       if (response.data.statusCode === 200) {
-        console.log("Notification sent successfully:", response.data);
-        Alert.alert("Success", "Notification sent successfully!");
+        // console.log("Notification sent successfully:", response.data);
+        // Alert.alert("Success", "Notification sent successfully!");
       } else {
-        console.log("Failed to send notification:", response.data);
+        // console.log("Failed to send notification:", response.data);
         Alert.alert("Error", "Failed to send notification.");
       }
     } catch (error) {
-      console.error("Error sending notification:", error);
+      // console.error("Error sending notification:", error);
       Alert.alert("Error", "An error occurred while sending the notification.");
     }
   };
@@ -158,7 +164,7 @@ export default function ResultScreen() {
     const fetchMobileNumber = async () => {
       try {
         const response = await axios.get(
-          `https://17d7-175-157-245-166.ngrok-free.app/api/account/${userId}`
+          `https://43c8-2402-4000-13f3-d2b3-4dc9-9a03-4b48-a3f8.ngrok-free.app/api/account/${userId}`
         );
         setTelNo(response.data.userAccountDto.telno);
       } catch (error) {
