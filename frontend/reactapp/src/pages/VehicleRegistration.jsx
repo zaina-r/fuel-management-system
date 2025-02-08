@@ -183,6 +183,7 @@ const VehicleRegistration = () => {
                     <option value="Motorcycle">Motorcycle</option>
                     <option value="Truck">Truck</option>
                     <option value="Van">Van</option> */}
+                    <option value="">Select Vehicle Type</option>
                     {vehicleType.map((type, index) => (
                       <option key={type.vehicleTypeId} value={type.vehicleType}>
                         {type.vehicleType}
