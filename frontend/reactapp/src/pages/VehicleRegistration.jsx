@@ -132,7 +132,7 @@ const VehicleRegistration = () => {
             whileInView={"visible"}
             className="w-full flex flex-col space-y-8  p-6 rounded-lg "
           >
-            <h1 className="text-4xl font-semibold ">
+            <h1 className="text-4xl font-semibold">
               Vehicle Registration Form
             </h1>
             <form onSubmit={handleSubmit}>
