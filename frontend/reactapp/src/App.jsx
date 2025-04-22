@@ -29,7 +29,11 @@ import Service from "./pages/Service";
 import AvailableVehicles from "./AdminPages/AvailableVehicles";
 import Authentication from "./apiservice/Authentication";
 import TermsAndConditions from "./pages/TermsAndConditions";
-
+import Footer from "./components/Footer";
+import UserDashboard from "./pages/UserDashboard";
+import UserHome from "./pages/UserHome";
+import StationDashboard from "./pages/StationDashboard";
+import StationHome from "./pages/StationHome";
 function App() {
   return (
     <BrowserRouter>
@@ -41,7 +45,10 @@ function App() {
 function RoutesWrapper() {
   const location = useLocation();
 
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAdminRoute =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/user") ||
+    location.pathname.startsWith("/stationOwner");
 
   return (
     <div className="fuelPass">
@@ -113,10 +120,23 @@ function RoutesWrapper() {
               />
             </Route>
           )}
+
+          <Route path="/users" element={<UserDashboard />}>
+            <Route index element={<UserHome />} />
+            <Route path="vehicleRegister" element={<VehicleRegistration />} />
+            <Route path="vehicleHistory" element={<DisplayVehicleDetails />} />
+          </Route>
+
+          <Route path="/stationOwner" element={<StationDashboard />}>
+            <Route index element={<StationHome />} />
+            <Route path="stationRegister" element={<StationRegistration />} />
+            <Route path="StationHistory" element={<DisplayStationDetails />} />
+          </Route>
         </Routes>
       </div>
 
       {/* {isAdminRoute && <AdminNavbar />} */}
+      {/* <Footer /> */}
     </div>
   );
 }
