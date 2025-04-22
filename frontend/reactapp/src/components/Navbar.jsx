@@ -93,31 +93,27 @@ const Navbar = () => {
               <li className="hover:text-gray-300 cursor-pointer">
                 <NavLink to="/contact">Contact</NavLink>
               </li>
+              
               {isVehicleOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                  <NavLink to="/vehicleRegister">VehicleRegister</NavLink>
+                  <NavLink to="/users">User Dashdashboard</NavLink>
                 </li>
               )}
-              {isVehicleOwner && (
-                <li className="hover:text-gray-300 cursor-pointer">
-                  <NavLink to="/vehicleHistory">VehicleHistory</NavLink>
-                </li>
-              )}
-              {isFuelStationOwner && (
+              {/* {isFuelStationOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/stationRegister">FuelStationRegister</NavLink>
                 </li>
-              )}
+              )} */}
               {isFuelStationOwner && (
                 <li className="hover:text-gray-300 cursor-pointer">
-                  <NavLink to="/StationHistory">StationHistory</NavLink>
+                  <NavLink to="/stationOwner">Station Dashboard</NavLink>
                 </li>
               )}
-              {isAdmin && (
+              {/* {isAdmin && (
                 <li className="hover:text-gray-300 cursor-pointer">
                   <NavLink to="/admin">AdminPanel</NavLink>
                 </li>
-              )}
+              )} */}
             </ul>
           </div>
           {!isAuthenticated && (

@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   FaGasPump,
   FaChartLine,
@@ -179,6 +180,7 @@ const About = () => {
 
         {/* Mission Section */}
       </div>
+      {/* <Footer/> */}
     </div>
   );
 };
