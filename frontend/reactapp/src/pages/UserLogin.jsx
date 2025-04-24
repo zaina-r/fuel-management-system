@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
-// import password_icon from "../Assets/password.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import Error from "../responseDisplay/Error";
 import Success from "../responseDisplay/Success";
@@ -27,6 +26,7 @@ function UserLogin() {
   const navigate = useNavigate();
 
   const validate = async () => {
+    
     if (username && password) {
       return true;
     }
@@ -35,6 +35,7 @@ function UserLogin() {
 
   const handleLogin = async () => {
     if (!validate()) {
+      console.log("check")
       setError("Fill the input fields");
       return;
     }
@@ -57,8 +58,7 @@ function UserLogin() {
           navigate("/");
         } else if (role === "FUELSTATION_OWNER") {
           localStorage.setItem("userId", id);
-          // localStorage.setItem("token", token);
-          // localStorage.setItem("role", role);
+           
           setOtpBar(true);
           setSuccess("OTP sent to your email. Please verify.");
         }else if (role === "ADMIN"){
