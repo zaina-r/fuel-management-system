@@ -57,8 +57,10 @@ const DisplayVehicleDetails = () => {
 
   return (
     <div className="bg-slate-800 w-full min-h-screen fixed">
+      
       {error && <Error error={error} setError={setError} />}
       {success && <Success success={success} setSuccess={setSuccess} />}
+      
 
       <div
         className="h-screen overflow-y-auto"
@@ -66,8 +68,10 @@ const DisplayVehicleDetails = () => {
           scrollBehavior: "smooth", // Enables smooth scrolling
         }}
       >
+        <h1 className="ml-64 mt-24 text-2xl text-white uppercase font-semibold"><span className="text-orange-500">Vehicle</span> <span className="text-blue-600">Qr</span></h1>
+        
         {qrVehicleData.length > 0 ? (
-          <div className="container my-24">
+          <div className="container ">
             {qrVehicleData.map((vehicle, index) => (
               <motion.div
                 key={index}
@@ -76,6 +80,7 @@ const DisplayVehicleDetails = () => {
                 whileInView="visible"
                 className="text-sm rounded-xl my-5"
               >
+                
                 <div className="flex justify-center h-[300px] text-white">
                   {/* QR Code Section */}
                   <div className="w-1/4 p-7 flex justify-center items-center">
@@ -170,7 +175,7 @@ const DisplayVehicleDetails = () => {
             variants={SlideDown(0.5)}
             initial="hidden"
             whileInView="visible"
-            className="text-center w-full h-screen flex justify-center items-center"
+            className="text-center w-full mt-24 flex justify-center items-center"
           >
             <div>
               <img
