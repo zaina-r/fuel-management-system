@@ -228,7 +228,7 @@ const StationRegistration = () => {
             variants={SlideLeft(0.1)}
             initial="hidden"
             whileInView={"visible"}
-            className="w-full lg:w-1/2 pb-16 hidden lg:block"
+            className="w-full lg:w-1/2 pb-15 hidden lg:block"
           >
             <div className="relative">
               <img 

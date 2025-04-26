@@ -51,7 +51,7 @@ const UserRegisterationForm = () => {
       username &&
       password &&
       nic &&
-      telno &&
+      // telno &&
       role &&
       confirmpassword
     ) {
@@ -83,6 +83,7 @@ const UserRegisterationForm = () => {
 
   const handleChange = (e) => {
     setError("");
+    console.log(formData)
     const { name, value } = e.target;
     if (name === "role") {
       setLicense(value === "FUELSTATION_OWNER");
@@ -179,150 +180,7 @@ const UserRegisterationForm = () => {
     <div className="bg-slate-800 h-screen w-full fixed ">
       <div className="container my-20">
         <div className="flex justify-between items-start">
-          <div className="">
-            <h1 className="text-3xl font-extrabold px-8 mt-14 text-white">
-              Sign Up
-            </h1>
-            <div className="relative  ">
-              <div className=" p-8 text-white">
-                <div className="flex flex-col gap-3">
-                  <motion.p
-                    variants={SlideUp(0.2)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-center gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>First Name</span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.4)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-center gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>Last Name</span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.3)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-start gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>NIC</span>
-
-                    <span className="text-xs text-neutral-400 ">
-                      Enter your National Identity Card number. This helps us
-                      verify your identity and ensure that your registration is
-                      valid. This is typically a government-issued
-                      numberExample:
-                      <span className="text-white">
-                        "123456789456V / 200023002913"
-                      </span>{" "}
-                    </span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.4)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-start gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>Tel No</span>
-
-                    <span className="text-xs text-neutral-400 ">
-                      Enter your telephone number. Please ensure that it is
-                      active and that we can reach you if necessary. Use the
-                      format +94xxxxxxxx (Sri Lanka)
-                      <span className="text-white">
-                        <br />
-                        Example:"+94123456789"
-                      </span>{" "}
-                    </span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.5)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-start gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>Username</span>
-                    <span className="text-xs text-neutral-400">
-                      Choose a unique username. This will be used to identify
-                      your account. It should be something you’ll remember and
-                      may include letters, numbers, and underscores. <br />
-                      <span className="text-white">Example:name@gmail.com</span>
-                    </span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.6)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-start gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>Password</span>
-                    <span className="text-xs text-neutral-400">
-                      Create a strong password that you can easily remember but
-                      is difficult for others to guess. We recommend using a
-                      combination of letters, numbers, and special characters..{" "}
-                      <br />
-                      <span className="text-white">
-                        Example:xxxxxx atlease 5 characters
-                      </span>
-                    </span>
-                  </motion.p>
-                  <motion.p
-                    variants={SlideUp(0.7)}
-                    initial="hidden"
-                    whileInView={"visible"}
-                    className="flex items-start gap-2"
-                  >
-                    <img
-                      src="../src/Assets/accept.png"
-                      alt=""
-                      className="w-[15px] h-[15px] inline"
-                    />
-                    <span>Role</span>
-                    <span className="text-xs text-neutral-400">
-                      When you select fuel station owner you need to provide one
-                      more secure license No for you station registration <br />
-                      <span className="text-white">
-                        Example:xxxxxx secure license code for fuel station
-                      </span>
-                    </span>
-                  </motion.p>
-                </div>
-              </div>
-            </div>
-          </div>
+        
           <div className="container text-sm mb-32 ">
             <div className=" w-[450px]">
               <motion.div
@@ -551,6 +409,150 @@ const UserRegisterationForm = () => {
                   )}
                 </form>
               </motion.div>
+            </div>
+          </div>
+          <div className="">
+            <h1 className="text-3xl font-extrabold px-8 mt-14 text-white">
+              Sign Up
+            </h1>
+            <div className="relative  ">
+              <div className=" p-8 text-white">
+                <div className="flex flex-col gap-3">
+                  <motion.p
+                    variants={SlideUp(0.2)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>First Name</span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.4)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Last Name</span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.3)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>NIC</span>
+
+                    <span className="text-xs text-neutral-400 ">
+                      Enter your National Identity Card number. This helps us
+                      verify your identity and ensure that your registration is
+                      valid. This is typically a government-issued
+                      numberExample:
+                      <span className="text-white">
+                        "123456789456V / 200023002913"
+                      </span>{" "}
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.4)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Tel No</span>
+
+                    <span className="text-xs text-neutral-400 ">
+                      Enter your telephone number. Please ensure that it is
+                      active and that we can reach you if necessary. Use the
+                      format +94xxxxxxxx (Sri Lanka)
+                      <span className="text-white">
+                        <br />
+                        Example:"+94123456789"
+                      </span>{" "}
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.5)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Username</span>
+                    <span className="text-xs text-neutral-400">
+                      Choose a unique username. This will be used to identify
+                      your account. It should be something you’ll remember and
+                      may include letters, numbers, and underscores. <br />
+                      <span className="text-white">Example:name@gmail.com</span>
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.6)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Password</span>
+                    <span className="text-xs text-neutral-400">
+                      Create a strong password that you can easily remember but
+                      is difficult for others to guess. We recommend using a
+                      combination of letters, numbers, and special characters..{" "}
+                      <br />
+                      <span className="text-white">
+                        Example:xxxxxx atlease 5 characters
+                      </span>
+                    </span>
+                  </motion.p>
+                  <motion.p
+                    variants={SlideUp(0.7)}
+                    initial="hidden"
+                    whileInView={"visible"}
+                    className="flex items-start gap-2"
+                  >
+                    <img
+                      src="../src/Assets/accept.png"
+                      alt=""
+                      className="w-[15px] h-[15px] inline"
+                    />
+                    <span>Role</span>
+                    <span className="text-xs text-neutral-400">
+                      When you select fuel station owner you need to provide one
+                      more secure license No for you station registration <br />
+                      <span className="text-white">
+                        Example:xxxxxx secure license code for fuel station
+                      </span>
+                    </span>
+                  </motion.p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

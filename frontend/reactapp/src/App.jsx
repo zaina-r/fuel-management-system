@@ -34,6 +34,11 @@ import UserDashboard from "./pages/UserDashboard";
 import UserHome from "./pages/UserHome";
 import StationDashboard from "./pages/StationDashboard";
 import StationHome from "./pages/StationHome";
+import StationOwnerProfile from "./pages/StationOwnerProfile";
+import VehicleOwnerProfile from "./pages/VehicleOwnerProfile";
+import StationTransaction from "./pages/StationTransaction";
+import VehicleTransaction from "./pages/VehicleTransaction";
+ 
 function App() {
   return (
     <BrowserRouter>
@@ -125,12 +130,21 @@ function RoutesWrapper() {
             <Route index element={<UserHome />} />
             <Route path="vehicleRegister" element={<VehicleRegistration />} />
             <Route path="vehicleHistory" element={<DisplayVehicleDetails />} />
+            <Route path="vprofile" element={<VehicleOwnerProfile />} />
+            <Route path="vtransaction" element={<VehicleTransaction />} />
+
+
           </Route>
 
           <Route path="/stationOwner" element={<StationDashboard />}>
             <Route index element={<StationHome />} />
             <Route path="stationRegister" element={<StationRegistration />} />
             <Route path="StationHistory" element={<DisplayStationDetails />} />
+            <Route path="profile" element={<StationOwnerProfile />} />
+            <Route path="stransaction" element={<StationTransaction />} />
+
+
+            
           </Route>
         </Routes>
       </div>
