@@ -7,12 +7,13 @@ import {
   Menu,
   House
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
 
 
 const StationHeader = () => {
+     const naviagte=useNavigate();
      const [profileData, setProfileData] = useState({
         firstname: '',
         username: '',
@@ -45,6 +46,12 @@ const StationHeader = () => {
       useEffect(() => {
         fetchProfile();
       }, [profileData]);
+
+
+      const handleLogout=()=>{
+            localStorage.removeItem("token");
+            naviagte("/");
+      }
     
   return (
     <header className="fixed w-full top-0 left-0 z-40 bg-gray-1000 shadow-md px-6 py-4 flex justify-between items-center border-b border-gray-700">
@@ -77,7 +84,8 @@ const StationHeader = () => {
        
 
         {/* Logout Button */}
-        <button className="flex items-center gap-2 bg-orange-500 hover:bg-red-600 text-white text-sm px-3 py-1.5 rounded-md transition">
+        <button className="flex items-center gap-2 bg-orange-500 hover:bg-red-600 text-white text-sm px-3 py-1.5 rounded-md transition"
+        onClick={handleLogout}>
           <LogOut size={18} />
           Logout
         </button>
