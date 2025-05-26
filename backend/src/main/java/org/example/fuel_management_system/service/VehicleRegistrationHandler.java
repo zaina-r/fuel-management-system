@@ -39,28 +39,6 @@ public class VehicleRegistrationHandler implements VehicleRegistrationService{
         try {
             requireNonNull(inputVehicle, "Input vehicle cannot be null");
 
-//            switch (inputVehicle.getVehicle_type()) {
-//                case "Car":
-//                    inputVehicle.setMaximumFuelCapacity(5L);
-//                    inputVehicle.setAvailableFuelCapacity(5L);
-//                    break;
-//                case "Motorcycle":
-//                    inputVehicle.setMaximumFuelCapacity(3L);
-//                    inputVehicle.setAvailableFuelCapacity(3L);
-//                    break;
-//                case "Van":
-//                    inputVehicle.setMaximumFuelCapacity(6L);
-//                    inputVehicle.setAvailableFuelCapacity(6L);
-//                    break;
-//                case "Truck":
-//                    inputVehicle.setMaximumFuelCapacity(8L);
-//                    inputVehicle.setAvailableFuelCapacity(8L);
-//                    break;
-//                default:
-//                    response.setMessage("Invalid vehicle type");
-//                    response.setStatusCode(400);
-//                    return response;
-//            }
 
             inputVehicle.setQrCode(qrcode.generateQrCode());
             inputVehicle.setMaximumFuelCapacity(fuelAmount);
@@ -83,7 +61,7 @@ public class VehicleRegistrationHandler implements VehicleRegistrationService{
                     Optional<UserAccount> userAccount = userAccountRepository.findById(userId);
                     if (userAccount.isEmpty()) {
                         response.setMessage("User account not found");
-                        response.setStatusCode(404);
+                        response.setStatusCode(404); 
                         return response;
                     }
 

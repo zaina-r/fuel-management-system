@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface FuelTransitionService {
 
- Response getAllFuelTransitions();
+ Response getAllFuelTransitions(int userId);
 
   Response getAllFuelTransitionsByStationId(String stationId);
 
  Response addTransaction(FuelTransition fuelTransition,int userId,int vehicleId);
 
+ Response getAllTransaction();
 }

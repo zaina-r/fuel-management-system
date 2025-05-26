@@ -1,5 +1,6 @@
 package org.example.fuel_management_system.service;
 
+import org.example.fuel_management_system.DTO.FuelTransitionDto;
 import org.example.fuel_management_system.DTO.Response;
 import org.example.fuel_management_system.Repository.FuelTransitionRepository;
 import org.example.fuel_management_system.Repository.UserAccountRepository;
@@ -25,10 +26,10 @@ public class FuelTransitionHandler implements FuelTransitionService {
 
 
 
-    public Response getAllFuelTransitions(){
+    public Response getAllFuelTransitions(int userId){
         Response response=new Response();
         try{
-            List<FuelTransition> fuelTransitions =fuelTransitionRepository.findAll();
+            List<FuelTransition> fuelTransitions =fuelTransitionRepository.findByUserAccount_UserId(userId);
             if(fuelTransitions.isEmpty()){
                 response.setStatusCode(400);
                 response.setMessage("No fuel transitions found");
@@ -44,6 +45,26 @@ public class FuelTransitionHandler implements FuelTransitionService {
             response.setMessage("No fuel transitions found");
             return response;
         }}
+
+    public Response getAllTransaction(){
+        Response response=new Response();
+        try{
+            List<FuelTransition>fuelTransitions=fuelTransitionRepository.findAll();
+            if(fuelTransitions.isEmpty()){
+                response.setStatusCode(400);
+                response.setMessage("No fuel transitions found");
+            }
+            response.setStatusCode(200);
+            response.setMessage("fuel transitions found");
+            response.setFuelTransitionDtoList(MapUtils.mapListFuelTransitionDtoToFuelTransition(fuelTransitions));
+
+        }catch (Exception e){
+            response.setStatusCode(400);
+            response.setMessage("No fuel transitions found");
+        }
+        return response;
+    }
+
 
     public Response getAllFuelTransitionsByStationId(String stationId){
         Response response=new Response();
@@ -84,5 +105,7 @@ public class FuelTransitionHandler implements FuelTransitionService {
         }
         return response;
     }
+
+
 
 }

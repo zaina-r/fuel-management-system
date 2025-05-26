@@ -124,7 +124,9 @@ public class StationHandler implements StationService{
 
     public Response saveOrUpdateStation(Station station) {
         Response response = new Response();
-
+        System.out.println(station.getDealerName());
+        System.out.println(station.getLicenseNumber());
+        System.out.println(station.getId());
         try {
             Optional<ExistingStations> existingStationOptional = existingStationsRepository.findByLicenseNumber(station.getLicenseNumber());
             boolean stationOptional=fuelStationRepository.existsByStationId(station.getStationId());

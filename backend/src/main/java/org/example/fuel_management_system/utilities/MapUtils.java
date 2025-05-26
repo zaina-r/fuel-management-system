@@ -19,6 +19,9 @@ public class MapUtils {
        userDTO.setNIC(userAccount.getNIC());
        userDTO.setTelno(userAccount.getTelno());
        userDTO.setRole(userAccount.getRole());
+       userDTO.setImageName(userAccount.getImageName());
+       userDTO.setImageData(userAccount.getImageData());
+       userDTO.setImageType(userAccount.getImageType());
         return userDTO;
     }
     public static List<UserAccountDto> mapUserListEntityToUserListDTO(List<UserAccount> userList) {
@@ -36,6 +39,7 @@ public class MapUtils {
          stationDto.setFuel(station.getFuel());
          stationDto.setRegistrationDate(station.getRegistrationDate());
          stationDto.setDealerName(station.getDealerName());
+
 
         return stationDto;
     }

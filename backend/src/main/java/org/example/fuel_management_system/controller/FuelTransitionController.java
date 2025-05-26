@@ -2,13 +2,11 @@ package org.example.fuel_management_system.controller;
 
 
 import org.example.fuel_management_system.DTO.Response;
-import org.example.fuel_management_system.model.Fuel;
 import org.example.fuel_management_system.model.FuelTransition;
 import org.example.fuel_management_system.service.FuelTransitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,11 +22,15 @@ public class FuelTransitionController {
         Response response=fuelTransitionService.getAllFuelTransitionsByStationId(stationId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
     @GetMapping("/alltransitions")
+    public ResponseEntity<Response>getAllFuelTransitions(){
+        return ResponseEntity.ok(fuelTransitionService.getAllTransaction());
+    }
+
+    @GetMapping("/alltransitions/{userId}")
 //    @PreAuthorize("hasAnyAuthority('FUELSTATION_OWNER', 'ADMIN')")
-    public ResponseEntity<Response> getFuelTransitions(){
-        Response response=fuelTransitionService.getAllFuelTransitions();
+    public ResponseEntity<Response> getFuelTransitions(@PathVariable  int userId){
+        Response response=fuelTransitionService.getAllFuelTransitions(userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/add/{vehicleId}/{userId}")

@@ -18,13 +18,13 @@ public class TwilloServiceHandler implements TwillioService {
     @Autowired
     private OTPRecordRepository otpRecordRepository;
 
-    @Value("${twilio.account.sid}")
+    @Value("${twilio.account-sid}")
     private String accountSid;
 
-    @Value("${twilio.auth.token}")
+    @Value("${twilio.auth-token}")
     private String authToken;
 
-    @Value("${twilio.phone.number}")
+    @Value("${twilio.phone-number}")
     private String twilioPhoneNumber;
 
 

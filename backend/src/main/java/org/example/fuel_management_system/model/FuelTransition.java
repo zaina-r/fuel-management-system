@@ -21,6 +21,7 @@ public class FuelTransition {
     @JsonIgnore
     private VehicleVerification vehicleVerification;
     @ManyToOne
+    @JoinColumn(name = "userAccount_id")
     @JsonIgnore
     private UserAccount userAccount;
 

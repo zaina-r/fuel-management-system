@@ -5,7 +5,9 @@ import org.example.fuel_management_system.Request.UserRequest;
 import org.example.fuel_management_system.enumpackage.Role;
 import org.example.fuel_management_system.model.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 
 
 @Service
@@ -39,4 +41,5 @@ UserAccount updatePassword(UserAccount user, String newPassword);
  Response deleteAccount(int userId);
 
 
+    Response addProfileImage(UserAccount userAccount,MultipartFile file, int userId) throws IOException;
 }

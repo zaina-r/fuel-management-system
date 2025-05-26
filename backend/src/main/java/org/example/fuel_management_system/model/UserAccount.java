@@ -38,6 +38,13 @@ public class UserAccount implements UserDetails {
     @Column(name="Password")
     private String password;
 
+    @Lob
+    private byte[] imageData;
+
+    private String imageType;
+
+    private String imageName;
+
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
@@ -163,5 +170,29 @@ public class UserAccount implements UserDetails {
 
     public void setFuelTransitions(List<FuelTransition> fuelTransitions) {
         this.fuelTransitions = fuelTransitions;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

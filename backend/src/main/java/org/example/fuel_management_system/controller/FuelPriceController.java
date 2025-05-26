@@ -27,7 +27,8 @@ public class FuelPriceController {
 
     @PutMapping("/updatePrice/{fuelPriceId}")
 //    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
-    public ResponseEntity<Response> UpdatePrice(@RequestBody FuelPriceRequest fuelPriceRequest,@PathVariable int fuelPriceId){
+    public ResponseEntity<Response> UpdatePrice(@RequestBody FuelPrice fuelPriceRequest,@PathVariable int fuelPriceId){
+        System.out.println(fuelPriceRequest.getFuelName());
         Response response=fuelPriceService.updateFuelPrice(fuelPriceRequest,fuelPriceId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -40,6 +41,7 @@ public class FuelPriceController {
     @GetMapping("/findfuel/{fuelId}")
 //    @PreAuthorize("hasAnyAuthority( 'ADMIN')")
     public ResponseEntity<Response> findFuel(@PathVariable String fuelId){
+        System.out.println(fuelId);
         Response response=fuelPriceService.findFuel(fuelId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

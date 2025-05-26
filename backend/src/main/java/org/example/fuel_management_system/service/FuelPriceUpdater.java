@@ -18,11 +18,13 @@ public class FuelPriceUpdater implements FuelPriceService {
     private FuelPriceRepository fuelPriceRepository;
 
 
-    public Response updateFuelPrice(FuelPriceRequest fuelPriceRequest, int id) {
+    public Response updateFuelPrice(FuelPrice fuelPriceRequest, int id) {
         Response response = new Response();
+        System.out.println(fuelPriceRequest);
         try {
             FuelPrice fuelPrice = fuelPriceRepository.findById(id).orElseThrow(() -> new RuntimeException("Fuel not found"));
             fuelPrice.setPrice(fuelPriceRequest.getPrice());
+            fuelPrice.setFuelName(fuelPriceRequest.getFuelName());
             fuelPriceRepository.save(fuelPrice);
 
             response.setMessage("Successfully updated the fuel price");

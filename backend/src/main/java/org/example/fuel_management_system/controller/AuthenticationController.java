@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -27,6 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Response> register(@RequestBody UserAccount request) throws Exception {
+        System.out.println("check");
         Response response = authenticateService.register(request);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
@@ -102,6 +102,12 @@ public class AuthenticationController {
            return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
+
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Response>updateProfileImage(@RequestPart UserAccount userAccount,@RequestPart(required = false) MultipartFile file,@PathVariable int userId) throws Exception {
+        return ResponseEntity.ok(authenticateService.addProfileImage(userAccount,file,userId));
+    }
+
 
 
 }

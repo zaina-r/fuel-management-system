@@ -18,7 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -78,7 +80,12 @@ public class AuthenticateServiceManager implements AuthenticateService{
                 request.setRole(Role.ADMIN);
             }
 
+            if(request.getImageData()==null){
+                 request.setImageData(null);
+                 request.setImageName(null);
+                 request.setImageType(null);
 
+            }
             UserAccount savedUser=userAccountRepository.save(request);
             UserAccountDto userAccountDto= MapUtils.mapUserEntityToUserDTO(savedUser);
             String token=jwtService.generateToken(savedUser);
@@ -100,6 +107,51 @@ public class AuthenticateServiceManager implements AuthenticateService{
         }
         return response;
     }
+
+    public Response addProfileImage(UserAccount userAccount, MultipartFile file, int userId) throws IOException {
+        Response response = new Response();
+
+        try {
+            Optional<UserAccount> userAccountOptional = userAccountRepository.findById(userId);
+
+            if (!userAccountOptional.isPresent()) {
+                response.setStatusCode(404);
+                response.setMessage("User not found");
+                return response;
+            }
+
+            UserAccount existingUser = userAccountOptional.get();
+
+            // Update basic info
+            existingUser.setNIC(userAccount.getNIC());
+            existingUser.setUsername(userAccount.getUsername());
+            existingUser.setTelno(userAccount.getTelno());
+            existingUser.setFirstname(userAccount.getFirstname());
+            existingUser.setLicenseNumber(userAccount.getLicenseNumber());
+
+            // Update image if provided
+            if (file != null && !file.isEmpty()) {
+                existingUser.setImageData(file.getBytes());
+                existingUser.setImageType(file.getContentType());
+                existingUser.setImageName(file.getOriginalFilename());
+            }
+
+            userAccountRepository.save(existingUser); // Save updated user
+
+            response.setStatusCode(200);
+            response.setMessage("Profile updated successfully");
+        } catch (FuelException | IllegalArgumentException e) {
+            response.setStatusCode(400);
+            response.setMessage("Error: " + e.getMessage());
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Internal Server Error: " + e.getMessage());
+        }
+
+        return response;
+    }
+
+
 
     public Response authenticate(UserAccount request){
         Response response = new Response();

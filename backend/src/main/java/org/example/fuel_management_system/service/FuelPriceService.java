@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public interface FuelPriceService {
 
 
-   Response updateFuelPrice(FuelPriceRequest fuelPriceRequest,int id);
+   Response updateFuelPrice(FuelPrice fuelPriceRequest,int id);
 
  Response getAllFuelDetails();
 

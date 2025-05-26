@@ -14,4 +14,6 @@ public interface FuelTransitionRepository extends JpaRepository<FuelTransition,I
 
 
     List<FuelTransition> findByStationId(String stationId);
+//    List<FuelTransition> findByUserId(int userId);
+    List<FuelTransition> findByUserAccount_UserId(int userId);
 }
