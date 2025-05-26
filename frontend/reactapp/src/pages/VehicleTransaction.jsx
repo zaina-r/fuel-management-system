@@ -21,7 +21,8 @@ const VehicleTransaction = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const vehicleId = localStorage.getItem("vehicleId");
+      const vehicleId = localStorage.getItem("userId");
+      console.log(vehicleId);
 
       const vehicleRes = await axios.get(
         `http://localhost:8080/api/vehicle/${vehicleId}`   
@@ -30,7 +31,7 @@ const VehicleTransaction = () => {
       setVehicleDetails(vehicleData);
 
       const response = await axios.get(
-        `http://localhost:8080/api/fuelAllocation/vehicle/${vehicleId}/transitions`
+        `http://localhost:8080/api/fuelAllocation/alltransitions/${vehicleId}`
       );
       const transactions = response.data.fuelTransitionDtoList || [];
       setData(transactions);
@@ -75,7 +76,7 @@ const VehicleTransaction = () => {
     : "N/A";
 
   return (
-    <div className="container pl-40 pt-24 text-white">
+    <div className="container pl-40 pt-24 h-screen text-white">
       <motion.h1
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -206,7 +207,7 @@ const VehicleTransaction = () => {
                       : "N/A"}
                   </td>
                   <td className="px-4 py-3">
-                    {item.station?.stationName || "N/A"}
+                    {item.stationId || "N/A"}
                   </td>
                 </tr>
               ))}

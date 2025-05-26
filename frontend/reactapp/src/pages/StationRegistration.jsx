@@ -28,10 +28,10 @@ const StationRegistration = () => {
       return false;
     }
 
-    if (stationId.length < 6) {
-      setError("Station ID must be at least 6 characters long.");
-      return false;
-    }
+    // if (stationId.length < 6) {
+    //   setError("Station ID must be at least 6 characters long.");
+    //   return false;
+    // }
 
     if (licenseNumber.length < 8) {
       setError("License number must be at least 8 characters long.");

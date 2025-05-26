@@ -9,7 +9,7 @@ const UserDashboard = () => {
       <UserSidebar />
       <div className="flex flex-col flex-1">
         <UserHeader />
-        <div className="bg-gray-800  pl-32 ">
+        <div className="bg-gray-800  h-[2000px]  pl-32 ">
            
           <Outlet />
         </div>

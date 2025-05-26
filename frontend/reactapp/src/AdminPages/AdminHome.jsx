@@ -59,7 +59,9 @@ const AdminHome = () => {
         const getPetrolDetails = await Admin.getFuelByName("petrol");
 
         setPetrolPrice(getPetrolDetails.fuelPriceDtoList[0].price);
+        console.log(petrolPrice)
 
+        
         const getDieselDetails = await Admin.getFuelByName("diesel");
 
         setDieselPrice(getDieselDetails.fuelPriceDtoList[0].price);
@@ -97,42 +99,42 @@ const AdminHome = () => {
       description: "Generate and analyze system reports.",
       icon: "📊",
       bgColor: "bg-gradient-to-r from-yellow-500 to-yellow-700",
-      amt: activeStations,
+      amt: activeStations || 0,
     },
     {
       title: "In Active Stations",
       description: "Send and manage alerts and notifications.",
       icon: "🔔",
       bgColor: "bg-gradient-to-r from-red-500 to-red-700",
-      amt: inactiveStation,
+      amt: inactiveStation || 0,
     },
     {
       title: "Total Available petrolCapacity",
       description: "Configure system preferences.",
       icon: "🛢️",
       bgColor: "bg-gradient-to-r from-gray-500 to-gray-700",
-      amt: `${petrolCapacity}L`,
+      amt: `${petrolCapacity || 0}L`,
     },
     {
       title: "Total Available DieselCapacity",
       description: "Access help and support resources.",
       icon: "🛢",
       bgColor: "bg-gradient-to-r from-pink-500 to-pink-700",
-      amt: `${dieselCapacity}L`,
+      amt: `${dieselCapacity || 0}L`,
     },
     {
       title: "Current Petrol Price",
       description: "Access help and support resources.",
       icon: "💵",
       bgColor: "bg-gradient-to-r from-orange-500 to-orange-700",
-      amt: `${petrolPrice}.00/L Rs`,
+      amt: `${petrolPrice || 0}.00/L Rs`,
     },
     {
       title: "Current Diesel Price",
       description: "Access help and support resources.",
       icon: "💴",
       bgColor: "bg-gradient-to-r from-violet-500 to-pink-700",
-      amt: `${dieselPrice}.00/L Rs`,
+      amt: `${dieselPrice || 0}.00/L Rs`,
     },
   ];   
 
@@ -186,11 +188,11 @@ const AdminHome = () => {
     series: [
       {
         name: "Petrol Capacity",
-        data: [20,30,40,50,60,70]
+        data: [10,18,32,39,67,89,99]
       },
       {
         name: "Diesel Capacity",
-        data: [20,30,40,50,60,90]
+        data: [43,41,48,40,50,60,90]
       },
     ],
     options: {

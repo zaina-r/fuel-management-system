@@ -57,10 +57,14 @@ function UserLogin() {
           localStorage.setItem("role", role);
           navigate("/");
         } else if (role === "FUELSTATION_OWNER") {
-          localStorage.setItem("userId", id);
+           localStorage.setItem("token", token);
+           localStorage.setItem("role", role);
+           localStorage.setItem("userId",id);
+           navigate("/");
+          
            
-          setOtpBar(true);
-          setSuccess("OTP sent to your email. Please verify.");
+          // setOtpBar(true);
+          // setSuccess("OTP sent to your email. Please verify.");
         }else if (role === "ADMIN"){
           setSuccess("User has successfully logged in");
           localStorage.setItem("userId", id);

@@ -242,9 +242,9 @@ const StationHome = () => {
                     ) : (
                       <AlertCircle size={20} className="text-red-400" />
                     )
-                  }
-                  label="Status"
-                  value={station?.status || "N/A"}
+                  } 
+                  label="Login Code"
+                  value={station?.loginCode || "N/A"}
                 />
               </div>
             </FadeCard>
