@@ -114,8 +114,20 @@ For complete instructions, troubleshooting, and production deployment, please re
 
 - **[SETUP.md](SETUP.md)** - Complete setup and installation guide
 - **[DOCKER.md](DOCKER.md)** - Quick start with Docker
+- **[QUICKREF.md](QUICKREF.md)** - Quick reference guide for common commands
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- **[check-prerequisites.sh](check-prerequisites.sh)** - Script to check if prerequisites are installed
 - **[backend/src/main/resources/application.properties.example](backend/src/main/resources/application.properties.example)** - Configuration template
+
+### Quick Check
+
+Before starting, run the prerequisites check script:
+
+```bash
+./check-prerequisites.sh
+```
+
+This will verify that you have all required software installed.
 
 
 

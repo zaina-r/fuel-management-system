@@ -14,8 +14,10 @@ This guide helps you get the database up and running quickly using Docker.
 From the root directory of the project, run:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
+
+**Note:** This guide uses `docker compose` (Docker Compose v2). If you have the older standalone version, use `docker compose` instead.
 
 This will:
 - Start MySQL database on port 3306
@@ -25,7 +27,7 @@ This will:
 ### 2. Verify Database is Running
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 You should see both `fuel-management-mysql` and `fuel-management-phpmyadmin` running.
@@ -68,31 +70,31 @@ Follow the regular setup instructions in [SETUP.md](SETUP.md) to start the backe
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # MySQL only
-docker-compose logs -f mysql
+docker compose logs -f mysql
 
 # phpMyAdmin only
-docker-compose logs -f phpmyadmin
+docker compose logs -f phpmyadmin
 ```
 
 ### Stop Services
 
 ```bash
-docker-compose stop
+docker compose stop
 ```
 
 ### Start Services Again
 
 ```bash
-docker-compose start
+docker compose start
 ```
 
 ### Stop and Remove Containers
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Stop and Remove Everything (including data)
@@ -100,13 +102,13 @@ docker-compose down
 ⚠️ **Warning**: This will delete all database data!
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 ### Restart Services
 
 ```bash
-docker-compose restart
+docker compose restart
 ```
 
 ## Accessing MySQL from Command Line
@@ -139,7 +141,7 @@ SELECT * FROM registered_vehicles LIMIT 10;
 
 ### Port Already in Use
 
-If port 3306 is already in use, you can change it in `docker-compose.yml`:
+If port 3306 is already in use, you can change it in `docker compose.yml`:
 
 ```yaml
 ports:
@@ -155,12 +157,12 @@ spring.datasource.url=jdbc:mysql://localhost:3307/fuelmanagement
 
 1. Check if container is running:
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 
 2. Check container logs:
    ```bash
-   docker-compose logs mysql
+   docker compose logs mysql
    ```
 
 3. Verify network connectivity:
@@ -192,17 +194,17 @@ To start fresh:
 
 ```bash
 # Stop and remove containers with volumes
-docker-compose down -v
+docker compose down -v
 
 # Start again
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Custom Configuration
 
 ### Change Database Credentials
 
-Edit `docker-compose.yml`:
+Edit `docker compose.yml`:
 
 ```yaml
 environment:
@@ -215,7 +217,7 @@ Remember to update your backend `application.properties` accordingly.
 
 ### Persist Data to Custom Location
 
-Edit `docker-compose.yml`:
+Edit `docker compose.yml`:
 
 ```yaml
 volumes:
@@ -231,7 +233,7 @@ volumes:
 
 For production deployments:
 
-1. **Change default passwords** in `docker-compose.yml`
+1. **Change default passwords** in `docker compose.yml`
 2. **Use environment variables** instead of hardcoded values
 3. **Set up proper backups** for the database
 4. **Use Docker secrets** for sensitive data
