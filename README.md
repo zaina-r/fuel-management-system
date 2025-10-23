@@ -112,22 +112,34 @@ For complete instructions, troubleshooting, and production deployment, please re
 
 ## 📚 Documentation
 
-- **[SETUP.md](SETUP.md)** - Complete setup and installation guide
-- **[DOCKER.md](DOCKER.md)** - Quick start with Docker
-- **[QUICKREF.md](QUICKREF.md)** - Quick reference guide for common commands
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
-- **[check-prerequisites.sh](check-prerequisites.sh)** - Script to check if prerequisites are installed
-- **[backend/src/main/resources/application.properties.example](backend/src/main/resources/application.properties.example)** - Configuration template
+Comprehensive documentation is available to help you get started and understand the system:
+
+### Getting Started
+- **[SETUP.md](SETUP.md)** - Complete step-by-step setup and installation guide
+- **[DOCKER.md](DOCKER.md)** - Quick start guide using Docker for database setup
+- **[QUICKREF.md](QUICKREF.md)** - Quick reference guide for common commands and operations
+- **[FAQ.md](FAQ.md)** - Frequently asked questions and answers
+- **[check-prerequisites.sh](check-prerequisites.sh)** - Automated script to verify prerequisites
+
+### Development & Contributing
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributing to the project
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture and design documentation
+- **[.env.example](.env.example)** - Environment variables template
+- **[backend/src/main/resources/application.properties.example](backend/src/main/resources/application.properties.example)** - Backend configuration template
+
+### Security & License
+- **[SECURITY.md](SECURITY.md)** - Security best practices and vulnerability reporting
+- **[LICENSE](LICENSE)** - MIT License
 
 ### Quick Check
 
-Before starting, run the prerequisites check script:
+Before starting, verify your environment by running:
 
 ```bash
 ./check-prerequisites.sh
 ```
 
-This will verify that you have all required software installed.
+This automated script checks if all required software is installed and properly configured.
 
 
 
