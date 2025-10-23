@@ -1,0 +1,59 @@
+# Root .gitignore for Fuel Management System
+
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS Files
+Thumbs.db
+Desktop.ini
+
+# Environment variables and sensitive data
+.env
+.env.local
+.env.*.local
+*.env
+
+# Application properties with credentials
+**/application.properties
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+dist/
+build/
+target/
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output
+
+# Database files
+*.sql.gz
+*.db
+
+# Docker volumes
+docker-volumes/
+
+# Misc
+.cache/
+.parcel-cache/

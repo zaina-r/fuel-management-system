@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: fuel-management-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: fuelmanagement
+      MYSQL_USER: fueluser
+      MYSQL_PASSWORD: fuelpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      # Persist database data
+      - mysql_data:/var/lib/mysql
+      # Import initial SQL scripts
+      - ./backend/DMV_mock_database:/docker-entrypoint-initdb.d/dmv
+      - ./backend/fuel_stations_registered_stations.sql:/docker-entrypoint-initdb.d/fuel_stations_registered_stations.sql
+      - ./backend/fuel_stations_routines.sql:/docker-entrypoint-initdb.d/fuel_stations_routines.sql
+    networks:
+      - fuel-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # PhpMyAdmin (Optional - for database management GUI)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: fuel-management-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - fuel-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  fuel-network:
+    driver: bridge

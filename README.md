@@ -5,6 +5,7 @@ This project is a fuel management system that was developed to simplify and enha
 - [Features](#-features)
 - [Technologies Used](#-technologies-used)
 - [Getting Started](#-getting-started)
+- [Documentation](#-documentation)
 - [Acknowledgements](#-acknowledgements)
 
 
@@ -61,29 +62,60 @@ This project is a fuel management system that was developed to simplify and enha
   
 
 ## 📂 Getting Started
+
+For detailed setup instructions, see our comprehensive guides:
+
+### Quick Start Options
+
+**Option 1: Quick Start with Docker (Recommended for beginners)**
+- See [DOCKER.md](DOCKER.md) for database setup using Docker
+- Fastest way to get the database running
+
+**Option 2: Manual Setup**
+- See [SETUP.md](SETUP.md) for complete step-by-step installation guide
+- Includes backend, frontend, and mobile app setup
+
+### Quick Overview
+
 **1. Clone the repository:**  
-- Clone the repository using Git to get a local copy on your machine.
-
-**2. Backend setup**  
-- Navigate to the backend directory
-- Configure the `application.properties` file with your MySQL database credentials and Twilio API keys.
-- Build and run the Spring Boot application.
-- Setup the database by importing the provided SQL files
-
-**3. Frontend setup**
-- Navigate to the react app directory: `cd reactapp`
-- Install dependencies: `npm install`
-- Start the React application: `npm run dev`
-
-**4. Mobile Setup**
-- Navigate to the mobile app directory: `cd mobile`
-- Install dependencies: `npm install`
-- Run the app on an emulator or physical device:
-```sh
-npx react-native run-android  
-# or  
-npx react-native run-ios
+```bash
+git clone https://github.com/zaina-r/fuel-management-system.git
+cd fuel-management-system
 ```
+
+**2. Setup Database**
+- **Using Docker** (easiest): `docker-compose up -d` (see [DOCKER.md](DOCKER.md))
+- **Manual setup**: Install MySQL and import SQL files (see [SETUP.md](SETUP.md))
+
+**3. Backend setup**  
+```bash
+cd backend
+# Configure application.properties (see SETUP.md for details)
+./mvnw spring-boot:run
+```
+
+**4. Frontend setup**
+```bash
+cd frontend/reactapp
+npm install
+npm run dev
+```
+
+**5. Mobile setup (Optional)**
+```bash
+cd mobileScanner
+npm install
+npx expo start
+```
+
+For complete instructions, troubleshooting, and production deployment, please refer to [SETUP.md](SETUP.md).
+
+## 📚 Documentation
+
+- **[SETUP.md](SETUP.md)** - Complete setup and installation guide
+- **[DOCKER.md](DOCKER.md)** - Quick start with Docker
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- **[backend/src/main/resources/application.properties.example](backend/src/main/resources/application.properties.example)** - Configuration template
 
 
 
